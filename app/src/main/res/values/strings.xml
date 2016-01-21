@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Grocery List</string>
+    <string name="action_settings">Settings</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="create">Create a list below.....</string>
+    <string name="hint">"enter item here"</string>
+    <string name="save_btn_text">Save</string>
+    <string name="add_item_btn_text">Add Item</string>
+    <string name="finish_btn_text">Finish</string>
+    <string name="title_activity_item_selected_list">ItemSelectedListActivity</string>
+    <string name="title_hint"><font size="20">enter title here</font></string>
+    <string name="title_activity_edit_list">EditListActivity</string>
+</resources>

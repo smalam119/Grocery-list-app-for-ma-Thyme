@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item><layer-list>
+        <item ><bitmap android:gravity="bottom|right" android:src="@drawable/option_menu_marker_button" />   // you can use any other image here, instead of default_holo_dark_am
+        </item>
+    </layer-list></item>
+
+</selector>
