@@ -58,7 +58,7 @@ public class ItemSelectionListActivity extends AppCompatActivity implements View
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(adapter);
         button.setOnClickListener(this);
-        listId = (String)getIntent().getExtras().get(LIST_ID);
+        listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
 
         fetchItemsOfAList();
 
@@ -73,14 +73,14 @@ public class ItemSelectionListActivity extends AppCompatActivity implements View
     public void fetchItemsOfAList()
     {
         Cursor cursor = db.query("LISTS",
-                new String[] {"NAME","ITEMS"},
-                "NAME=?",
+                new String[] {"_id","NAME","ITEMS"},
+                "_id=?",
                 new String[] {listId},
                 null,null,null);
 
         if(cursor.moveToFirst())
         {
-            concataneted = cursor.getString(1).replaceAll("\\[", "").replaceAll("\\]", "");
+            concataneted = cursor.getString(2).replaceAll("\\[", "").replaceAll("\\]", "");
             listOfItems = Arrays.asList(concataneted.split(","));
         }
     }
@@ -106,7 +106,7 @@ public class ItemSelectionListActivity extends AppCompatActivity implements View
 
         ContentValues cv = new ContentValues();
         cv.put("ARCHIVED",1);
-        db.update("LISTS",cv,"NAME=?",new String[] {listId});
+        db.update("LISTS",cv,"_id=?",new String[] {listId});
 
         Toast.makeText(this,"Shopping Finished and list sent to Archive!",Toast.LENGTH_SHORT).show();
 

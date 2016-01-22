@@ -28,7 +28,7 @@ public class ArchivedListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_previous_lists, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_archived_list, container, false);
 
         return rootView;
     }

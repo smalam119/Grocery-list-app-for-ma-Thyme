@@ -26,7 +26,7 @@ import java.util.List;
 
 public class EditListActivity extends AppCompatActivity {
 
-    public static final String LIST_TITLE = "listTitle";
+    public static final String LIST_ID = "listID";
     private String listId,concataneted;
     private List<String> listOfItems;
     private LinearLayout childLayout;
@@ -58,7 +58,7 @@ public class EditListActivity extends AppCompatActivity {
             toast.show();
         }
 
-        listId = (String)getIntent().getExtras().get(LIST_TITLE);
+        listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
 
         fetchItemsOfAList();
 
@@ -112,7 +112,7 @@ public class EditListActivity extends AppCompatActivity {
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         Cursor cursor = db.query("LISTS",
                 new String[] {"NAME","ITEMS"},
-                "NAME=?",
+                "_id=?",
                 new String[] {listId},
                 null,null,null);
 

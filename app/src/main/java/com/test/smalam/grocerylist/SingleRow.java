@@ -6,9 +6,11 @@ package com.test.smalam.grocerylist;
 public class SingleRow
 {
     String title,date,optionMenu;
+    int id;
 
-    public SingleRow(String title, String date,String optionMenu)
+    public SingleRow(int id,String title, String date,String optionMenu)
     {
+        this.id = id;
         this.title = title;
         this.date = date;
         this.optionMenu = optionMenu;

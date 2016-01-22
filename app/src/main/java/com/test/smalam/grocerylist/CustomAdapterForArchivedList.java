@@ -45,11 +45,11 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
     {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
-        Cursor cursor = db.query("LISTS", new String[] {"NAME","DATE"},"ARCHIVED = ?", new String[] {"1"},null,null,null);
+        Cursor cursor = db.query("LISTS", new String[] {"_id","NAME","DATE"},"ARCHIVED = ?", new String[] {"1"},null,null,null);
 
         while (cursor.moveToNext()){
 
-            a.add(new SingleRow(cursor.getString(0),cursor.getString(1),spinnerOptions[cursor.getCount()]));
+            a.add(new SingleRow(cursor.getInt(0),cursor.getString(1),cursor.getString(2),spinnerOptions[cursor.getCount()]));
 
         }
 
@@ -100,7 +100,7 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(context,ItemSelectionListActivity.class);
-                intent.putExtra(ItemSelectionListActivity.LIST_ID, temp.title);
+                intent.putExtra(ItemSelectionListActivity.LIST_ID, temp.id);
                 context.startActivity(intent);
             }
         });
@@ -121,7 +121,7 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
                         if(position == 1)
                         {
                             Intent intent = new Intent(context,EditListActivity.class);
-                            intent.putExtra(EditListActivity.LIST_TITLE, temp.title);
+                            intent.putExtra(EditListActivity.LIST_ID, temp.id);
                             context.startActivity(intent);
                         }
                         if (position == 2)
