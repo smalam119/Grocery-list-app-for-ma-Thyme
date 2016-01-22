@@ -9,7 +9,6 @@
         android:layout_height="48dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/previous_list_icon"
         android:layout_margin="10dp" />
 
     <TextView

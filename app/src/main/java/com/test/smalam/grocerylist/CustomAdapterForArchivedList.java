@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +50,7 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
 
         while (cursor.moveToNext()){
 
-            a.add(new SingleRow(cursor.getInt(0),cursor.getString(1),cursor.getString(2),spinnerOptions[cursor.getCount()]));
+            a.add(new SingleRow(cursor.getInt(0),cursor.getString(1),cursor.getString(2),spinnerOptions[cursor.getCount()],R.drawable.previous_list_icon_black));
 
         }
 
@@ -90,11 +91,12 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
 
         TextView tvTitle = (TextView) rowView.findViewById(R.id.textView_title_single_row);
         TextView  tvDate = (TextView) rowView.findViewById(R.id.textView_date);
+        ImageView iv = (ImageView) rowView.findViewById(R.id.imageView1);
         final SingleRow temp = a.get(position);
 
         tvTitle.setText(temp.title);
         tvDate.setText(temp.date);
-
+        iv.setImageResource(temp.imageResource);
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

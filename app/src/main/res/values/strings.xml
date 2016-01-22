@@ -13,6 +13,6 @@
     <string name="add_item_btn_text">Add Item</string>
     <string name="finish_btn_text">Finish</string>
     <string name="title_activity_item_selected_list">ItemSelectedListActivity</string>
-    <string name="title_hint"><font size="20">enter title here</font></string>
+    <string name="title_hint"><font size="18">enter title here</font></string>
     <string name="title_activity_edit_list">EditListActivity</string>
 </resources>

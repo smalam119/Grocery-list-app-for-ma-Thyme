@@ -32,7 +32,7 @@ public class GroceryListDatabaseHelper extends SQLiteOpenHelper {
     {
         if(oldVersion<1)
         {
-            db.execSQL("CREATE TABLE LISTS(_id INTEGER PRIMARY KEY AUTOINCREMENT, "+"DATE TEXT,"+"NAME TEXT,"+"ITEMS TEXT,"+"ARCHIVED INTEGER);");
+            db.execSQL("CREATE TABLE LISTS(_id INTEGER PRIMARY KEY AUTOINCREMENT, "+"DATE TEXT,"+"NAME TEXT,"+"ITEMS TEXT,"+"ARCHIVED INTEGER,"+"FAVORITE INTEGER);");
         }
     }
 }

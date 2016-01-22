@@ -6,13 +6,14 @@ package com.test.smalam.grocerylist;
 public class SingleRow
 {
     String title,date,optionMenu;
-    int id;
+    int id,imageResource;
 
-    public SingleRow(int id,String title, String date,String optionMenu)
+    public SingleRow(int id,String title, String date,String optionMenu,int imageResource)
     {
         this.id = id;
         this.title = title;
         this.date = date;
         this.optionMenu = optionMenu;
+        this.imageResource = imageResource;
     }
 }

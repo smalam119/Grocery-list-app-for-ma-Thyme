@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -34,10 +35,12 @@ public class EditListActivity extends AppCompatActivity {
     List<EditText> allEds = new ArrayList<EditText>();
     private int id=0;
     private String title;
-    Button btn, save;
+    Button btn, save,fav;
     private ArrayList<String> itemData = new ArrayList<String>();
     private SQLiteDatabase db;
     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+    private boolean favButtonState;
+    Button iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,13 +62,26 @@ public class EditListActivity extends AppCompatActivity {
         }
 
         listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
+        iv = (Button) findViewById(R.id.fav_button);
 
         fetchItemsOfAList();
+
+        if(favButtonState == true)
+        {
+            iv.setBackgroundResource(R.drawable.fav_icon);
+        }
+
+        else if(favButtonState == false)
+        {
+            iv.setBackgroundResource(R.drawable.unselected_fav_icon);
+        }
 
         for(int i =0; i < listOfItems.size(); i++ )
         {
             createEditText(listOfItems.get(i));
         }
+
+
 
         titleEd = (EditText) findViewById(R.id.title_e);
         titleEd.setText(title);
@@ -76,6 +92,24 @@ public class EditListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createEditText();
+            }
+        });
+
+        fav = (Button) findViewById(R.id.fav_button);
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(favButtonState == false){
+
+                    fav.setBackgroundResource(R.drawable.fav_icon);
+                    favButtonState = true;
+                }
+
+                else if(favButtonState == true){
+
+                    fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+                    favButtonState = false;
+                }
             }
         });
 
@@ -106,22 +140,29 @@ public class EditListActivity extends AppCompatActivity {
 
     }
 
-    public void fetchItemsOfAList()
-    {
+    public void fetchItemsOfAList() {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(this);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         Cursor cursor = db.query("LISTS",
-                new String[] {"NAME","ITEMS"},
+                new String[]{"NAME", "ITEMS", "FAVORITE"},
                 "_id=?",
-                new String[] {listId},
-                null,null,null);
+                new String[]{listId},
+                null, null, null);
 
-        if(cursor.moveToFirst())
-        {
-            concataneted = cursor.getString(1).replaceAll("\\[", "").replaceAll("\\]","");
+        if (cursor.moveToFirst()) {
+            int fav = cursor.getInt(2);
+            concataneted = cursor.getString(1).replaceAll("\\[", "").replaceAll("\\]", "");
             listOfItems = Arrays.asList(concataneted.split(","));
             title = cursor.getString(0);
 
+            if (fav == 0)
+            {
+                favButtonState = false;
+            }
+            else if (fav == 1)
+            {
+                favButtonState = true;
+            }
         }
     }
 
@@ -156,7 +197,15 @@ public class EditListActivity extends AppCompatActivity {
         cv.put("DATE", date);
         cv.put("NAME", name);
         cv.put("ITEMS", items);
-        db.update("LISTS",cv, "NAME=?", new String[] {listId});
+        if(favButtonState)
+        {
+            cv.put("FAVORITE", 1);
+        }
+        else if(!favButtonState)
+        {
+            cv.put("FAVORITE", 0);
+        }
+        db.update("LISTS",cv, "_id=?", new String[] {listId});
     }
 
 

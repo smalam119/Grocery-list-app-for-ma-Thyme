@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class CreateNewListFragment extends Fragment {
 
-    Button btn,save;
+    Button btn,save,fav;
     private int id=0;
     private LinearLayout childLayout;
     private ArrayList<String> itemData = new ArrayList<String>();
@@ -33,6 +34,7 @@ public class CreateNewListFragment extends Fragment {
     private SQLiteDatabase db;
     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     private String title;
+    private boolean favButtonState;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +65,15 @@ public class CreateNewListFragment extends Fragment {
         cv.put("NAME",name);
         cv.put("ITEMS",items);
         cv.put("ARCHIVED",0);
+        if(favButtonState)
+        {
+            cv.put("FAVORITE", 1);
+        }
+        else if(!favButtonState)
+        {
+            cv.put("FAVORITE", 0);
+        }
+
         db.insert("LISTS",null,cv);
     }
 
@@ -71,6 +82,8 @@ public class CreateNewListFragment extends Fragment {
     public void onStart()
     {
         super.onStart();
+
+
 
         try
         {
@@ -84,8 +97,30 @@ public class CreateNewListFragment extends Fragment {
         }
         View view = getView();
 
+        favButtonState = false;
+        fav = (Button) view.findViewById(R.id.fav_button);
+        fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+
         titleEd = (EditText) view.findViewById(R.id.title);
         btn = (Button) view.findViewById(R.id.add_row);
+
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(favButtonState == false){
+
+                    fav.setBackgroundResource(R.drawable.fav_icon);
+                    favButtonState = true;
+                }
+
+                else if(favButtonState == true){
+
+                    fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+                    favButtonState = false;
+                }
+            }
+        });
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

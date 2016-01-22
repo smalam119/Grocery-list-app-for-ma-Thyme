@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,12 +46,20 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
     {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
-        Cursor cursor = db.query("LISTS", new String[] {"_id","NAME","DATE"},"ARCHIVED = ?", new String[] {"0"},null,null,null);
+        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE"}, "ARCHIVED = ?", new String[]{"0"}, null, null, null);
 
         while (cursor.moveToNext()){
 
-            a.add(new SingleRow(cursor.getInt(0),cursor.getString(1),cursor.getString(2),spinnerOptions[cursor.getCount()]));
+            int favorite = cursor.getInt(3);
 
+            if(favorite == 1)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()],R.drawable.fav_icon));
+            }
+            else if(favorite == 0)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()],R.drawable.previous_list_icon));
+            }
         }
 
     }
@@ -90,10 +100,12 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
 
         TextView tvTitle = (TextView) rowView.findViewById(R.id.textView_title_single_row);
         TextView  tvDate = (TextView) rowView.findViewById(R.id.textView_date);
+        ImageView iv = (ImageView) rowView.findViewById(R.id.imageView1);
         final SingleRow temp = a.get(position);
 
         tvTitle.setText(temp.title);
         tvDate.setText(temp.date);
+        iv.setImageResource(temp.imageResource);
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
