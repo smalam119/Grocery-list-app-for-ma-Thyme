@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +29,8 @@ import java.util.ArrayList;
 public class CustomAdapterForPreviousList extends BaseAdapter {
     Context context;
     ArrayList<SingleRow> a;
+    ArrayList<SingleRow> a1;
+    ValueFilter valueFilter;
     final String[] spinnerOptions = {
             "",
             "Edit",
@@ -37,41 +41,41 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
     CustomAdapterForPreviousList(Context c) {
         context = c;
         a = new ArrayList<SingleRow>();
+        a1 = new ArrayList<SingleRow>();
         final SingleRow temp;
 
         readAllLists();
     }
 
-    public void readAllLists()
-    {
+    public void readAllLists() {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE"}, "ARCHIVED = ?", new String[]{"0"}, null, null, null);
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
 
             int favorite = cursor.getInt(3);
 
-            if(favorite == 1)
-            {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()],R.drawable.fav_icon));
+            if (favorite == 1) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.fav_icon));
+                a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.fav_icon));
+            } else if (favorite == 0) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_icon));
+                a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_icon));
             }
-            else if(favorite == 0)
-            {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()],R.drawable.previous_list_icon));
-            }
+
+
         }
 
     }
 
 
-    public void deleteList(SingleRow s)
-    {
+    public void deleteList(SingleRow s) {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         db.delete("LISTS",
                 "NAME=?",
-                new String[] {s.title});
+                new String[]{s.title});
     }
 
     @Override
@@ -91,15 +95,14 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
 
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent)
-    {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
-       LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
 
-        final View rowView = inflater.inflate(R.layout.single_row, parent ,false);
+        final View rowView = inflater.inflate(R.layout.single_row, parent, false);
 
         TextView tvTitle = (TextView) rowView.findViewById(R.id.textView_title_single_row);
-        TextView  tvDate = (TextView) rowView.findViewById(R.id.textView_date);
+        TextView tvDate = (TextView) rowView.findViewById(R.id.textView_date);
         ImageView iv = (ImageView) rowView.findViewById(R.id.imageView1);
         final SingleRow temp = a.get(position);
 
@@ -111,7 +114,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(context,ItemSelectionListActivity.class);
+                Intent intent = new Intent(context, ItemSelectionListActivity.class);
                 intent.putExtra(ItemSelectionListActivity.LIST_ID, temp.id);
                 context.startActivity(intent);
             }
@@ -130,14 +133,12 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
 
                         int position = spnr.getSelectedItemPosition();
                         // TODO Auto-generated method stub
-                        if(position == 1)
-                        {
-                            Intent intent = new Intent(context,EditListActivity.class);
+                        if (position == 1) {
+                            Intent intent = new Intent(context, EditListActivity.class);
                             intent.putExtra(EditListActivity.LIST_ID, temp.id);
                             context.startActivity(intent);
                         }
-                        if (position == 2)
-                        {
+                        if (position == 2) {
                             a.remove(temp);
                             CustomAdapterForPreviousList.this.notifyDataSetChanged();
                             deleteList(temp);
@@ -157,4 +158,50 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
         return rowView;
     }
 
+    public Filter getFilter() {
+        if (valueFilter == null) {
+            valueFilter = new ValueFilter();
+        }
+        return valueFilter;
+    }
+
+    private class ValueFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+
+            if (constraint != null && constraint.length() > 0) {
+                ArrayList<SingleRow> filterList = new ArrayList<SingleRow>();
+                for (int i = 0; i < a1.size(); i++) {
+                    if ((a1.get(i).getTitle().toUpperCase())
+                            .contains(constraint.toString().toUpperCase())) {
+
+                        SingleRow sr = new SingleRow(a1.get(i).getId(), a1.get(i).getTitle(), a1.get(i).getDate(), a1.get(i).getOptionMenu(), a1.get(i).getImageResource());
+                        //SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getOptionMenu(), a.get(i).getImageResource());
+
+                        filterList.add(sr);
+                    }
+                }
+                results.count = filterList.size();
+                results.values = filterList;
+            } else {
+                a.clear();
+                readAllLists();
+                results.count = a.size();
+                results.values = a;
+            }
+            return results;
+
+        }
+
+
+        @Override
+        protected void publishResults(CharSequence constraint,
+                                      FilterResults results) {
+            a = (ArrayList<SingleRow>) results.values;
+            notifyDataSetChanged();
+        }
+
+
+    }
 }
