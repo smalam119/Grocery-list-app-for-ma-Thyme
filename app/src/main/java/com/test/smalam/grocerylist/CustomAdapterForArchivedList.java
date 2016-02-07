@@ -50,7 +50,7 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
 
         while (cursor.moveToNext()){
 
-            a.add(new SingleRow(cursor.getInt(0),cursor.getString(1),cursor.getString(2),spinnerOptions[cursor.getCount()],R.drawable.previous_list_icon_black));
+            a.add(new SingleRow(cursor.getInt(0),cursor.getString(1),cursor.getString(2),spinnerOptions[cursor.getCount()],R.drawable.previous_list_icon_black,0));
 
         }
 

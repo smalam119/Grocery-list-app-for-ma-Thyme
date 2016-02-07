@@ -8,6 +8,18 @@ public class SingleRow
     String title;
     String date;
 
+    public int getIsToDoList()
+    {
+        return isToDoList;
+    }
+
+    public void setIsToDoList(int isToDoList)
+    {
+        this.isToDoList = isToDoList;
+    }
+
+    int isToDoList;
+
     public String getTitle() {
         return title;
     }
@@ -51,12 +63,13 @@ public class SingleRow
     String optionMenu;
     int id,imageResource;
 
-    public SingleRow(int id,String title, String date,String optionMenu,int imageResource)
+    public SingleRow(int id,String title, String date,String optionMenu,int imageResource,int isToDoList)
     {
         this.id = id;
         this.title = title;
         this.date = date;
         this.optionMenu = optionMenu;
         this.imageResource = imageResource;
+        this.isToDoList = isToDoList;
     }
 }

@@ -63,7 +63,7 @@ public class CreateTakeANoteFragment extends Fragment
             @Override
             public void onClick(View v) {
 
-                noteText = note.getText().toString();
+                noteText = note.getText().toString().trim();
                 titleText = title.getText().toString();
 
                 insertList(db, currentDateTimeString,titleText,noteText);

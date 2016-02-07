@@ -50,18 +50,23 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
     public void readAllLists() {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
-        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE"}, "ARCHIVED = ?", new String[]{"0"}, null, null, null);
+        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE","IS_TO_DO_LIST"}, "ARCHIVED = ?", new String[]{"0"}, null, null, null);
 
         while (cursor.moveToNext()) {
 
             int favorite = cursor.getInt(3);
+            int isToDo = cursor.getInt(4);
 
-            if (favorite == 1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.fav_icon));
-                a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.fav_icon));
-            } else if (favorite == 0) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_icon));
-                a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_icon));
+            if (favorite == 1 && isToDo ==1) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.fav_icon,cursor.getInt(4)));
+                a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.fav_icon,cursor.getInt(4)));
+            } else if (favorite == 0  && isToDo ==1) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_icon,cursor.getInt(4)));
+                a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_icon,cursor.getInt(4)));
+            }
+            if (isToDo == 0) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_note_icon,cursor.getInt(4)));
+                a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_note_icon,cursor.getInt(4)));
             }
 
 
@@ -114,9 +119,17 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(context, ItemSelectionListActivity.class);
-                intent.putExtra(ItemSelectionListActivity.LIST_ID, temp.id);
-                context.startActivity(intent);
+                if(temp.getIsToDoList() == 1) {
+                    Intent intent = new Intent(context, ItemSelectionListActivity.class);
+                    intent.putExtra(ItemSelectionListActivity.LIST_ID, temp.id);
+                    context.startActivity(intent);
+                }
+                else if (temp.getIsToDoList() == 0)
+                {
+                    Intent intent = new Intent(context, NotesViewerActivity.class);
+                    intent.putExtra(NotesViewerActivity.LIST_ID, temp.getId());
+                    context.startActivity(intent);
+                }
             }
         });
 
@@ -134,9 +147,19 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
                         int position = spnr.getSelectedItemPosition();
                         // TODO Auto-generated method stub
                         if (position == 1) {
-                            Intent intent = new Intent(context, EditListActivity.class);
-                            intent.putExtra(EditListActivity.LIST_ID, temp.id);
-                            context.startActivity(intent);
+
+                            if(temp.getIsToDoList() == 1) {
+                                Intent intent = new Intent(context, EditListActivity.class);
+                                intent.putExtra(EditListActivity.LIST_ID, temp.getId());
+                                context.startActivity(intent);
+                            }
+
+                            else if (temp.getIsToDoList() == 0)
+                            {
+                                Intent intent = new Intent(context, EditListActivity.class);
+                                intent.putExtra(EditNotesActivity.LIST_ID, temp.getId());
+                                context.startActivity(intent);
+                            }
                         }
                         if (position == 2) {
                             a.remove(temp);
@@ -176,7 +199,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
                     if ((a.get(i).getTitle().toUpperCase())
                             .contains(constraint.toString().toUpperCase())) {
 
-                        SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getOptionMenu(), a.get(i).getImageResource());
+                        SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getOptionMenu(), a.get(i).getImageResource(),a.get(i).getId());
                         //SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getOptionMenu(), a.get(i).getImageResource());
 
                         filterList.add(sr);

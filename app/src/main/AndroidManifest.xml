@@ -25,6 +25,14 @@
         <activity
             android:name=".EditListActivity"
             android:label="@string/title_activity_edit_list"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".EditNotesActivity"
+            android:label="@string/title_activity_edit_notes"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".NotesViewerActivity"
+            android:label="@string/title_activity_notes_viewer"
             android:theme="@style/AppTheme"></activity>
     </application>
 
