@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,18 +22,19 @@ import java.util.Date;
 import java.util.List;
 
 
-public class CreateNewListFragment extends Fragment {
+public class CreateNewToDoFragment extends Fragment {
 
-    Button btn,save,fav;
     private int id=0;
     private LinearLayout childLayout;
     private ArrayList<String> itemData = new ArrayList<String>();
-    EditText ed,titleEd;
-    List<EditText> allEds = new ArrayList<EditText>();
+    private ArrayList<String> checks = new ArrayList<String>();
     private SQLiteDatabase db;
-    String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     private String title;
     private boolean favButtonState;
+    List<EditText> allEds = new ArrayList<EditText>();
+    String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+    Button btn,save,fav;
+    EditText ed,titleEd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +55,7 @@ public class CreateNewListFragment extends Fragment {
         ed.setHint(R.string.hint);
         ed.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
         childLayout.addView(ed);
+        ed.requestFocus();
         id++;
     }
 
@@ -65,6 +66,8 @@ public class CreateNewListFragment extends Fragment {
         cv.put("NAME",name);
         cv.put("ITEMS",items);
         cv.put("ARCHIVED",0);
+        cv.put("CHECK_LIST_STATUS",checks.toString());
+        cv.put("IS_TO_DO_LIST",1);
         if(favButtonState)
         {
             cv.put("FAVORITE", 1);
@@ -141,6 +144,7 @@ public class CreateNewListFragment extends Fragment {
                     String s = allEds.get(i).getText().toString();
                     if(!s.equals("")) {
                         itemData.add(s);
+                        checks.add("false");
                     }
 
                     title = titleEd.getText().toString();

@@ -1,23 +1,21 @@
 package com.test.smalam.grocerylist;
 
-import android.content.Context;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 
-public class PreviousListsFragment extends Fragment {
+public class PreviousListsFragment extends Fragment implements SearchView.OnQueryTextListener{
 
     ListView listView;
-    Spinner spnr;
-    Context context;
-    ViewGroup parent;
-
+    SearchView searchBar;
+    CustomAdapterForPreviousList adapterForPreviousList;
 
 
     public PreviousListsFragment(){}
@@ -40,14 +38,26 @@ public class PreviousListsFragment extends Fragment {
     {
         super.onStart();
         View view = getView();
+
         if (view != null) {
+            adapterForPreviousList = new CustomAdapterForPreviousList(getContext());
             TextView title = (TextView) view.findViewById(R.id.textView_title_previous_list);
             listView = (ListView) view.findViewById(R.id.listView);
-            listView.setAdapter(new CustomAdapterForPreviousList(getContext()));
+            listView.setAdapter(adapterForPreviousList);
+            searchBar = (SearchView) view.findViewById(R.id.search_view);
+            searchBar.setOnQueryTextListener(this);
         }
     }
 
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapterForPreviousList.getFilter().filter(newText);
+        return false;
+    }
 
-
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
 
 }

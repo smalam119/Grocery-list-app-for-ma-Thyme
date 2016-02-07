@@ -6,14 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -28,19 +25,18 @@ import java.util.List;
 public class EditListActivity extends AppCompatActivity {
 
     public static final String LIST_ID = "listID";
-    private String listId,concataneted;
+    private String listId, concatenated;
     private List<String> listOfItems;
     private LinearLayout childLayout;
-    EditText ed,titleEd;
-    List<EditText> allEds = new ArrayList<EditText>();
     private int id=0;
     private String title;
-    Button btn, save,fav;
     private ArrayList<String> itemData = new ArrayList<String>();
     private SQLiteDatabase db;
-    String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     private boolean favButtonState;
-    Button iv;
+    String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+    List<EditText> allEds = new ArrayList<EditText>();
+    Button btn, save,fav,iv;
+    EditText ed,titleEd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -64,7 +60,7 @@ public class EditListActivity extends AppCompatActivity {
         listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
         iv = (Button) findViewById(R.id.fav_button);
 
-        fetchItemsOfAList();
+        fetchItemsOfAList(listOfItems);
 
         if(favButtonState == true)
         {
@@ -76,10 +72,6 @@ public class EditListActivity extends AppCompatActivity {
             iv.setBackgroundResource(R.drawable.unselected_fav_icon);
         }
 
-        for(int i =0; i < listOfItems.size(); i++ )
-        {
-            createEditText(listOfItems.get(i));
-        }
 
 
 
@@ -87,7 +79,6 @@ public class EditListActivity extends AppCompatActivity {
         titleEd.setText(title);
 
         btn = (Button) findViewById(R.id.add_row_e);
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +131,7 @@ public class EditListActivity extends AppCompatActivity {
 
     }
 
-    public void fetchItemsOfAList() {
+    public void fetchItemsOfAList(List<String> list) {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(this);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         Cursor cursor = db.query("LISTS",
@@ -151,8 +142,8 @@ public class EditListActivity extends AppCompatActivity {
 
         if (cursor.moveToFirst()) {
             int fav = cursor.getInt(2);
-            concataneted = cursor.getString(1).replaceAll("\\[", "").replaceAll("\\]", "");
-            listOfItems = Arrays.asList(concataneted.split(","));
+            concatenated = cursor.getString(1).replaceAll("\\[", "").replaceAll("\\]", "").trim();
+            list = Arrays.asList(concatenated.split(","));
             title = cursor.getString(0);
 
             if (fav == 0)
@@ -164,6 +155,13 @@ public class EditListActivity extends AppCompatActivity {
                 favButtonState = true;
             }
         }
+
+        for(int i =0; i < list.size(); i++ )
+        {
+            createEditText(list.get(i).trim());
+        }
+
+
     }
 
     public void createEditText(String content)
@@ -207,9 +205,6 @@ public class EditListActivity extends AppCompatActivity {
         }
         db.update("LISTS",cv, "_id=?", new String[] {listId});
     }
-
-
-
 
 
 }

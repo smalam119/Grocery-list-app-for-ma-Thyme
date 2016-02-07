@@ -63,15 +63,16 @@ public class MainActivity extends AppCompatActivity {
 
         Class fragmentClass;
         switch(menuItem.getItemId()) {
-            case R.id.nav_first_fragment:
-                fragmentClass = CreateNewListFragment.class;
+            case R.id.new_to_do_list:
+                fragmentClass = CreateNewToDoFragment.class;
                 break;
-            case R.id.nav_second_fragment:
-                //fragmentClass = ItemSelectionListFragment.class;
+            case R.id.take_a_note:
+                fragmentClass =  CreateTakeANoteFragment.class;
+                break;
+            case R.id.previous_list:
                 fragmentClass =  PreviousListsFragment.class;
                 break;
-            case R.id.nav_third_fragment:
-                //fragmentClass = ItemSelectionListFragment.class;
+            case R.id.trash:
                 fragmentClass =  ArchivedListFragment.class;
                 break;
             default:

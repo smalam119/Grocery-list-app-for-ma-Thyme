@@ -11,8 +11,10 @@
     <string name="hint">"enter item here"</string>
     <string name="save_btn_text">Save</string>
     <string name="add_item_btn_text">Add Item</string>
+    <string name="save_note">Save Note</string>
     <string name="finish_btn_text">Finish</string>
     <string name="title_activity_item_selected_list">ItemSelectedListActivity</string>
     <string name="title_hint"><font size="18">enter title here</font></string>
+    <string name="note_body_hint"><font size="18">take note..</font></string>
     <string name="title_activity_edit_list">EditListActivity</string>
 </resources>

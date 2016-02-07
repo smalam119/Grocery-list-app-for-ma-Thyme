@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CreateNewToDoFragment"
     android:id="@+id/parent_lay"
-    android:orientation="vertical"
-    android:layout_marginTop="50dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -13,43 +13,29 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/title_e"
-            android:layout_width="130dp"
+            android:id="@+id/title_note"
+            android:layout_width="280dp"
             android:layout_height="match_parent"
             android:textColor="@color/colorPrimary"
             android:textSize="30sp"
             android:hint="@string/title_hint"/>
 
         <Button
-            android:id="@+id/add_row_e"
+            android:id="@+id/save_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
-            android:text="@string/add_item_btn_text"
-            />
+            android:text="@string/save_note" />
 
-        <Button
-            android:id="@+id/save_e"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save_btn_text"
-            android:textColor="@color/colorPrimary"
-            />
-
-        <Button
-            android:id="@+id/fav_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/child_lay_e"
+    <EditText
+        android:id="@+id/note_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:hint="@string/note_body_hint"
+        android:gravity="top|left"/>
 
 
 

@@ -3,18 +3,27 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_first_fragment"
+            android:id="@+id/new_to_do_list"
             android:icon="@drawable/create_icon"
-            android:title="New List"
+            android:title="New To Do List"
+            android:checked="true"/>
+
+        <item
+            android:id="@+id/take_a_note"
+            android:icon="@drawable/note_icon"
+            android:title="Take A Note"
             android:checked="true"/>
         <item
-            android:id="@+id/nav_second_fragment"
-            android:icon="@drawable/previous_icon"
-            android:title="Previous Lists" />
-        <item
-            android:id="@+id/nav_third_fragment"
+            android:id="@+id/previous_list"
             android:icon="@drawable/archive_icon"
-            android:title="Archive" />
+            android:title="Previous List" />
+        <item
+            android:id="@+id/trash"
+            android:icon="@drawable/trash_icon"
+            android:title="Trash" />
+
     </group>
+
+
 
 </menu>

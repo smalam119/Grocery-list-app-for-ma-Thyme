@@ -5,7 +5,50 @@ package com.test.smalam.grocerylist;
  */
 public class SingleRow
 {
-    String title,date,optionMenu;
+    String title;
+    String date;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getOptionMenu() {
+        return optionMenu;
+    }
+
+    public void setOptionMenu(String optionMenu) {
+        this.optionMenu = optionMenu;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getImageResource() {
+        return imageResource;
+    }
+
+    public void setImageResource(int imageResource) {
+        this.imageResource = imageResource;
+    }
+
+    String optionMenu;
     int id,imageResource;
 
     public SingleRow(int id,String title, String date,String optionMenu,int imageResource)

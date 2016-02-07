@@ -8,29 +8,28 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ItemSelectionListActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private ArrayList<String> items = new ArrayList<String>();
+    public static final String LIST_ID = "drinkNo";
+    private String listId, itemsConcatenated, checkStatusConcatenated;
+    private List<String> listOfItems;
+    private List<String> listOfChecks;
+    private SQLiteDatabase db;
+    ArrayList<Boolean> isSelectedList = new ArrayList<>();
     Button button;
     ListView listView;
     ArrayAdapter<String> adapter;
-    private ArrayList<String> items = new ArrayList<String>();
-    public static final String LIST_ID = "drinkNo";
-    private String listId,concataneted;
-    private List<String> listOfItems;
-    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +52,6 @@ public class ItemSelectionListActivity extends AppCompatActivity implements View
 
         button = (Button) findViewById(R.id.finish_btn_activity);
         listView = (ListView) findViewById(R.id.list_activity);
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_multiple_choice, items);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        listView.setAdapter(adapter);
         button.setOnClickListener(this);
         listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
 
@@ -67,48 +62,58 @@ public class ItemSelectionListActivity extends AppCompatActivity implements View
             items.add(listOfItems.get(i));
         }
 
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_multiple_choice, items);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        listView.setAdapter(adapter);
+
+        for(int i = 0; i < listOfChecks.size(); i++)
+        {
+            if(listOfChecks.get(i).trim().equals("true") )
+            {
+                listView.setItemChecked(i,true);
+            } else if(listOfChecks.get(i).trim().equals("false"))
+            {
+                listView.setItemChecked(i,false);
+            }
+        }
+
+        Toast.makeText(this,listOfChecks.toString(),Toast.LENGTH_LONG).show();
+
 
     }
 
     public void fetchItemsOfAList()
     {
         Cursor cursor = db.query("LISTS",
-                new String[] {"_id","NAME","ITEMS"},
+                new String[] {"_id","NAME","ITEMS","CHECK_LIST_STATUS"},
                 "_id=?",
                 new String[] {listId},
                 null,null,null);
 
         if(cursor.moveToFirst())
         {
-            concataneted = cursor.getString(2).replaceAll("\\[", "").replaceAll("\\]", "");
-            listOfItems = Arrays.asList(concataneted.split(","));
+            itemsConcatenated = cursor.getString(2).replaceAll("\\[", "").replaceAll("\\]", "");
+            checkStatusConcatenated = cursor.getString(3).replaceAll("\\[", "").replaceAll("\\]", "");
+            listOfItems = Arrays.asList(itemsConcatenated.split(","));
+            listOfChecks = Arrays.asList(checkStatusConcatenated.split(","));
         }
     }
 
 
     @Override
-    public void onClick(View v) {
-        SparseBooleanArray checked = listView.getCheckedItemPositions();
-        ArrayList<String> selectedItems = new ArrayList<String>();
-        for (int i = 0; i < checked.size(); i++) {
-            // Item position in adapter
-            int position = checked.keyAt(i);
-            // Add sport if it is checked i.e.) == TRUE!
-            if (checked.valueAt(i))
-                selectedItems.add(adapter.getItem(position));
+    public void onClick(View v)
+    {
+        for (int i = 0; i < listOfItems.size(); i++)
+        {
+            isSelectedList.add(listView.isItemChecked(i));
         }
 
-        String[] outputStrArr = new String[selectedItems.size()];
-
-        for (int i = 0; i < selectedItems.size(); i++) {
-            outputStrArr[i] = selectedItems.get(i);
-        }
 
         ContentValues cv = new ContentValues();
-        cv.put("ARCHIVED",1);
-        db.update("LISTS",cv,"_id=?",new String[] {listId});
+        cv.put("CHECK_LIST_STATUS", isSelectedList.toString());
+        db.update("LISTS", cv, "_id=?", new String[]{listId});
 
-        Toast.makeText(this,"Shopping Finished and list sent to Archive!",Toast.LENGTH_SHORT).show();
 
     }
 }

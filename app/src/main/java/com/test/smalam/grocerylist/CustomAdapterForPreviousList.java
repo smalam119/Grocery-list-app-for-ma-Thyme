@@ -172,11 +172,11 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
 
             if (constraint != null && constraint.length() > 0) {
                 ArrayList<SingleRow> filterList = new ArrayList<SingleRow>();
-                for (int i = 0; i < a1.size(); i++) {
-                    if ((a1.get(i).getTitle().toUpperCase())
+                for (int i = 0; i < a.size(); i++) {
+                    if ((a.get(i).getTitle().toUpperCase())
                             .contains(constraint.toString().toUpperCase())) {
 
-                        SingleRow sr = new SingleRow(a1.get(i).getId(), a1.get(i).getTitle(), a1.get(i).getDate(), a1.get(i).getOptionMenu(), a1.get(i).getImageResource());
+                        SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getOptionMenu(), a.get(i).getImageResource());
                         //SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getOptionMenu(), a.get(i).getImageResource());
 
                         filterList.add(sr);
