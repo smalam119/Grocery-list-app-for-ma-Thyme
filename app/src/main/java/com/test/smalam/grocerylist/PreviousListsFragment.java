@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 
 public class PreviousListsFragment extends Fragment implements SearchView.OnQueryTextListener{
@@ -16,6 +16,8 @@ public class PreviousListsFragment extends Fragment implements SearchView.OnQuer
     ListView listView;
     SearchView searchBar;
     CustomAdapterForPreviousList adapterForPreviousList;
+    RadioGroup searchOptions;
+    String typeOfSearch = "all";
 
 
     public PreviousListsFragment(){}
@@ -40,10 +42,38 @@ public class PreviousListsFragment extends Fragment implements SearchView.OnQuer
         View view = getView();
 
         if (view != null) {
-            adapterForPreviousList = new CustomAdapterForPreviousList(getContext());
-            TextView title = (TextView) view.findViewById(R.id.textView_title_previous_list);
+
             listView = (ListView) view.findViewById(R.id.listView);
+            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),typeOfSearch);
             listView.setAdapter(adapterForPreviousList);
+
+
+            searchOptions = (RadioGroup) view.findViewById(R.id.search_options);
+            searchOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    switch (checkedId) {
+                        case R.id.all:
+                            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),"all");
+                            listView.setAdapter(adapterForPreviousList);
+                            break;
+                        case R.id.fav:
+                            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),"favorites");
+                            listView.setAdapter(adapterForPreviousList);
+                            break;
+                        case R.id.note:
+                            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),"notes");
+                            listView.setAdapter(adapterForPreviousList);
+                            break;
+                        case R.id.to_do:
+                            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),"toDo");
+                            listView.setAdapter(adapterForPreviousList);
+                            break;
+                    }
+                }
+            });
+
+
             searchBar = (SearchView) view.findViewById(R.id.search_view);
             searchBar.setOnQueryTextListener(this);
         }

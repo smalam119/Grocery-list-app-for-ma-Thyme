@@ -148,7 +148,7 @@ public class CreateNewToDoFragment extends Fragment {
                     title = titleEd.getText().toString();
                 }
 
-                if(title.equals(""))
+                if(title.isEmpty())
                 {
                     Toast.makeText(getContext(),"Your list must have a title",Toast.LENGTH_LONG).show();
                 }

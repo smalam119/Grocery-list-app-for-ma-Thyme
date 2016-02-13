@@ -66,7 +66,16 @@ public class CreateTakeANoteFragment extends Fragment
                 noteText = note.getText().toString().trim();
                 titleText = title.getText().toString();
 
-                insertList(db, currentDateTimeString,titleText,noteText);
+
+                if(titleText.isEmpty())
+                {
+                    Toast.makeText(getContext(),"You must have give a title",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    insertList(db, currentDateTimeString,titleText,noteText);
+                    Toast.makeText(getContext(),"Note added",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

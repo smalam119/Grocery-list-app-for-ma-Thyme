@@ -36,13 +36,6 @@ public class SingleRow
         this.date = date;
     }
 
-    public String getOptionMenu() {
-        return optionMenu;
-    }
-
-    public void setOptionMenu(String optionMenu) {
-        this.optionMenu = optionMenu;
-    }
 
     public int getId() {
         return id;
@@ -63,12 +56,11 @@ public class SingleRow
     String optionMenu;
     int id,imageResource;
 
-    public SingleRow(int id,String title, String date,String optionMenu,int imageResource,int isToDoList)
+    public SingleRow(int id,String title, String date,int imageResource,int isToDoList)
     {
         this.id = id;
         this.title = title;
         this.date = date;
-        this.optionMenu = optionMenu;
         this.imageResource = imageResource;
         this.isToDoList = isToDoList;
     }

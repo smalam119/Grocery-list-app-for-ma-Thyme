@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ItemSelectionListActivity"
+            android:name=".ToDoViewerActivity"
             android:label="@string/title_activity_item_selected_list"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".EditListActivity"
+            android:name=".EditToDoActivity"
             android:label="@string/title_activity_edit_list"
             android:theme="@style/AppTheme" />
         <activity

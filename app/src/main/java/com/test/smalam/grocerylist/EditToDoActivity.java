@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class EditListActivity extends AppCompatActivity {
+public class EditToDoActivity extends AppCompatActivity {
 
     public static final String LIST_ID = "listID";
     private String listId, concatenated;
@@ -119,7 +119,7 @@ public class EditListActivity extends AppCompatActivity {
                     title = titleEd.getText().toString();
                 }
 
-                if (title.equals("")) {
+                if (title.isEmpty()) {
                     Toast.makeText(getBaseContext(), "Your list must have a title", Toast.LENGTH_LONG).show();
                 } else {
                     updateList(db, currentDateTimeString, title, itemData.toString());

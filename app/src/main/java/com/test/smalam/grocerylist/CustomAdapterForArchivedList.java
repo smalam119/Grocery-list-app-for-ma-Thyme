@@ -1,5 +1,6 @@
 package com.test.smalam.grocerylist;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -28,9 +29,8 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
     ArrayList<SingleRow> a;
     final String[] spinnerOptions = {
             "",
-            "Edit",
             "Delete",
-            "Send"
+            "Restore",
     };
 
     CustomAdapterForArchivedList(Context c) {
@@ -46,11 +46,19 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
     {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
-        Cursor cursor = db.query("LISTS", new String[] {"_id","NAME","DATE"},"ARCHIVED = ?", new String[] {"1"},null,null,null);
+        Cursor cursor = db.query("LISTS", new String[] {"_id","NAME","DATE","IS_TO_DO_LIST"},"ARCHIVED = ?", new String[] {"1"},null,null,null);
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext())
+        {
+            if(cursor.getInt(3) == 1)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon_black, 0));
+            }
 
-            a.add(new SingleRow(cursor.getInt(0),cursor.getString(1),cursor.getString(2),spinnerOptions[cursor.getCount()],R.drawable.previous_list_icon_black,0));
+            else if(cursor.getInt(3) == 0)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.note_trashed, 0));
+            }
 
         }
 
@@ -62,7 +70,16 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         db.delete("LISTS",
                 "NAME=?",
-                new String[] {s.title});
+                new String[] {String.valueOf(s.getId())});
+    }
+
+    public void sendToPreviousList(SingleRow s)
+    {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("ARCHIVED", 0);
+        db.update("LISTS",cv, "_id=?", new String[] {String.valueOf(s.getId())});
     }
 
     @Override
@@ -101,8 +118,8 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(context,ItemSelectionListActivity.class);
-                intent.putExtra(ItemSelectionListActivity.LIST_ID, temp.id);
+                Intent intent = new Intent(context,ToDoViewerActivity.class);
+                intent.putExtra(ToDoViewerActivity.LIST_ID, temp.id);
                 context.startActivity(intent);
             }
         });
@@ -120,18 +137,20 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
 
                         int position = spnr.getSelectedItemPosition();
                         // TODO Auto-generated method stub
-                        if(position == 1)
-                        {
-                            Intent intent = new Intent(context,EditListActivity.class);
-                            intent.putExtra(EditListActivity.LIST_ID, temp.id);
-                            context.startActivity(intent);
-                        }
-                        if (position == 2)
+                        if (position == 1)
                         {
                             a.remove(temp);
                             CustomAdapterForArchivedList.this.notifyDataSetChanged();
                             deleteList(temp);
                             Toast.makeText(context, "List Deleted", Toast.LENGTH_LONG).show();
+                        }
+
+                        if(position == 2)
+                        {
+                            a.remove(temp);
+                            CustomAdapterForArchivedList.this.notifyDataSetChanged();
+                            sendToPreviousList(temp);
+                            Toast.makeText(context, "Restored", Toast.LENGTH_LONG).show();
                         }
                     }
 

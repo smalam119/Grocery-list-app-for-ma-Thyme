@@ -17,12 +17,16 @@
             android:layout_marginTop="50dp"
             android:textSize="30sp" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/note_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top|left"/>
-
+    </ScrollView>
 
 </LinearLayout>
 

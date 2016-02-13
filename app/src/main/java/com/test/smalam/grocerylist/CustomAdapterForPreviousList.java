@@ -1,5 +1,6 @@
 package com.test.smalam.grocerylist;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,22 +12,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
-
 import java.util.ArrayList;
+
 
 /**
  * Created by SAYED on 1/13/2016.
  */
-public class CustomAdapterForPreviousList extends BaseAdapter {
+public class CustomAdapterForPreviousList extends BaseAdapter
+{
     Context context;
     ArrayList<SingleRow> a;
     ArrayList<SingleRow> a1;
@@ -38,13 +37,37 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
             "Send"
     };
 
-    CustomAdapterForPreviousList(Context c) {
+
+    public  static String queryType;
+
+    CustomAdapterForPreviousList(Context c,String typeOfSearch) {
         context = c;
         a = new ArrayList<SingleRow>();
         a1 = new ArrayList<SingleRow>();
         final SingleRow temp;
 
-        readAllLists();
+        if(typeOfSearch.equals("all"))
+        {
+            readAllLists();
+            queryType = "all";
+        }
+        else if(typeOfSearch.equals("favorites"))
+        {
+            readOnlyFavorites();
+            queryType = "favorite";
+        }
+        else if(typeOfSearch.equals("notes"))
+        {
+            readOnlyNotes(0);
+            queryType = "notes";
+        }
+        else if(typeOfSearch.equals("toDo"))
+        {
+            readOnlyNotes(1);
+            queryType = "toDo";
+        }
+
+
     }
 
     public void readAllLists() {
@@ -58,15 +81,15 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
             int isToDo = cursor.getInt(4);
 
             if (favorite == 1 && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.fav_icon,cursor.getInt(4)));
-                a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.fav_icon,cursor.getInt(4)));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.fav_icon,cursor.getInt(4)));
+                //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.fav_icon,cursor.getInt(4)));
             } else if (favorite == 0  && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_icon,cursor.getInt(4)));
-                a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_icon,cursor.getInt(4)));
-            }
-            if (isToDo == 0) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_note_icon,cursor.getInt(4)));
-                a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), spinnerOptions[cursor.getCount()], R.drawable.previous_list_note_icon,cursor.getInt(4)));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4)));
+                //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4)));
+           }
+            else if (isToDo == 0) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4)));
+                //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4)));
             }
 
 
@@ -74,8 +97,75 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
 
     }
 
+    public void readOnlyFavorites() {
 
-    public void deleteList(SingleRow s) {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+
+        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE","IS_TO_DO_LIST"}, "ARCHIVED = ? AND FAVORITE = ?", new String[]{"0","1"}, null, null, null);
+
+        while (cursor.moveToNext()) {
+
+            int favorite = cursor.getInt(3);
+            int isToDo = cursor.getInt(4);
+
+            if (favorite == 1 && isToDo ==1) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.fav_icon,cursor.getInt(4)));
+                //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.fav_icon,cursor.getInt(4)));
+            } else if (favorite == 0  && isToDo ==1) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon,cursor.getInt(4)));
+                //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4)));
+            }
+            else if (isToDo == 0) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_note_icon,cursor.getInt(4)));
+                //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4)));
+            }
+
+
+        }
+
+    }
+
+    public void readOnlyNotes(int isToDoNote) {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE","IS_TO_DO_LIST"}, "ARCHIVED = ? AND IS_TO_DO_LIST = ?", new String[]{"0", String.valueOf(isToDoNote)}, null, null, null);
+
+        while (cursor.moveToNext()) {
+
+            int favorite = cursor.getInt(3);
+            int isToDo = cursor.getInt(4);
+
+            if (favorite == 1 && isToDo ==1) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.fav_icon,cursor.getInt(4)));
+                //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.fav_icon,cursor.getInt(4)));
+            } else if (favorite == 0  && isToDo ==1) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4)));
+                //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4)));
+            }
+
+            else if (isToDo ==0) {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4)));
+                //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.note_icon,cursor.getInt(4)));
+            }
+
+
+        }
+
+    }
+
+    public void sendToTrash(SingleRow s)
+    {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("ARCHIVED", 1);
+        db.update("LISTS",cv, "_id=?", new String[] {String.valueOf(s.getId())});
+    }
+
+
+    public void deleteList(SingleRow s)
+    {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         db.delete("LISTS",
@@ -120,8 +210,8 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 if(temp.getIsToDoList() == 1) {
-                    Intent intent = new Intent(context, ItemSelectionListActivity.class);
-                    intent.putExtra(ItemSelectionListActivity.LIST_ID, temp.id);
+                    Intent intent = new Intent(context, ToDoViewerActivity.class);
+                    intent.putExtra(ToDoViewerActivity.LIST_ID, temp.id);
                     context.startActivity(intent);
                 }
                 else if (temp.getIsToDoList() == 0)
@@ -149,14 +239,14 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
                         if (position == 1) {
 
                             if(temp.getIsToDoList() == 1) {
-                                Intent intent = new Intent(context, EditListActivity.class);
-                                intent.putExtra(EditListActivity.LIST_ID, temp.getId());
+                                Intent intent = new Intent(context, EditToDoActivity.class);
+                                intent.putExtra(EditToDoActivity.LIST_ID, temp.getId());
                                 context.startActivity(intent);
                             }
 
                             else if (temp.getIsToDoList() == 0)
                             {
-                                Intent intent = new Intent(context, EditListActivity.class);
+                                Intent intent = new Intent(context, EditNotesActivity.class);
                                 intent.putExtra(EditNotesActivity.LIST_ID, temp.getId());
                                 context.startActivity(intent);
                             }
@@ -164,7 +254,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
                         if (position == 2) {
                             a.remove(temp);
                             CustomAdapterForPreviousList.this.notifyDataSetChanged();
-                            deleteList(temp);
+                            sendToTrash(temp);
                             Toast.makeText(context, "List Deleted", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -199,7 +289,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
                     if ((a.get(i).getTitle().toUpperCase())
                             .contains(constraint.toString().toUpperCase())) {
 
-                        SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getOptionMenu(), a.get(i).getImageResource(),a.get(i).getId());
+                        SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getImageResource(),a.get(i).getId());
                         //SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getOptionMenu(), a.get(i).getImageResource());
 
                         filterList.add(sr);
@@ -207,11 +297,37 @@ public class CustomAdapterForPreviousList extends BaseAdapter {
                 }
                 results.count = filterList.size();
                 results.values = filterList;
-            } else {
-                a.clear();
-                readAllLists();
-                results.count = a.size();
-                results.values = a;
+            }
+            else {
+
+                if(CustomAdapterForPreviousList.queryType.equals("all"))
+                {
+                    a.clear();
+                    readAllLists();
+                    results.count = a.size();
+                    results.values = a;
+                }
+                else if(CustomAdapterForPreviousList.queryType.equals("favorite"))
+                {
+                    a.clear();
+                    readOnlyFavorites();
+                    results.count = a.size();
+                    results.values = a;
+                }
+                else if(CustomAdapterForPreviousList.queryType.equals("notes"))
+                {
+                    a.clear();
+                    readOnlyNotes(0);
+                    results.count = a.size();
+                    results.values = a;
+                }
+                else if(CustomAdapterForPreviousList.queryType.equals("toDo"))
+                {
+                    a.clear();
+                    readOnlyNotes(1);
+                    results.count = a.size();
+                    results.values = a;
+                }
             }
             return results;
 

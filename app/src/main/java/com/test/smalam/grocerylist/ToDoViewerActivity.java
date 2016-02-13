@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemSelectionListActivity extends AppCompatActivity implements View.OnClickListener {
+public class ToDoViewerActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ArrayList<String> items = new ArrayList<String>();
     public static final String LIST_ID = "drinkNo";
@@ -50,9 +50,8 @@ public class ItemSelectionListActivity extends AppCompatActivity implements View
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        button = (Button) findViewById(R.id.finish_btn_activity);
+
         listView = (ListView) findViewById(R.id.list_activity);
-        button.setOnClickListener(this);
         listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
 
         fetchItemsOfAList();

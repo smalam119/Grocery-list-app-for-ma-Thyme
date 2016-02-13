@@ -44,7 +44,6 @@ public class NotesViewerActivity extends AppCompatActivity
         fetchItemsOfAList();
 
         note = (TextView) findViewById(R.id.note_body);
-        note.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
         note.setText(fetchedNoteText);
 
         title = (TextView) findViewById(R.id.title_note);

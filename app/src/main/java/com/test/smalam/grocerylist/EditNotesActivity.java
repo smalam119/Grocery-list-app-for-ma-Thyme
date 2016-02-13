@@ -54,14 +54,13 @@ public class EditNotesActivity extends AppCompatActivity
 
         fetchItemsOfAList();
 
-        note = (EditText) findViewById(R.id.note_body);
-        note.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
+        note = (EditText) findViewById(R.id.note_body_e);
         note.setText(fetchedNoteText);
 
-        title = (EditText) findViewById(R.id.title_note);
+        title = (EditText) findViewById(R.id.title_note_e);
         title.setText(fetchedTitle);
 
-        save = (Button) findViewById(R.id.save_note);
+        save = (Button) findViewById(R.id.save_note_e);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +68,17 @@ public class EditNotesActivity extends AppCompatActivity
                 noteText = note.getText().toString();
                 titleText = title.getText().toString();
 
-                updateList(db, currentDateTimeString, titleText, noteText);
+
+
+                if(titleText.isEmpty())
+                {
+                    Toast.makeText(getBaseContext(),"You must have give a title",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    updateList(db, currentDateTimeString, titleText, noteText);
+                    Toast.makeText(getBaseContext(),"Note added",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
