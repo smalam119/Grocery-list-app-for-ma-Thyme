@@ -29,14 +29,6 @@
             />
 
         <Button
-            android:id="@+id/save_e"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save_btn_text"
-            android:textColor="@color/colorPrimary"
-            />
-
-        <Button
             android:id="@+id/fav_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

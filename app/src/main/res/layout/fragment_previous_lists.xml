@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:iconifiedByDefault="false"
-        android:queryHint="Search...." />
+        android:queryHint="Search...."
+        android:focusable="false"/>
     <RadioGroup
         android:id="@+id/search_options"
         android:layout_width="wrap_content"

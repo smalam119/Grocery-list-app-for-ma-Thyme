@@ -61,7 +61,7 @@ public class EditNotesActivity extends AppCompatActivity
         title.setText(fetchedTitle);
 
         save = (Button) findViewById(R.id.save_note_e);
-        save.setOnClickListener(new View.OnClickListener() {
+        /*save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -80,7 +80,7 @@ public class EditNotesActivity extends AppCompatActivity
                     Toast.makeText(getBaseContext(),"Note added",Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
     }
 
     public void fetchItemsOfAList() {
@@ -110,7 +110,24 @@ public class EditNotesActivity extends AppCompatActivity
         db.update("LISTS",cv, "_id=?", new String[] {listId});
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
 
+        noteText = note.getText().toString();
+        titleText = title.getText().toString();
+
+        if(titleText.isEmpty())
+        {
+            Toast.makeText(getBaseContext(),"You must have give a title",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            updateList(db, currentDateTimeString, titleText, noteText);
+            Toast.makeText(getBaseContext(),"Note added",Toast.LENGTH_SHORT).show();
+        }
     }
+}
 
 

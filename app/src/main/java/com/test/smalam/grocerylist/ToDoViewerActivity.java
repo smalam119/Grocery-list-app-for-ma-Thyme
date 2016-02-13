@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ToDoViewerActivity extends AppCompatActivity implements View.OnClickListener {
+public class ToDoViewerActivity extends AppCompatActivity  {
 
     private ArrayList<String> items = new ArrayList<String>();
     public static final String LIST_ID = "drinkNo";
@@ -100,7 +100,7 @@ public class ToDoViewerActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-    @Override
+    /*@Override
     public void onClick(View v)
     {
         for (int i = 0; i < listOfItems.size(); i++)
@@ -114,5 +114,20 @@ public class ToDoViewerActivity extends AppCompatActivity implements View.OnClic
         db.update("LISTS", cv, "_id=?", new String[]{listId});
 
 
+    }*/
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        for (int i = 0; i < listOfItems.size(); i++)
+        {
+            isSelectedList.add(listView.isItemChecked(i));
+        }
+
+
+        ContentValues cv = new ContentValues();
+        cv.put("CHECK_LIST_STATUS", isSelectedList.toString());
+        db.update("LISTS", cv, "_id=?", new String[]{listId});
     }
 }

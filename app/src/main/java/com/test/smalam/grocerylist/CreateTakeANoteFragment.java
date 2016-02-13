@@ -54,7 +54,7 @@ public class CreateTakeANoteFragment extends Fragment
         View v = getView();
 
         note = (EditText) v.findViewById(R.id.note_body);
-        note.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
+        //note.setBackgroundResource(R.drawable.apptheme_textfield_disabled_holo_light);
 
         title = (EditText) v.findViewById(R.id.title_note);
 
@@ -92,4 +92,5 @@ public class CreateTakeANoteFragment extends Fragment
         cv.put("FAVORITE", 0);
         db.insert("LISTS", null, cv);
     }
+
 }

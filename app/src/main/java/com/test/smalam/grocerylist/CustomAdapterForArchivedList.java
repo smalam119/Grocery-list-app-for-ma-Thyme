@@ -69,7 +69,7 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         db.delete("LISTS",
-                "NAME=?",
+                "_id=?",
                 new String[] {String.valueOf(s.getId())});
     }
 

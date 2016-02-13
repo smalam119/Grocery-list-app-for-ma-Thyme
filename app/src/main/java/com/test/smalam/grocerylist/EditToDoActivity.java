@@ -35,7 +35,7 @@ public class EditToDoActivity extends AppCompatActivity {
     private boolean favButtonState;
     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     List<EditText> allEds = new ArrayList<EditText>();
-    Button btn, save,fav,iv;
+    Button btn,fav,iv;
     EditText ed,titleEd;
 
     @Override
@@ -104,8 +104,8 @@ public class EditToDoActivity extends AppCompatActivity {
             }
         });
 
-        save = (Button) findViewById(R.id.save_e);
-        save.setOnClickListener(new View.OnClickListener() {
+        //save = (Button) findViewById(R.id.save_e);
+        /*save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemData.clear();
@@ -127,7 +127,30 @@ public class EditToDoActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        itemData.clear();
+
+        for (int i = 0; i < allEds.size(); i++) {
+            String s = allEds.get(i).getText().toString();
+            if (!s.equals("")) {
+                itemData.add(s);
+            }
+
+            title = titleEd.getText().toString();
+        }
+
+        if (title.isEmpty()) {
+            Toast.makeText(getBaseContext(), "Your list must have a title", Toast.LENGTH_LONG).show();
+        } else {
+            updateList(db, currentDateTimeString, title, itemData.toString());
+            Toast.makeText(getBaseContext(), "List Saved", Toast.LENGTH_LONG).show();
+        }
 
     }
 

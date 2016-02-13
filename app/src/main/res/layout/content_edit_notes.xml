@@ -33,9 +33,12 @@
 
     <EditText
         android:id="@+id/note_body_e"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
         android:hint="@string/note_body_hint"
-        android:gravity="top|left"/>
+        android:gravity="top|left"
+        android:background="#ffffff"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"/>
 
 </LinearLayout>
