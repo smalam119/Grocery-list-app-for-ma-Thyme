@@ -19,11 +19,6 @@ public class ArchivedListFragment extends Fragment {
     ViewGroup parent;
 
 
-
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

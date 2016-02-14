@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class ToDoViewerActivity extends AppCompatActivity  {
 
     private ArrayList<String> items = new ArrayList<String>();
     public static final String LIST_ID = "drinkNo";
-    private String listId, itemsConcatenated, checkStatusConcatenated;
+    private String listId, itemsConcatenated, checkStatusConcatenated, title;
     private List<String> listOfItems;
     private List<String> listOfChecks;
     private SQLiteDatabase db;
@@ -30,11 +30,12 @@ public class ToDoViewerActivity extends AppCompatActivity  {
     Button button;
     ListView listView;
     ArrayAdapter<String> adapter;
+    TextView titleTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_selection_list);
+        setContentView(R.layout.activity_to_do_viwer);
 
         try
         {
@@ -50,15 +51,18 @@ public class ToDoViewerActivity extends AppCompatActivity  {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        titleTv = (TextView) findViewById(R.id.title_to_do);
 
         listView = (ListView) findViewById(R.id.list_activity);
         listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
 
         fetchItemsOfAList();
 
+        titleTv.setText(title);
+
         for(int i = 0; i < listOfItems.size(); i++)
         {
-            items.add(listOfItems.get(i));
+            items.add(listOfItems.get(i).trim());
         }
 
         adapter = new ArrayAdapter<String>(this,
@@ -96,6 +100,7 @@ public class ToDoViewerActivity extends AppCompatActivity  {
             checkStatusConcatenated = cursor.getString(3).replaceAll("\\[", "").replaceAll("\\]", "");
             listOfItems = Arrays.asList(itemsConcatenated.split(","));
             listOfChecks = Arrays.asList(checkStatusConcatenated.split(","));
+            title = cursor.getString(1);
         }
     }
 

@@ -11,8 +11,7 @@
         <item
             android:id="@+id/take_a_note"
             android:icon="@drawable/note_icon"
-            android:title="Take A Note"
-            android:checked="true"/>
+            android:title="Take A Note"/>
         <item
             android:id="@+id/previous_list"
             android:icon="@drawable/archive_icon"

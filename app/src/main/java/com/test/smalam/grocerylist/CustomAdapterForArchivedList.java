@@ -7,12 +7,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +35,8 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
             "Delete",
             "Restore",
     };
+
+
 
     CustomAdapterForArchivedList(Context c) {
         context = c;
@@ -70,7 +75,7 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         db.delete("LISTS",
                 "_id=?",
-                new String[] {String.valueOf(s.getId())});
+                new String[]{String.valueOf(s.getId())});
     }
 
     public void sendToPreviousList(SingleRow s)
@@ -79,7 +84,7 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("ARCHIVED", 0);
-        db.update("LISTS",cv, "_id=?", new String[] {String.valueOf(s.getId())});
+        db.update("LISTS", cv, "_id=?", new String[]{String.valueOf(s.getId())});
     }
 
     @Override
@@ -104,27 +109,25 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
 
-        final View rowView = inflater.inflate(R.layout.single_row, parent ,false);
+        final View rowView = inflater.inflate(R.layout.single_row, parent, false);
 
         TextView tvTitle = (TextView) rowView.findViewById(R.id.textView_title_single_row);
         TextView  tvDate = (TextView) rowView.findViewById(R.id.textView_date);
         ImageView iv = (ImageView) rowView.findViewById(R.id.imageView1);
+        ImageView s = (ImageView) rowView.findViewById(R.id.option_menu_spinner);
         final SingleRow temp = a.get(position);
+        s.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenu(v,temp);
+            }
+        });
 
         tvTitle.setText(temp.title);
         tvDate.setText(temp.date);
         iv.setImageResource(temp.imageResource);
-        rowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent(context,ToDoViewerActivity.class);
-                intent.putExtra(ToDoViewerActivity.LIST_ID, temp.id);
-                context.startActivity(intent);
-            }
-        });
 
-        final Spinner spnr = (Spinner) rowView.findViewById(R.id.option_menu_spinner);
+        /*final Spinner spnr = (Spinner) rowView.findViewById(R.id.option_menu_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 context, android.R.layout.simple_spinner_item, spinnerOptions);
         spnr.setAdapter(adapter);
@@ -161,9 +164,42 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
                     }
 
                 }
-        );
+        );*/
 
         return rowView;
     }
+
+    public void showMenu(View v, final SingleRow t) {
+        PopupMenu popup = new PopupMenu(context, v);
+
+        // This activity implements OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId())
+                {
+                    case R.id.delete_a:
+                        a.remove(t);
+                        CustomAdapterForArchivedList.this.notifyDataSetChanged();
+                        deleteList(t);
+                        Toast.makeText(context, "List Deleted", Toast.LENGTH_LONG).show();
+                        return true;
+
+                    case R.id.restore_a:
+                        a.remove(t);
+                        CustomAdapterForArchivedList.this.notifyDataSetChanged();
+                        sendToPreviousList(t);
+                        Toast.makeText(context, "Restored", Toast.LENGTH_LONG).show();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+        popup.inflate(R.menu.archived_list_option_menu);
+        popup.show();
+    }
+
 
 }

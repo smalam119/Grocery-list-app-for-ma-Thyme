@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:menuCategory="alternative">
+        <item
+            android:id="@+id/edit"
+            android:icon="@drawable/create_icon"
+            android:title="Edit"/>
+
+        <item
+            android:id="@+id/delete"
+            android:icon="@drawable/note_icon"
+            android:title="Delete"/>
+        <item
+            android:id="@+id/Send"
+            android:icon="@drawable/archive_icon"
+            android:title="Send" />
+
+    </group>
+
+
+
+</menu>

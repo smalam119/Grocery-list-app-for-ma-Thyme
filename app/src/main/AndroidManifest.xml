@@ -33,7 +33,7 @@
         <activity
             android:name=".NotesViewerActivity"
             android:label="@string/title_activity_notes_viewer"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

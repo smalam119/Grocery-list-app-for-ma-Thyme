@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -201,6 +203,14 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         ImageView iv = (ImageView) rowView.findViewById(R.id.imageView1);
         final SingleRow temp = a.get(position);
 
+        ImageView s = (ImageView) rowView.findViewById(R.id.option_menu_spinner);
+        s.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenu(v,temp);
+            }
+        });
+
         tvTitle.setText(temp.title);
         tvDate.setText(temp.date);
         iv.setImageResource(temp.imageResource);
@@ -223,7 +233,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             }
         });
 
-        final Spinner spnr = (Spinner) rowView.findViewById(R.id.option_menu_spinner);
+        /*final Spinner spnr = (Spinner) rowView.findViewById(R.id.option_menu_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 context, android.R.layout.simple_spinner_item, spinnerOptions);
         spnr.setAdapter(adapter);
@@ -266,9 +276,48 @@ public class CustomAdapterForPreviousList extends BaseAdapter
                     }
 
                 }
-        );
+        );*/
 
         return rowView;
+    }
+
+    public void showMenu(View v, final SingleRow t) {
+        PopupMenu popup = new PopupMenu(context, v);
+
+        // This activity implements OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.edit:
+                        if(t.getIsToDoList() == 1) {
+                            Intent intent = new Intent(context, EditToDoActivity.class);
+                            intent.putExtra(EditToDoActivity.LIST_ID, t.getId());
+                            context.startActivity(intent);
+                        }
+
+                        else if (t.getIsToDoList() == 0)
+                        {
+                            Intent intent = new Intent(context, EditNotesActivity.class);
+                            intent.putExtra(EditNotesActivity.LIST_ID, t.getId());
+                            context.startActivity(intent);
+                        }
+                        return true;
+
+                    case R.id.delete:
+                        a.remove(t);
+                        CustomAdapterForPreviousList.this.notifyDataSetChanged();
+                        sendToTrash(t);
+                        Toast.makeText(context, "List Deleted", Toast.LENGTH_LONG).show();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+        popup.inflate(R.menu.previous_lists_option_menu);
+        popup.show();
     }
 
     public Filter getFilter() {
@@ -336,7 +385,8 @@ public class CustomAdapterForPreviousList extends BaseAdapter
 
         @Override
         protected void publishResults(CharSequence constraint,
-                                      FilterResults results) {
+                                      FilterResults results)
+        {
             a = (ArrayList<SingleRow>) results.values;
             notifyDataSetChanged();
         }
