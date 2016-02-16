@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
@@ -23,7 +24,7 @@ public class CreateTakeANoteFragment extends Fragment
 {
     private SQLiteDatabase db;
     EditText note,title;
-    Button save;
+    ImageButton save;
     String noteText,titleText;
     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
@@ -56,9 +57,9 @@ public class CreateTakeANoteFragment extends Fragment
         note = (EditText) v.findViewById(R.id.note_body);
         //note.setBackgroundResource(R.drawable.apptheme_textfield_disabled_holo_light);
 
-        title = (EditText) v.findViewById(R.id.title_note);
+        title = (EditText) v.findViewById(R.id.title);
 
-        save = (Button) v.findViewById(R.id.save_note);
+        save = (ImageButton) v.findViewById(R.id.save_note);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

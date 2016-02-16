@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
@@ -27,7 +28,7 @@ public class EditNotesActivity extends AppCompatActivity
     public static final String LIST_ID = "listID";
     private SQLiteDatabase db;
     EditText note,title;
-    Button save;
+    ImageButton save;
     String noteText,titleText;
     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     public String listId,fetchedNoteText,fetchedTitle;
@@ -60,7 +61,7 @@ public class EditNotesActivity extends AppCompatActivity
         title = (EditText) findViewById(R.id.title_note_e);
         title.setText(fetchedTitle);
 
-        save = (Button) findViewById(R.id.save_note_e);
+        //save = (ImageButton) findViewById(R.id.save_note_e);
         /*save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class EditToDoActivity extends AppCompatActivity {
     private boolean favButtonState;
     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     List<EditText> allEds = new ArrayList<EditText>();
-    Button btn,fav,iv;
+    ImageButton btn,fav,iv;
     EditText ed,titleEd;
 
     @Override
@@ -58,7 +59,7 @@ public class EditToDoActivity extends AppCompatActivity {
         }
 
         listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
-        iv = (Button) findViewById(R.id.fav_button);
+        iv = (ImageButton) findViewById(R.id.fav_button_e);
 
         fetchItemsOfAList(listOfItems);
 
@@ -78,7 +79,7 @@ public class EditToDoActivity extends AppCompatActivity {
         titleEd = (EditText) findViewById(R.id.title_e);
         titleEd.setText(title);
 
-        btn = (Button) findViewById(R.id.add_row_e);
+        btn = (ImageButton) findViewById(R.id.add_row_e);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +87,7 @@ public class EditToDoActivity extends AppCompatActivity {
             }
         });
 
-        fav = (Button) findViewById(R.id.fav_button);
+        fav = (ImageButton) findViewById(R.id.fav_button_e);
         fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

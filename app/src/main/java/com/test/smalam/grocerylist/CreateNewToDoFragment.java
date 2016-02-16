@@ -8,10 +8,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -33,7 +36,7 @@ public class CreateNewToDoFragment extends Fragment {
     private boolean favButtonState;
     List<EditText> allEds = new ArrayList<EditText>();
     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-    Button btn,save,fav;
+    ImageButton save,btn,fav;
     EditText ed,titleEd,firstEd;
 
 
@@ -46,16 +49,19 @@ public class CreateNewToDoFragment extends Fragment {
         return rootView;
     }
 
+
+
+
     public void createEditText()
     {
         View view = getView();
         childLayout = (LinearLayout)view.findViewById(R.id.child_lay);
         ed = new EditText(getContext());
+        ed.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
         allEds.add(ed);
         ed.setId(id);
         //ed.setHint(R.string.hint);
-        //ed.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
-        ed.setBackgroundColor(Color.parseColor("white"));
+        ed.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
         childLayout.addView(ed);
         ed.requestFocus();
         id++;
@@ -103,13 +109,14 @@ public class CreateNewToDoFragment extends Fragment {
 
         firstEd = (EditText) view.findViewById(R.id.first_ed);
         firstEd.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
+        allEds.add(firstEd);
 
                 favButtonState = false;
-        fav = (Button) view.findViewById(R.id.fav_button);
+        fav = (ImageButton) view.findViewById(R.id.fav_button);
         fav.setBackgroundResource(R.drawable.unselected_fav_icon);
 
-        titleEd = (EditText) view.findViewById(R.id.title);
-        btn = (Button) view.findViewById(R.id.add_row);
+        titleEd = (EditText) view.findViewById(R.id.title_note);
+        btn = (ImageButton) view.findViewById(R.id.add_row);
 
         fav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,16 +138,16 @@ public class CreateNewToDoFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                allEds.add(firstEd);
                 createEditText();
             }
         });
 
-        save = (Button) view.findViewById(R.id.save);
+        save = (ImageButton) view.findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemData.clear();
+
 
                 for (int i = 0; i < allEds.size(); i++) {
                     String s = allEds.get(i).getText().toString();

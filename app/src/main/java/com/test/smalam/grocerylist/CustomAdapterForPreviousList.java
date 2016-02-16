@@ -162,7 +162,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("ARCHIVED", 1);
-        db.update("LISTS",cv, "_id=?", new String[] {String.valueOf(s.getId())});
+        db.update("LISTS", cv, "_id=?", new String[]{String.valueOf(s.getId())});
     }
 
 
@@ -207,7 +207,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMenu(v,temp);
+                showMenu(v, temp);
             }
         });
 
@@ -215,17 +215,22 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         tvDate.setText(temp.date);
         iv.setImageResource(temp.imageResource);
 
+        rowView.setOnLongClickListener(new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            showMenu(v,temp);
+            return true;
+            }
+        });
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if(temp.getIsToDoList() == 1) {
+                if (temp.getIsToDoList() == 1) {
                     Intent intent = new Intent(context, ToDoViewerActivity.class);
                     intent.putExtra(ToDoViewerActivity.LIST_ID, temp.id);
                     context.startActivity(intent);
-                }
-                else if (temp.getIsToDoList() == 0)
-                {
+                } else if (temp.getIsToDoList() == 0) {
                     Intent intent = new Intent(context, NotesViewerActivity.class);
                     intent.putExtra(NotesViewerActivity.LIST_ID, temp.getId());
                     context.startActivity(intent);
@@ -326,6 +331,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         }
         return valueFilter;
     }
+
 
     private class ValueFilter extends Filter {
         @Override

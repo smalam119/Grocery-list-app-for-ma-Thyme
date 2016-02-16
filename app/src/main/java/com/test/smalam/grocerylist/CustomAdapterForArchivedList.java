@@ -127,6 +127,15 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         tvDate.setText(temp.date);
         iv.setImageResource(temp.imageResource);
 
+        rowView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showMenu(v, temp);
+                return true;
+            }
+        });
+
+
         /*final Spinner spnr = (Spinner) rowView.findViewById(R.id.option_menu_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 context, android.R.layout.simple_spinner_item, spinnerOptions);

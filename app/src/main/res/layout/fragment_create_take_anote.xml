@@ -1,34 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".CreateNewToDoFragment"
-    android:id="@+id/parent_lay"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/title_note"
-            android:layout_width="280dp"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorPrimary"
-            android:textSize="30sp"
-            android:hint="@string/title_hint"/>
-
-        <Button
-            android:id="@+id/save_note"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:text="@string/save_note" />
-
-
-    </LinearLayout>
+    android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/note_body"
@@ -37,7 +10,50 @@
         android:hint="@string/note_body_hint"
         android:gravity="top|left"
         android:background="#ffffff"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:layout_marginTop="20dp"/>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#f2efef">
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:hint="@string/title_hint"
+            android:layout_marginRight="150dp"
+            android:background="#f2efef"/>
+
+        <ImageButton
+            android:id="@+id/save_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/save"
+            android:layout_marginRight="10dp"
+            />
+
+        <ImageButton
+            android:id="@+id/fav_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/add"
+            android:layout_marginRight="10dp"
+            />
+
+    </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
