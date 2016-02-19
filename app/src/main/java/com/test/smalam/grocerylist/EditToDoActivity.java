@@ -1,6 +1,7 @@
 package com.test.smalam.grocerylist;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -58,7 +59,7 @@ public class EditToDoActivity extends AppCompatActivity {
             toast.show();
         }
 
-        listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
+        listId = String.valueOf(getIntent().getExtras().get(LIST_ID));
         iv = (ImageButton) findViewById(R.id.fav_button_e);
 
         fetchItemsOfAList(listOfItems);
@@ -153,6 +154,10 @@ public class EditToDoActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "List Saved", Toast.LENGTH_LONG).show();
         }
 
+        Intent i = new Intent(this,ToDoViewerActivity.class);
+        i.putExtra(ToDoViewerActivity.LIST_ID,listId);
+        startActivity(i);
+
     }
 
     public void fetchItemsOfAList(List<String> list) {
@@ -198,6 +203,7 @@ public class EditToDoActivity extends AppCompatActivity {
         ed.setText(content);
         ed.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
         childLayout.addView(ed);
+        ed.requestFocus();
         id++;
     }
 

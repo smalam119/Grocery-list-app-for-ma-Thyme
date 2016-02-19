@@ -1,6 +1,7 @@
 package com.test.smalam.grocerylist;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -40,7 +41,7 @@ public class EditNotesActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
+        listId = String.valueOf(getIntent().getExtras().get(LIST_ID));
 
         try
         {
@@ -128,6 +129,10 @@ public class EditNotesActivity extends AppCompatActivity
             updateList(db, currentDateTimeString, titleText, noteText);
             Toast.makeText(getBaseContext(),"Note added",Toast.LENGTH_SHORT).show();
         }
+
+        Intent i = new Intent(this,NotesViewerActivity.class);
+        i.putExtra(NotesViewerActivity.LIST_ID,listId);
+        startActivity(i);
     }
 }
 

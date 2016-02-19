@@ -1,5 +1,7 @@
 package com.test.smalam.grocerylist;
 
+import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -8,7 +10,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,7 +35,7 @@ public class NotesViewerActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
+        listId = String.valueOf(getIntent().getExtras().get(LIST_ID));
 
         try
         {
@@ -70,6 +74,40 @@ public class NotesViewerActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.notes_viewer_menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                Intent i = new Intent(this,EditNotesActivity.class);
+                i.putExtra(EditNotesActivity.LIST_ID,listId);
+                startActivity(i);
+                finish();
+                return true;
+
+            case R.id.action_delete:
+                sendToTrash(listId);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void sendToTrash(String s)
+    {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(this);
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("ARCHIVED", 1);
+        db.update("LISTS", cv, "_id=?", new String[]{s});
+    }
 
 }

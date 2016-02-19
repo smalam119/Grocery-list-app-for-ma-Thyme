@@ -74,7 +74,7 @@ public class ToDoViewerActivity extends AppCompatActivity  {
         });
 
         listView = (ListView) findViewById(R.id.list_activity);
-        listId = String.valueOf((int)getIntent().getExtras().get(LIST_ID));
+        listId = String.valueOf(getIntent().getExtras().get(LIST_ID));
 
         fetchItemsOfAList();
 
@@ -105,6 +105,7 @@ public class ToDoViewerActivity extends AppCompatActivity  {
 
 
     }
+
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
@@ -162,6 +163,44 @@ public class ToDoViewerActivity extends AppCompatActivity  {
         }
     }
 
+    public void sendToTrash(String s)
+    {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(this);
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("ARCHIVED", 1);
+        db.update("LISTS", cv, "_id=?", new String[]{s});
+    }
+
+    public void favUpdate(String s)
+    {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(this);
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+
+        int fav = 0;
+
+        Cursor cursor = db.query("LISTS",
+                new String[]{"_id", "FAVORITE"},
+                "_id=?",
+                new String[]{listId},
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            fav = cursor.getInt(1);
+        }
+
+        ContentValues cv = new ContentValues();
+        if(fav == 0)
+        {
+            cv.put("FAVORITE", 1);
+        }
+        else if(fav == 1)
+        {
+            cv.put("FAVORITE", 0);
+        }
+        db.update("LISTS",cv, "_id=?", new String[] {s});
+    }
+
 
     /*@Override
     public void onClick(View v)
@@ -197,7 +236,7 @@ public class ToDoViewerActivity extends AppCompatActivity  {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.new_menu, menu);
+        inflater.inflate(R.menu.to_do_viewer_menu, menu);
         return true;
     }
 
@@ -206,12 +245,19 @@ public class ToDoViewerActivity extends AppCompatActivity  {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_favorite:
-                Toast.makeText(getBaseContext(),"Fuck you syd",Toast.LENGTH_SHORT).show();
+                favUpdate(listId);
                 return true;
+
             case R.id.action_edit:
                 Intent i = new Intent(this,EditToDoActivity.class);
-
+                i.putExtra(EditToDoActivity.LIST_ID,listId);
                 startActivity(i);
+                finish();
+                return true;
+
+            case R.id.action_delete:
+                sendToTrash(listId);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
