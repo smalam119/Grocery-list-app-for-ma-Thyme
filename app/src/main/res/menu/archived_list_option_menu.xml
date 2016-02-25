@@ -8,6 +8,10 @@
             android:icon="@drawable/note_icon"
             android:title="Delete"/>
         <item
+            android:id="@+id/delete_all"
+            android:icon="@drawable/note_icon"
+            android:title="Delete All"/>
+        <item
             android:id="@+id/restore_a"
             android:icon="@drawable/archive_icon"
             android:title="Restore" />

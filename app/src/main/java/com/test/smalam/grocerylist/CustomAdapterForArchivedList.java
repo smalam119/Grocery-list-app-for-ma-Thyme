@@ -78,6 +78,15 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
                 new String[]{String.valueOf(s.getId())});
     }
 
+    public void deleteAll()
+    {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+        db.delete("LISTS",
+                "ARCHIVED=?",
+                new String[]{"1"});
+    }
+
     public void sendToPreviousList(SingleRow s)
     {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
@@ -119,7 +128,7 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         isFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMenu(v,temp);
+                showMenu(v, temp);
             }
         });
 
@@ -135,53 +144,12 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
             }
         });
 
-
-        /*final Spinner spnr = (Spinner) rowView.findViewById(R.id.option_menu_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                context, android.R.layout.simple_spinner_item, spinnerOptions);
-        spnr.setAdapter(adapter);
-        spnr.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                               int arg2, long arg3) {
-
-                        int position = spnr.getSelectedItemPosition();
-                        // TODO Auto-generated method stub
-                        if (position == 1)
-                        {
-                            a.remove(temp);
-                            CustomAdapterForArchivedList.this.notifyDataSetChanged();
-                            deleteList(temp);
-                            Toast.makeText(context, "List Deleted", Toast.LENGTH_LONG).show();
-                        }
-
-                        if(position == 2)
-                        {
-                            a.remove(temp);
-                            CustomAdapterForArchivedList.this.notifyDataSetChanged();
-                            sendToPreviousList(temp);
-                            Toast.makeText(context, "Restored", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> arg0) {
-                        // TODO Auto-generated method stub
-
-                    }
-
-                }
-        );*/
-
         return rowView;
     }
 
     public void showMenu(View v, final SingleRow t) {
         PopupMenu popup = new PopupMenu(context, v);
 
-        // This activity implements OnMenuItemClickListener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -191,6 +159,13 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
                         a.remove(t);
                         CustomAdapterForArchivedList.this.notifyDataSetChanged();
                         deleteList(t);
+                        Toast.makeText(context, "List Deleted", Toast.LENGTH_LONG).show();
+                        return true;
+
+                    case R.id.delete_all:
+                        a.clear();
+                        CustomAdapterForArchivedList.this.notifyDataSetChanged();
+                        deleteAll();
                         Toast.makeText(context, "List Deleted", Toast.LENGTH_LONG).show();
                         return true;
 

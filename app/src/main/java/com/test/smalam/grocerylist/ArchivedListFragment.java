@@ -35,7 +35,6 @@ public class ArchivedListFragment extends Fragment {
         super.onStart();
         View view = getView();
         if (view != null) {
-            TextView title = (TextView) view.findViewById(R.id.textView_title_previous_list);
             listView = (ListView) view.findViewById(R.id.listView);
             listView.setAdapter(new CustomAdapterForArchivedList(getContext()));
         }

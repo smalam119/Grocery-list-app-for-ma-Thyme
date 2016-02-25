@@ -1,6 +1,7 @@
 package com.test.smalam.grocerylist;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -9,15 +10,12 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
 import java.text.DateFormat;
@@ -58,11 +56,10 @@ public class CreateNewToDoFragment extends Fragment {
         View view = getView();
         childLayout = (LinearLayout)view.findViewById(R.id.child_lay);
         ed = new EditText(getContext());
-        ed.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+        ed.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         allEds.add(ed);
-        //ed.setId(id);
         ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        ed.setHint(""+id+".");
+        ed.setHint("" + id + ".");
         //ed.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
         childLayout.addView(ed);
         ed.requestFocus();
@@ -112,7 +109,6 @@ public class CreateNewToDoFragment extends Fragment {
         firstEd = (EditText) view.findViewById(R.id.first_ed);
         firstEd.setHint("1.");
         firstEd.requestFocus();
-        //firstEd.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
         allEds.add(firstEd);
 
                 favButtonState = false;
@@ -143,6 +139,11 @@ public class CreateNewToDoFragment extends Fragment {
             public void onClick(View v)
             {
                 createEditText();
+                if(id == 6)
+                {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
             }
         });
 
@@ -165,7 +166,7 @@ public class CreateNewToDoFragment extends Fragment {
 
                 }
 
-                if (title.isEmpty() && firstEdValue.isEmpty()) {
+                if (title.isEmpty() || firstEdValue.isEmpty()) {
                     Toast.makeText(getContext(), "Your list must have a title and at least an item", Toast.LENGTH_LONG).show();
                 } else {
                     insertList(db, currentDateTimeString, title, itemData.toString());

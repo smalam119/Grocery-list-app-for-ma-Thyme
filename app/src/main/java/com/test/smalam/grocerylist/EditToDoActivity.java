@@ -1,23 +1,24 @@
 package com.test.smalam.grocerylist;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
-
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +31,6 @@ public class EditToDoActivity extends AppCompatActivity {
     private String listId, concatenated;
     private List<String> listOfItems;
     private LinearLayout childLayout;
-    private int id=0;
     private String title;
     private ArrayList<String> itemData = new ArrayList<String>();
     private SQLiteDatabase db;
@@ -39,6 +39,7 @@ public class EditToDoActivity extends AppCompatActivity {
     List<EditText> allEds = new ArrayList<EditText>();
     ImageButton btn,fav,iv;
     EditText ed,titleEd;
+    private int id = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -85,6 +86,8 @@ public class EditToDoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createEditText();
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
 
@@ -105,31 +108,6 @@ public class EditToDoActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //save = (Button) findViewById(R.id.save_e);
-        /*save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemData.clear();
-
-                for (int i = 0; i < allEds.size(); i++) {
-                    String s = allEds.get(i).getText().toString();
-                    if (!s.equals("")) {
-                        itemData.add(s);
-                    }
-
-                    title = titleEd.getText().toString();
-                }
-
-                if (title.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "Your list must have a title", Toast.LENGTH_LONG).show();
-                } else {
-                    updateList(db, currentDateTimeString, title, itemData.toString());
-                    Toast.makeText(getBaseContext(), "List Saved", Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });*/
 
     }
 
@@ -188,8 +166,8 @@ public class EditToDoActivity extends AppCompatActivity {
         for(int i =0; i < list.size(); i++ )
         {
             createEditText(list.get(i).trim());
+            id++;
         }
-
 
     }
 
@@ -198,13 +176,13 @@ public class EditToDoActivity extends AppCompatActivity {
 
         childLayout = (LinearLayout) findViewById(R.id.child_lay_e);
         ed = new EditText(this);
+        ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         allEds.add(ed);
-        ed.setId(id);
+        //ed.setId(id);
         ed.setText(content);
-        ed.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
         childLayout.addView(ed);
         ed.requestFocus();
-        id++;
+        //id++;
     }
 
     public void createEditText()
@@ -212,9 +190,9 @@ public class EditToDoActivity extends AppCompatActivity {
 
         childLayout = (LinearLayout) findViewById(R.id.child_lay_e);
         ed = new EditText(this);
+        ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         allEds.add(ed);
-        ed.setId(id);
-        ed.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
+        ed.setHint(""+id+".");
         childLayout.addView(ed);
         id++;
     }

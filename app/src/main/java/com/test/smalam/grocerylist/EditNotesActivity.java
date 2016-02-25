@@ -7,22 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
-
 import java.text.DateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 public class EditNotesActivity extends AppCompatActivity
 {
@@ -61,28 +53,6 @@ public class EditNotesActivity extends AppCompatActivity
 
         title = (EditText) findViewById(R.id.title_note_e);
         title.setText(fetchedTitle);
-
-        //save = (ImageButton) findViewById(R.id.save_note_e);
-        /*save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                noteText = note.getText().toString();
-                titleText = title.getText().toString();
-
-
-
-                if(titleText.isEmpty())
-                {
-                    Toast.makeText(getBaseContext(),"You must have give a title",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    updateList(db, currentDateTimeString, titleText, noteText);
-                    Toast.makeText(getBaseContext(),"Note added",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
     }
 
     public void fetchItemsOfAList() {
@@ -122,7 +92,7 @@ public class EditNotesActivity extends AppCompatActivity
 
         if(titleText.isEmpty())
         {
-            Toast.makeText(getBaseContext(),"You must have give a title",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(),"You must give a title",Toast.LENGTH_SHORT).show();
         }
         else
         {

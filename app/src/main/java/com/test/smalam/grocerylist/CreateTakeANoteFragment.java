@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -32,7 +31,6 @@ public class CreateTakeANoteFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_take_anote, container, false);
     }
 
@@ -55,7 +53,6 @@ public class CreateTakeANoteFragment extends Fragment
         View v = getView();
 
         note = (EditText) v.findViewById(R.id.note_body);
-        //note.setBackgroundResource(R.drawable.apptheme_textfield_disabled_holo_light);
 
         title = (EditText) v.findViewById(R.id.title);
 
@@ -70,7 +67,7 @@ public class CreateTakeANoteFragment extends Fragment
 
                 if(titleText.isEmpty())
                 {
-                    Toast.makeText(getContext(),"You must have give a title",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"You must give a title",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {

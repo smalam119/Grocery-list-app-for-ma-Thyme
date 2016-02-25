@@ -59,20 +59,6 @@ public class ToDoViewerActivity extends AppCompatActivity  {
         setSupportActionBar(toolbar);
 
         titleTv = (TextView) findViewById(R.id.title_to_do);
-        titleTv.setOnLongClickListener(new View.OnLongClickListener() {
-            // Called when the user long-clicks on someView
-            public boolean onLongClick(View view) {
-                if (mActionMode != null) {
-                    return false;
-                }
-
-                // Start the CAB using the ActionMode.Callback defined above
-                mActionMode = ToDoViewerActivity.this.startActionMode(mActionModeCallback);
-                view.setSelected(true);
-                return true;
-            }
-        });
-
         listView = (ListView) findViewById(R.id.list_activity);
         listId = String.valueOf(getIntent().getExtras().get(LIST_ID));
 
@@ -202,21 +188,6 @@ public class ToDoViewerActivity extends AppCompatActivity  {
     }
 
 
-    /*@Override
-    public void onClick(View v)
-    {
-        for (int i = 0; i < listOfItems.size(); i++)
-        {
-            isSelectedList.add(listView.isItemChecked(i));
-        }
-
-
-        ContentValues cv = new ContentValues();
-        cv.put("CHECK_LIST_STATUS", isSelectedList.toString());
-        db.update("LISTS", cv, "_id=?", new String[]{listId});
-
-
-    }*/
 
     @Override
     public void onBackPressed() {

@@ -57,16 +57,9 @@
             android:id="@+id/child_lay_e"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/first_ed_e"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:hint="To Do..."
-                android:background="#ffffff"
-                android:textSize="18dp"
-                />
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp">
 
 
         </LinearLayout>
