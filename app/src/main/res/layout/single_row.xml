@@ -34,13 +34,13 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#000000" />
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/option_menu_spinner"
+    <ImageView
+        android:id="@+id/is_fav"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        style="@style/spinner_style"/>
+        android:layout_centerInParent="true"
+        />
 
 
 </RelativeLayout>

@@ -83,14 +83,14 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             int isToDo = cursor.getInt(4);
 
             if (favorite == 1 && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.fav_icon,cursor.getInt(4)));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4),R.drawable.fav_icon));
                 //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.fav_icon,cursor.getInt(4)));
             } else if (favorite == 0  && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4)));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4),R.color.colorAccent));
                 //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4)));
            }
             else if (isToDo == 0) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4)));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4),R.color.colorAccent));
                 //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4)));
             }
 
@@ -112,14 +112,14 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             int isToDo = cursor.getInt(4);
 
             if (favorite == 1 && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.fav_icon,cursor.getInt(4)));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon,cursor.getInt(4),R.drawable.fav_icon));
                 //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.fav_icon,cursor.getInt(4)));
             } else if (favorite == 0  && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon,cursor.getInt(4)));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon,cursor.getInt(4),R.color.colorAccent));
                 //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4)));
             }
             else if (isToDo == 0) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_note_icon,cursor.getInt(4)));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_note_icon,cursor.getInt(4),R.color.colorAccent));
                 //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4)));
             }
 
@@ -139,15 +139,15 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             int isToDo = cursor.getInt(4);
 
             if (favorite == 1 && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.fav_icon,cursor.getInt(4)));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4),R.drawable.fav_icon));
                 //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.fav_icon,cursor.getInt(4)));
             } else if (favorite == 0  && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4)));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4),R.color.colorAccent));
                 //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4)));
             }
 
             else if (isToDo ==0) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4)));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4),R.color.colorAccent));
                 //a1.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.note_icon,cursor.getInt(4)));
             }
 
@@ -200,20 +200,22 @@ public class CustomAdapterForPreviousList extends BaseAdapter
 
         TextView tvTitle = (TextView) rowView.findViewById(R.id.textView_title_single_row);
         TextView tvDate = (TextView) rowView.findViewById(R.id.textView_date);
-        ImageView iv = (ImageView) rowView.findViewById(R.id.imageView1);
+        ImageView icon = (ImageView) rowView.findViewById(R.id.imageView1);
         final SingleRow temp = a.get(position);
 
-        ImageView s = (ImageView) rowView.findViewById(R.id.option_menu_spinner);
-        s.setOnClickListener(new View.OnClickListener() {
+        ImageView isFav = (ImageView) rowView.findViewById(R.id.is_fav);
+        /*s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showMenu(v, temp);
             }
         });
+        */
 
         tvTitle.setText(temp.title);
         tvDate.setText(temp.date);
-        iv.setImageResource(temp.imageResource);
+        icon.setImageResource(temp.imageResource);
+        isFav.setImageResource(temp.isFavImage);
 
         rowView.setOnLongClickListener(new View.OnLongClickListener() {
         @Override
@@ -344,7 +346,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
                     if ((a.get(i).getTitle().toUpperCase())
                             .contains(constraint.toString().toUpperCase())) {
 
-                        SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getImageResource(),a.get(i).getId());
+                        SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getImageResource(),a.get(i).getId(),a.get(i).getIsFavImage());
                         //SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getOptionMenu(), a.get(i).getImageResource());
 
                         filterList.add(sr);

@@ -57,12 +57,12 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         {
             if(cursor.getInt(3) == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon_black, 0));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon_black, 0,R.drawable.fav_icon));
             }
 
             else if(cursor.getInt(3) == 0)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.note_trashed, 0));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.note_trashed, 0,R.drawable.fav_icon));
             }
 
         }
@@ -114,9 +114,9 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         TextView tvTitle = (TextView) rowView.findViewById(R.id.textView_title_single_row);
         TextView  tvDate = (TextView) rowView.findViewById(R.id.textView_date);
         ImageView iv = (ImageView) rowView.findViewById(R.id.imageView1);
-        ImageView s = (ImageView) rowView.findViewById(R.id.option_menu_spinner);
+        ImageView isFav = (ImageView) rowView.findViewById(R.id.is_fav);
         final SingleRow temp = a.get(position);
-        s.setOnClickListener(new View.OnClickListener() {
+        isFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showMenu(v,temp);

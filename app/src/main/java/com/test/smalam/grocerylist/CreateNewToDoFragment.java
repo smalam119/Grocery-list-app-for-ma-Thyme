@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class CreateNewToDoFragment extends Fragment {
 
-    private int id=0;
+    public int id=2;
     private LinearLayout childLayout;
     private ArrayList<String> itemData = new ArrayList<String>();
     private ArrayList<String> checks = new ArrayList<String>();
@@ -59,9 +60,10 @@ public class CreateNewToDoFragment extends Fragment {
         ed = new EditText(getContext());
         ed.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
         allEds.add(ed);
-        ed.setId(id);
-        //ed.setHint(R.string.hint);
-        ed.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
+        //ed.setId(id);
+        ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        ed.setHint(""+id+".");
+        //ed.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
         childLayout.addView(ed);
         ed.requestFocus();
         id++;
@@ -108,7 +110,9 @@ public class CreateNewToDoFragment extends Fragment {
         View view = getView();
 
         firstEd = (EditText) view.findViewById(R.id.first_ed);
-        firstEd.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
+        firstEd.setHint("1.");
+        firstEd.requestFocus();
+        //firstEd.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
         allEds.add(firstEd);
 
                 favButtonState = false;
