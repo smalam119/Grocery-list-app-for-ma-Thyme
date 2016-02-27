@@ -1,4 +1,4 @@
-package com.test.smalam.grocerylist;
+package com.test.smalam.grocerylist.com.test.smalam.grocerylist.main;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +16,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.test.smalam.grocerylist.R;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
+import com.test.smalam.grocerylist.com.test.smalam.grocerylist.settings.Settings;
 
 public class NotesViewerActivity extends AppCompatActivity
 {
@@ -24,6 +27,7 @@ public class NotesViewerActivity extends AppCompatActivity
     public static final String LIST_ID = "listID";
     public String listId,fetchedNoteText,fetchedTitle;
     private SQLiteDatabase db;
+    Settings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,8 @@ public class NotesViewerActivity extends AppCompatActivity
         setContentView(R.layout.activity_notes_viewer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        settings = new Settings();
 
         listId = String.valueOf(getIntent().getExtras().get(LIST_ID));
 
@@ -47,10 +53,14 @@ public class NotesViewerActivity extends AppCompatActivity
 
         fetchItemsOfAList();
 
+        settings.getSetting(this);
+
         note = (TextView) findViewById(R.id.note_body);
+        note.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
         note.setText(fetchedNoteText);
 
         title = (TextView) findViewById(R.id.title_note);
+        title.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
         title.setText(fetchedTitle);
     }
 

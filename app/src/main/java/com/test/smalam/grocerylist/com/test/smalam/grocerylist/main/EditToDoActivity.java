@@ -1,4 +1,4 @@
-package com.test.smalam.grocerylist;
+package com.test.smalam.grocerylist.com.test.smalam.grocerylist.main;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +19,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.test.smalam.grocerylist.R;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
+import com.test.smalam.grocerylist.com.test.smalam.grocerylist.settings.Settings;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +45,8 @@ public class EditToDoActivity extends AppCompatActivity {
     ImageButton btn,fav,iv;
     EditText ed,titleEd;
     private int id = 1;
+    Settings settings;
+    private int fontNumber,fontColorNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,6 +55,9 @@ public class EditToDoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        settings = new Settings();
+        settings.getSetting(this);
 
         try
         {
@@ -80,6 +90,7 @@ public class EditToDoActivity extends AppCompatActivity {
 
         titleEd = (EditText) findViewById(R.id.title_e);
         titleEd.setText(title);
+        titleEd.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
 
         btn = (ImageButton) findViewById(R.id.add_row_e);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -95,13 +106,11 @@ public class EditToDoActivity extends AppCompatActivity {
         fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(favButtonState == false){
+                if (favButtonState == false) {
 
                     fav.setBackgroundResource(R.drawable.fav_icon);
                     favButtonState = true;
-                }
-
-                else if(favButtonState == true){
+                } else if (favButtonState == true) {
 
                     fav.setBackgroundResource(R.drawable.unselected_fav_icon);
                     favButtonState = false;
@@ -171,12 +180,15 @@ public class EditToDoActivity extends AppCompatActivity {
 
     }
 
+
+
     public void createEditText(String content)
     {
 
         childLayout = (LinearLayout) findViewById(R.id.child_lay_e);
         ed = new EditText(this);
         ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        ed.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
         allEds.add(ed);
         //ed.setId(id);
         ed.setText(content);

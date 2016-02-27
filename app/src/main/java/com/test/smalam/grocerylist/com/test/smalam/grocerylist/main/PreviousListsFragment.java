@@ -1,14 +1,19 @@
-package com.test.smalam.grocerylist;
+package com.test.smalam.grocerylist.com.test.smalam.grocerylist.main;
 
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
+
+import com.test.smalam.grocerylist.R;
+import com.test.smalam.grocerylist.com.test.smalam.grocerylist.settings.Settings;
 
 
 public class PreviousListsFragment extends Fragment implements SearchView.OnQueryTextListener{
@@ -18,6 +23,7 @@ public class PreviousListsFragment extends Fragment implements SearchView.OnQuer
     CustomAdapterForPreviousList adapterForPreviousList;
     RadioGroup searchOptions;
     String typeOfSearch = "all";
+    Settings settings;
 
 
     public PreviousListsFragment(){}
@@ -41,6 +47,10 @@ public class PreviousListsFragment extends Fragment implements SearchView.OnQuer
         super.onStart();
         View view = getView();
 
+        settings = new Settings();
+
+        settings.getSetting(PreviousListsFragment.this);
+
         if (view != null) {
 
             listView = (ListView) view.findViewById(R.id.listView);
@@ -49,6 +59,20 @@ public class PreviousListsFragment extends Fragment implements SearchView.OnQuer
 
 
             searchOptions = (RadioGroup) view.findViewById(R.id.search_options);
+
+            RadioButton all,fav,notes,toDo;
+
+            all = (RadioButton) view.findViewById(R.id.all);
+            fav = (RadioButton) view.findViewById(R.id.fav);
+            notes = (RadioButton) view.findViewById(R.id.note);
+            toDo = (RadioButton) view.findViewById(R.id.to_do);
+
+            all.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
+            fav.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
+            notes.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
+            toDo.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
+
+
             searchOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {

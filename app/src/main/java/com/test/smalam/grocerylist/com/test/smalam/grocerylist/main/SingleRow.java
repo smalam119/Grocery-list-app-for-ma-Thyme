@@ -1,4 +1,4 @@
-package com.test.smalam.grocerylist;
+package com.test.smalam.grocerylist.com.test.smalam.grocerylist.main;
 
 /**
  * Created by SAYED on 1/14/2016.

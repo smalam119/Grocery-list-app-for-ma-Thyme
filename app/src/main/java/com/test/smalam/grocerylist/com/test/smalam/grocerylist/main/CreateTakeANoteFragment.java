@@ -1,9 +1,10 @@
-package com.test.smalam.grocerylist;
+package com.test.smalam.grocerylist.com.test.smalam.grocerylist.main;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,7 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.test.smalam.grocerylist.R;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
+import com.test.smalam.grocerylist.com.test.smalam.grocerylist.settings.Settings;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -26,6 +29,7 @@ public class CreateTakeANoteFragment extends Fragment
     ImageButton save;
     String noteText,titleText;
     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+    Settings settings;
 
 
     @Override
@@ -52,9 +56,14 @@ public class CreateTakeANoteFragment extends Fragment
 
         View v = getView();
 
+        settings = new Settings();
+        settings.getSetting(CreateTakeANoteFragment.this);
+
         note = (EditText) v.findViewById(R.id.note_body);
+        note.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
 
         title = (EditText) v.findViewById(R.id.title);
+        title.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
 
         save = (ImageButton) v.findViewById(R.id.save_note);
         save.setOnClickListener(new View.OnClickListener() {

@@ -1,4 +1,4 @@
-package com.test.smalam.grocerylist;
+package com.test.smalam.grocerylist.com.test.smalam.grocerylist.main;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,13 +14,16 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.test.smalam.grocerylist.R;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
+import com.test.smalam.grocerylist.com.test.smalam.grocerylist.settings.Settings;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,11 +42,15 @@ public class ToDoViewerActivity extends AppCompatActivity  {
     ArrayAdapter<String> adapter;
     TextView titleTv;
     private ActionMode mActionMode;
+    Settings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do_viwer);
+
+        settings = new Settings();
+        settings.getSetting(this);
 
         try
         {
@@ -59,6 +67,7 @@ public class ToDoViewerActivity extends AppCompatActivity  {
         setSupportActionBar(toolbar);
 
         titleTv = (TextView) findViewById(R.id.title_to_do);
+        titleTv.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
         listView = (ListView) findViewById(R.id.list_activity);
         listId = String.valueOf(getIntent().getExtras().get(LIST_ID));
 

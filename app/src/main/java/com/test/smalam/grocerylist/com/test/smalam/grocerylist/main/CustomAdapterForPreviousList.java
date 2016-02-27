@@ -1,4 +1,4 @@
-package com.test.smalam.grocerylist;
+package com.test.smalam.grocerylist.com.test.smalam.grocerylist.main;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,20 +6,22 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.test.smalam.grocerylist.R;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
+import com.test.smalam.grocerylist.com.test.smalam.grocerylist.settings.Settings;
+
 import java.util.ArrayList;
 
 
@@ -39,6 +41,8 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             "Send"
     };
 
+    Settings settings;
+
 
     public  static String queryType;
 
@@ -46,6 +50,8 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         context = c;
         a = new ArrayList<SingleRow>();
         a1 = new ArrayList<SingleRow>();
+        settings = new Settings();
+        settings.getSetting(context);
         final SingleRow temp;
 
         if(typeOfSearch.equals("all"))
@@ -83,7 +89,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             int isToDo = cursor.getInt(4);
 
             if (favorite == 1 && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4),R.drawable.fav_icon));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon,cursor.getInt(4),R.drawable.fav_icon));
             } else if (favorite == 0  && isToDo ==1) {
                 a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4),R.color.colorAccent));
            }
@@ -196,7 +202,9 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         ImageView isFav = (ImageView) rowView.findViewById(R.id.is_fav);
 
         tvTitle.setText(temp.title);
+        tvTitle.setTypeface(Typeface.createFromAsset(context.getAssets(), settings.getFont(settings.getFontNumber())));
         tvDate.setText(temp.date);
+        tvDate.setTypeface(Typeface.createFromAsset(context.getAssets(), settings.getFont(settings.getFontNumber())));
         icon.setImageResource(temp.imageResource);
         isFav.setImageResource(temp.isFavImage);
 

@@ -1,7 +1,8 @@
-package com.test.smalam.grocerylist;
+package com.test.smalam.grocerylist.com.test.smalam.grocerylist.main;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,7 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+
+import com.test.smalam.grocerylist.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -79,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.trash:
                 fragmentClass =  ArchivedListFragment.class;
                 break;
+            case R.id.setting:
+                Intent i = new Intent(this,SettingsActivity.class);
+                startActivity(i);
             default:
                 fragmentClass = PreviousListsFragment.class;
         }

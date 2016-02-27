@@ -1,12 +1,14 @@
-package com.test.smalam.grocerylist;
+package com.test.smalam.grocerylist.com.test.smalam.grocerylist.main;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,7 +19,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.test.smalam.grocerylist.R;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
+import com.test.smalam.grocerylist.com.test.smalam.grocerylist.settings.Settings;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +43,8 @@ public class CreateNewToDoFragment extends Fragment {
     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     ImageButton save,btn,fav;
     EditText ed,titleEd,firstEd;
+    int fontNumber,fontColorNumber;
+    Settings settings;
 
 
     @Override
@@ -44,7 +52,6 @@ public class CreateNewToDoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_create_new_list, container, false);
-
         return rootView;
     }
 
@@ -56,6 +63,7 @@ public class CreateNewToDoFragment extends Fragment {
         View view = getView();
         childLayout = (LinearLayout)view.findViewById(R.id.child_lay);
         ed = new EditText(getContext());
+        ed.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),settings.getFont(settings.getFontNumber())));
         ed.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         allEds.add(ed);
         ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
@@ -87,6 +95,23 @@ public class CreateNewToDoFragment extends Fragment {
         db.insert("LISTS", null, cv);
     }
 
+    public void getSetting()
+    {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(getContext());
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+        Cursor cursor = db.query("SETTINGS",
+                new String[]{"FONT_FAMILY", "FONT_COLOR"},
+                "_id=?",
+                new String[]{"1"},
+                null, null, null);
+
+        if (cursor.moveToFirst())
+        {
+            fontNumber = cursor.getInt(0);
+            fontColorNumber = cursor.getInt(1);
+        }
+    }
+
 
     @Override
     public void onStart()
@@ -104,11 +129,15 @@ public class CreateNewToDoFragment extends Fragment {
             toast.show();
         }
 
+        settings = new Settings();
+        settings.getSetting(CreateNewToDoFragment.this);
+
         View view = getView();
 
         firstEd = (EditText) view.findViewById(R.id.first_ed);
         firstEd.setHint("1.");
         firstEd.requestFocus();
+        firstEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
         allEds.add(firstEd);
 
                 favButtonState = false;
@@ -116,6 +145,7 @@ public class CreateNewToDoFragment extends Fragment {
         fav.setBackgroundResource(R.drawable.unselected_fav_icon);
 
         titleEd = (EditText) view.findViewById(R.id.title_note);
+        titleEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),settings.getFont(settings.getFontNumber())));
         btn = (ImageButton) view.findViewById(R.id.add_row);
 
         fav.setOnClickListener(new View.OnClickListener() {
