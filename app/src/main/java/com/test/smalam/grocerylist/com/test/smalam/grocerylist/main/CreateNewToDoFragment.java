@@ -11,6 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,9 @@ public class CreateNewToDoFragment extends Fragment {
     ImageButton save,btn,fav;
     EditText ed,titleEd,firstEd;
     int fontNumber,fontColorNumber;
-    Settings settings;
+    int latestId;
+    public Settings settings;
+    public boolean isSaved = false;
 
 
     @Override
@@ -52,6 +55,111 @@ public class CreateNewToDoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_create_new_list, container, false);
+
+
+        try
+        {
+            SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(getContext());
+            db = groceryListDatabaseHelper.getWritableDatabase();
+        }
+        catch(SQLiteException e)
+        {
+            Toast toast = Toast.makeText(getContext(), "Database unavailable", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+        settings = new Settings();
+        settings.getSetting(CreateNewToDoFragment.this);
+
+        //View view = getView();
+
+        firstEd = (EditText) rootView.findViewById(R.id.first_ed);
+        firstEd.setHint("1.");
+        firstEd.requestFocus();
+        firstEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
+        firstEd.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
+        allEds.add(firstEd);
+
+        favButtonState = false;
+        fav = (ImageButton) rootView.findViewById(R.id.fav_button);
+        fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+
+        titleEd = (EditText) rootView.findViewById(R.id.title_note);
+        titleEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),settings.getFont(settings.getFontNumber())));
+        titleEd.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
+        btn = (ImageButton) rootView.findViewById(R.id.add_row);
+
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (favButtonState == false) {
+
+                    fav.setBackgroundResource(R.drawable.fav_icon);
+                    favButtonState = true;
+                } else if (favButtonState == true) {
+
+                    fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+                    favButtonState = false;
+                }
+            }
+        });
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                createEditText();
+                if(id == 6)
+                {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+
+        save = (ImageButton) rootView.findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemData.clear();
+
+
+                for (int i = 0; i < allEds.size(); i++) {
+                    String s = allEds.get(i).getText().toString();
+                    if (!s.equals("")) {
+                        itemData.add(s);
+                        checks.add("false");
+                    }
+
+                    title = titleEd.getText().toString();
+                    firstEdValue = firstEd.getText().toString();
+                    Toast.makeText(getContext(),getLatestId()+"",Toast.LENGTH_SHORT).show();
+
+                }
+
+                if (title.isEmpty() || firstEdValue.isEmpty())
+                {
+                    Toast.makeText(getContext(), "Your list must have a title and at least an item", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    if(!isSaved)
+                    {
+                        insertList(db, currentDateTimeString, title, itemData.toString());
+                        Toast.makeText(getContext(), "List Saved", Toast.LENGTH_LONG).show();
+                        isSaved = true;
+                    }
+                    else
+                    {
+                        updateList(db, currentDateTimeString, title, itemData.toString());
+                    }
+                }
+
+            }
+        });
+
         return rootView;
     }
 
@@ -64,6 +172,8 @@ public class CreateNewToDoFragment extends Fragment {
         childLayout = (LinearLayout)view.findViewById(R.id.child_lay);
         ed = new EditText(getContext());
         ed.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),settings.getFont(settings.getFontNumber())));
+        ed.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
         ed.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         allEds.add(ed);
         ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
@@ -95,6 +205,41 @@ public class CreateNewToDoFragment extends Fragment {
         db.insert("LISTS", null, cv);
     }
 
+    public void updateList(SQLiteDatabase db,String date, String name, String items)
+    {
+        ContentValues cv = new ContentValues();
+        cv.put("DATE", date);
+        cv.put("NAME", name);
+        cv.put("ITEMS", items);
+        if(favButtonState)
+        {
+            cv.put("FAVORITE", 1);
+        }
+        else if(!favButtonState)
+        {
+            cv.put("FAVORITE", 0);
+        }
+        db.update("LISTS", cv, "_id=?", new String[]{getLatestId()+""});
+    }
+
+    public int getLatestId()
+    {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(getContext());
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+        Cursor cursor = db.query("LISTS",
+                new String[]{"_id"},
+                "NAME=?",
+                new String[]{titleEd.getText().toString()},
+                null, null, null);
+
+        if (cursor.moveToFirst())
+        {
+            latestId = cursor.getInt(0);
+        }
+
+        return latestId;
+    }
+
     public void getSetting()
     {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(getContext());
@@ -117,95 +262,6 @@ public class CreateNewToDoFragment extends Fragment {
     public void onStart()
     {
         super.onStart();
-
-        try
-        {
-            SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(getContext());
-            db = groceryListDatabaseHelper.getWritableDatabase();
-        }
-        catch(SQLiteException e)
-        {
-            Toast toast = Toast.makeText(getContext(), "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-
-        settings = new Settings();
-        settings.getSetting(CreateNewToDoFragment.this);
-
-        View view = getView();
-
-        firstEd = (EditText) view.findViewById(R.id.first_ed);
-        firstEd.setHint("1.");
-        firstEd.requestFocus();
-        firstEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
-        allEds.add(firstEd);
-
-                favButtonState = false;
-        fav = (ImageButton) view.findViewById(R.id.fav_button);
-        fav.setBackgroundResource(R.drawable.unselected_fav_icon);
-
-        titleEd = (EditText) view.findViewById(R.id.title_note);
-        titleEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),settings.getFont(settings.getFontNumber())));
-        btn = (ImageButton) view.findViewById(R.id.add_row);
-
-        fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (favButtonState == false) {
-
-                    fav.setBackgroundResource(R.drawable.fav_icon);
-                    favButtonState = true;
-                } else if (favButtonState == true) {
-
-                    fav.setBackgroundResource(R.drawable.unselected_fav_icon);
-                    favButtonState = false;
-                }
-            }
-        });
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                createEditText();
-                if(id == 6)
-                {
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-        });
-
-        save = (ImageButton) view.findViewById(R.id.save);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemData.clear();
-
-
-                for (int i = 0; i < allEds.size(); i++) {
-                    String s = allEds.get(i).getText().toString();
-                    if (!s.equals("")) {
-                        itemData.add(s);
-                        checks.add("false");
-                    }
-
-                    title = titleEd.getText().toString();
-                    firstEdValue = firstEd.getText().toString();
-
-                }
-
-                if (title.isEmpty() || firstEdValue.isEmpty()) {
-                    Toast.makeText(getContext(), "Your list must have a title and at least an item", Toast.LENGTH_LONG).show();
-                } else {
-                    insertList(db, currentDateTimeString, title, itemData.toString());
-                    Toast.makeText(getContext(), "List Saved", Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
-
 
     }
 

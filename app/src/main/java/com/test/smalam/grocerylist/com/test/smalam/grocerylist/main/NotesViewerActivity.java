@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -57,6 +58,8 @@ public class NotesViewerActivity extends AppCompatActivity
 
         note = (TextView) findViewById(R.id.note_body);
         note.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
+        note.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
         note.setText(fetchedNoteText);
 
         title = (TextView) findViewById(R.id.title_note);

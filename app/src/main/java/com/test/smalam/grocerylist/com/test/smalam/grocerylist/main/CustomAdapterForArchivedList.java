@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.test.smalam.grocerylist.R;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
+import com.test.smalam.grocerylist.com.test.smalam.grocerylist.settings.Settings;
 
 import java.util.ArrayList;
 
@@ -32,11 +34,15 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
             "Restore",
     };
 
+    Settings settings;
+
 
 
     CustomAdapterForArchivedList(Context c) {
         context = c;
         a = new ArrayList<SingleRow>();
+        settings = new Settings();
+        settings.getSetting(context);
         final SingleRow temp;
 
         readAllArchivedLists();
@@ -129,14 +135,16 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         });
 
         tvTitle.setText(temp.title);
+        tvTitle.setTypeface(Typeface.createFromAsset(context.getAssets(), settings.getFont(settings.getFontNumber())));
         tvDate.setText(temp.date);
+        tvDate.setTypeface(Typeface.createFromAsset(context.getAssets(), settings.getFont(settings.getFontNumber())));
         iv.setImageResource(temp.imageResource);
 
-        rowView.setOnLongClickListener(new View.OnLongClickListener() {
+        rowView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public void onClick(View v) {
                 showMenu(v, temp);
-                return true;
+                //return true;
             }
         });
 

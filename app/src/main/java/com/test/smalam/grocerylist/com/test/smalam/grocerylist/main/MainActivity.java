@@ -14,7 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
 
 import com.test.smalam.grocerylist.R;
 
@@ -81,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.trash:
                 fragmentClass =  ArchivedListFragment.class;
                 break;
-            case R.id.setting:
-                Intent i = new Intent(this,SettingsActivity.class);
-                startActivity(i);
+            //case R.id.setting:
+                //Intent i = new Intent(this,SettingsActivity.class);
+                //startActivity(i);
             default:
                 fragmentClass = PreviousListsFragment.class;
         }
@@ -110,7 +113,18 @@ public class MainActivity extends AppCompatActivity {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
+
+        switch (item.getItemId()) {
+            case R.id.setting:
+                Intent i = new Intent(this,SettingsActivity.class);
+                startActivity(i);
+                return true;
+            default:
+
+        }
+
         return super.onOptionsItemSelected(item);
+
     }
 
 
@@ -128,12 +142,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -184,6 +193,15 @@ public class MainActivity extends AppCompatActivity {
                 .show();
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.setting_menu, menu);
+        return true;
+    }
+
 
 
 }

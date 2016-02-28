@@ -13,6 +13,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -91,6 +92,8 @@ public class EditToDoActivity extends AppCompatActivity {
         titleEd = (EditText) findViewById(R.id.title_e);
         titleEd.setText(title);
         titleEd.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
+        titleEd.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
 
         btn = (ImageButton) findViewById(R.id.add_row_e);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -187,8 +190,10 @@ public class EditToDoActivity extends AppCompatActivity {
 
         childLayout = (LinearLayout) findViewById(R.id.child_lay_e);
         ed = new EditText(this);
-        ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         ed.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
+        ed.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
+        ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         allEds.add(ed);
         //ed.setId(id);
         ed.setText(content);
@@ -202,6 +207,9 @@ public class EditToDoActivity extends AppCompatActivity {
 
         childLayout = (LinearLayout) findViewById(R.id.child_lay_e);
         ed = new EditText(this);
+        ed.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
+        ed.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
         ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         allEds.add(ed);
         ed.setHint(""+id+".");

@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -60,10 +61,14 @@ public class EditNotesActivity extends AppCompatActivity
 
         note = (EditText) findViewById(R.id.note_body_e);
         note.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
+        note.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
         note.setText(fetchedNoteText);
 
         title = (EditText) findViewById(R.id.title_note_e);
         title.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
+        title.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
         title.setText(fetchedTitle);
     }
 

@@ -19,11 +19,6 @@
             android:title="Previous List" />
 
         <item
-            android:id="@+id/setting"
-            android:icon="@drawable/archive_icon"
-            android:title="Settings" />
-
-        <item
             android:id="@+id/trash"
             android:icon="@drawable/trash_icon"
             android:title="Trash" />
