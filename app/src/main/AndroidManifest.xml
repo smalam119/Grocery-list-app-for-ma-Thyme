@@ -38,6 +38,12 @@
             android:name=".com.test.smalam.grocerylist.main.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme"></activity>
+
+        <service
+            android:name=".com.test.smalam.grocerylist.service.ReminderService"
+            android:exported="false" >
+        </service>
+
     </application>
 
 </manifest>

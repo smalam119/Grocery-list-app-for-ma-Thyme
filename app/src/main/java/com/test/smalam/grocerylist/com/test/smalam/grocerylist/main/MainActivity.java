@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+        tx.replace(R.id.flContent, new PreviousListsFragment());
+        tx.commit();
 
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -85,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass =  ArchivedListFragment.class;
                 break;
             //case R.id.setting:
-                //Intent i = new Intent(this,SettingsActivity.class);
-                //startActivity(i);
+            //Intent i = new Intent(this,SettingsActivity.class);
+            //startActivity(i);
             default:
                 fragmentClass = PreviousListsFragment.class;
         }

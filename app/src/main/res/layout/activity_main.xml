@@ -26,6 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <include layout="@layout/fragment_previous_lists" />
+
     </LinearLayout>
 
     <!-- The navigation drawer that comes from the left -->
