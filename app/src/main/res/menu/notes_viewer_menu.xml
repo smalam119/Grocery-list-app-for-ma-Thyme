@@ -4,19 +4,25 @@
     <item
         android:id="@+id/action_reminder"
         android:icon="@drawable/option_menu_reminder_blue"
-        android:title="reminder"
+        android:title="Reminder"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/action_edit"
-        android:icon="@drawable/option_menu_edit_blue"
-        android:title="fav"
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/option_menu_fav_blue"
+        android:title="Favorite"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/option_menu_trash_blue"
-        android:title="fav"
+        android:title="Delete"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_edit"
+        android:icon="@drawable/option_menu_edit_blue"
+        android:title="Edit"
         app:showAsAction="ifRoom"/>
 
 

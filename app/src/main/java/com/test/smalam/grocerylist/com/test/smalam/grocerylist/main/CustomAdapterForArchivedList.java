@@ -59,12 +59,12 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         {
             if(cursor.getInt(3) == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon_black, 0,R.drawable.option_menu_fav_blue));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon_black, 0,R.drawable.option_menu_fav_blue,R.color.white));
             }
 
             else if(cursor.getInt(3) == 0)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_black, 0,R.drawable.option_menu_fav_blue));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_black, 0,R.drawable.option_menu_fav_blue,R.color.white));
             }
 
         }

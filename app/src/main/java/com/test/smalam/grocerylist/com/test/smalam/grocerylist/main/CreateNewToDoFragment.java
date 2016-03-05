@@ -193,6 +193,7 @@ public class CreateNewToDoFragment extends Fragment {
         cv.put("ARCHIVED", 0);
         cv.put("CHECK_LIST_STATUS", checks.toString());
         cv.put("IS_TO_DO_LIST", 1);
+        cv.put("IS_ALARMED",0);
         if(favButtonState)
         {
             cv.put("FAVORITE", 1);

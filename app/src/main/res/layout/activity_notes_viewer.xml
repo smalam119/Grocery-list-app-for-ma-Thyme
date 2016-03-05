@@ -21,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_to_do_viewer" />
+    <include layout="@layout/content_note_viewer" />
 
 
 </android.support.design.widget.CoordinatorLayout>

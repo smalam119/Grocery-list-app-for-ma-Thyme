@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,12 +31,11 @@ public class ToDoViewerActivity extends AppCompatActivity  {
 
     private ArrayList<String> items = new ArrayList<String>();
     public static final String LIST_ID = "drinkNo";
-    private String listId, itemsConcatenated, checkStatusConcatenated, title;
+    private String listId, itemsConcatenated, checkStatusConcatenated, title,fetchedNoteText,fetchedTitle;
     private List<String> listOfItems;
     private List<String> listOfChecks;
     private SQLiteDatabase db;
     ArrayList<Boolean> isSelectedList = new ArrayList<>();
-    Button button;
     ListView listView;
     ArrayAdapter<String> adapter;
     TextView titleTv;
@@ -219,6 +217,7 @@ public class ToDoViewerActivity extends AppCompatActivity  {
         inflater.inflate(R.menu.to_do_viewer_menu, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

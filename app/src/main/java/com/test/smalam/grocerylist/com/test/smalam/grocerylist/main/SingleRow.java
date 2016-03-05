@@ -10,7 +10,10 @@ public class SingleRow
     int isToDoList;
     int isFavImage;
     String optionMenu;
-    int id,imageResource;
+    int id;
+    int imageResource;
+
+    int isAlarmed;
 
     public int getIsToDoList()
     {
@@ -63,7 +66,15 @@ public class SingleRow
         this.imageResource = imageResource;
     }
 
-    public SingleRow(int id,String title, String date,int imageResource,int isToDoList,int isFavImage)
+    public int getIsAlarmed() {
+        return isAlarmed;
+    }
+
+    public void setIsAlarmed(int isAlarmed) {
+        this.isAlarmed = isAlarmed;
+    }
+
+    public SingleRow(int id,String title, String date,int imageResource,int isToDoList,int isFavImage,int isAlarmed)
     {
         this.id = id;
         this.title = title;
@@ -71,5 +82,6 @@ public class SingleRow
         this.imageResource = imageResource;
         this.isToDoList = isToDoList;
         this.isFavImage = isFavImage;
+        this.isAlarmed = isAlarmed;
     }
 }

@@ -66,12 +66,12 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         }
         else if(typeOfSearch.equals("notes"))
         {
-            readOnlyNotes(0);
+            readOnlyNotes();
             queryType = "notes";
         }
         else if(typeOfSearch.equals("toDo"))
         {
-            readOnlyNotes(1);
+            readOnlyToDo();
             queryType = "toDo";
         }
 
@@ -81,21 +81,56 @@ public class CustomAdapterForPreviousList extends BaseAdapter
     public void readAllLists() {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
-        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE","IS_TO_DO_LIST"}, "ARCHIVED = ?", new String[]{"0"}, null, null, null);
+        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE","IS_TO_DO_LIST","IS_ALARMED"}, "ARCHIVED = ?", new String[]{"0"}, null, null, null);
 
         while (cursor.moveToNext()) {
 
             int favorite = cursor.getInt(3);
             int isToDo = cursor.getInt(4);
+            int isAlarmed = cursor.getInt(5);
 
-            if (favorite == 1 && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue));
-            } else if (favorite == 0  && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.colorAccent));
-           }
-            else if (isToDo == 0) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.colorAccent));
+            if (favorite == 1 && isToDo == 1 && isAlarmed == 1)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
             }
+            else if (favorite == 0  && isToDo ==1 && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+            }
+            else if (favorite == 1  && isToDo ==1 && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+            }
+            else if (favorite == 0  && isToDo ==1 && isAlarmed == 1 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
+            }
+            else if (isToDo ==1)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+            }
+
+            if (favorite == 1 && isToDo == 0 && isAlarmed == 1)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
+            }
+            else if (favorite == 0  && isToDo == 0 && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+            }
+            else if (favorite == 1  && isToDo == 0 && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+            }
+            else if (favorite == 0  && isToDo == 0 && isAlarmed == 1 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
+            }
+            else if (isToDo == 0)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+            }
+
 
 
         }
@@ -107,48 +142,127 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
 
-        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE","IS_TO_DO_LIST"}, "ARCHIVED = ? AND FAVORITE = ?", new String[]{"0","1"}, null, null, null);
+        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE","IS_TO_DO_LIST","IS_ALARMED"}, "ARCHIVED = ? AND FAVORITE = ?", new String[]{"0","1"}, null, null, null);
 
         while (cursor.moveToNext()) {
 
             int favorite = cursor.getInt(3);
             int isToDo = cursor.getInt(4);
+            int isAlarmed = cursor.getInt(5);
 
-            if (favorite == 1 && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue));
-            } else if (favorite == 0  && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.color.colorAccent));
+            if (favorite == 1 && isToDo == 1 && isAlarmed == 1)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
             }
-            else if (isToDo == 0) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.color.colorAccent));
+            else if (favorite == 0  && isToDo ==1 && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
             }
+            else if (favorite == 1  && isToDo ==1 && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+            }
+            else if (favorite == 0  && isToDo ==1 && isAlarmed == 1 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
+            }
+            else if (isToDo ==1)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+            }
+
+            if (favorite == 1 && isToDo == 0 && isAlarmed == 1)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
+            }
+            else if (favorite == 0  && isToDo == 0 && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+            }
+            else if (favorite == 1  && isToDo == 0 && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+            }
+            else if (favorite == 0  && isToDo == 0 && isAlarmed == 1 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
+            }
+            else if (isToDo == 0)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+            }
+
 
 
         }
 
     }
 
-    public void readOnlyNotes(int isToDoNote) {
+   public void readOnlyNotes() {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
-        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE","IS_TO_DO_LIST"}, "ARCHIVED = ? AND IS_TO_DO_LIST = ?", new String[]{"0", String.valueOf(isToDoNote)}, null, null, null);
+        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE","IS_TO_DO_LIST","IS_ALARMED"}, "ARCHIVED = ? AND IS_TO_DO_LIST = ?", new String[]{"0", "0"}, null, null, null);
 
         while (cursor.moveToNext()) {
 
             int favorite = cursor.getInt(3);
             int isToDo = cursor.getInt(4);
+            int isAlarmed = cursor.getInt(5);
 
-            if (favorite == 1 && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue));
-            } else if (favorite == 0  && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.colorAccent));
+            if (favorite == 1 && isAlarmed == 1)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
             }
-            else if (isToDo ==0) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.colorAccent));
+            else if (favorite == 0  && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+            }
+            else if (favorite == 1  && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+            }
+            else if (favorite == 0  && isToDo == 0 && isAlarmed == 1 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
             }
 
 
         }
+
+
+    }
+
+    public void readOnlyToDo() {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE","IS_TO_DO_LIST","IS_ALARMED"}, "ARCHIVED = ? AND IS_TO_DO_LIST = ?", new String[]{"0", "1"}, null, null, null);
+
+        while (cursor.moveToNext()) {
+
+            int favorite = cursor.getInt(3);
+            int isToDo = cursor.getInt(4);
+            int isAlarmed = cursor.getInt(5);
+
+            if (favorite == 1 && isAlarmed == 1)
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
+            }
+            else if (favorite == 0  && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+            }
+            else if (favorite == 1  && isAlarmed == 0 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+            }
+            else if (favorite == 0  && isToDo == 0 && isAlarmed == 1 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
+            }
+
+
+        }
+
 
     }
 
@@ -201,12 +315,15 @@ public class CustomAdapterForPreviousList extends BaseAdapter
 
         ImageView isFav = (ImageView) rowView.findViewById(R.id.is_fav);
 
+        ImageView isAlarmed = (ImageView) rowView.findViewById(R.id.is_alarmed);
+
         tvTitle.setText(temp.title);
         tvTitle.setTypeface(Typeface.createFromAsset(context.getAssets(), settings.getFont(settings.getFontNumber())));
         tvDate.setText(temp.date);
         tvDate.setTypeface(Typeface.createFromAsset(context.getAssets(), settings.getFont(settings.getFontNumber())));
         icon.setImageResource(temp.imageResource);
         isFav.setImageResource(temp.isFavImage);
+        isAlarmed.setImageResource(temp.isAlarmed);
 
         rowView.setOnLongClickListener(new View.OnLongClickListener() {
         @Override
@@ -291,7 +408,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
                     if ((a.get(i).getTitle().toUpperCase())
                             .contains(constraint.toString().toUpperCase())) {
 
-                        SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getImageResource(),a.get(i).getId(),a.get(i).getIsFavImage());
+                        SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getImageResource(),a.get(i).getId(),a.get(i).getIsFavImage(),a.get(i).getIsAlarmed());
 
                         filterList.add(sr);
                     }
@@ -318,14 +435,14 @@ public class CustomAdapterForPreviousList extends BaseAdapter
                 else if(CustomAdapterForPreviousList.queryType.equals("notes"))
                 {
                     a.clear();
-                    readOnlyNotes(0);
+                    readOnlyNotes();
                     results.count = a.size();
                     results.values = a;
                 }
                 else if(CustomAdapterForPreviousList.queryType.equals("toDo"))
                 {
                     a.clear();
-                    readOnlyNotes(1);
+                    readOnlyToDo();
                     results.count = a.size();
                     results.values = a;
                 }

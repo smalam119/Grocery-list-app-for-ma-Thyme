@@ -28,12 +28,13 @@ public class CreateTakeANoteFragment extends Fragment
 {
     private SQLiteDatabase db;
     EditText note,title;
-    ImageButton save;
+    ImageButton save,fav;
     String noteText,titleText;
     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     Settings settings;
     public boolean isSaved = false;
     int latestId;
+    private boolean favButtonState;
 
 
     @Override
@@ -59,6 +60,26 @@ public class CreateTakeANoteFragment extends Fragment
         }
 
         View v = getView();
+
+        favButtonState = false;
+        fav = (ImageButton) v.findViewById(R.id.fav_button);
+        fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (favButtonState == false) {
+
+                    fav.setBackgroundResource(R.drawable.option_menu_fav_blue);
+                    favButtonState = true;
+                } else if (favButtonState == true) {
+
+                    fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+                    favButtonState = false;
+                }
+            }
+        });
 
         settings = new Settings();
         settings.getSetting(CreateTakeANoteFragment.this);
@@ -112,7 +133,14 @@ public class CreateTakeANoteFragment extends Fragment
         cv.put("ARCHIVED",0);
         cv.put("CHECK_LIST_STATUS", "");
         cv.put("IS_TO_DO_LIST",0);
-        cv.put("FAVORITE", 0);
+        if(favButtonState)
+        {
+            cv.put("FAVORITE", 1);
+        }
+        else if(!favButtonState)
+        {
+            cv.put("FAVORITE", 0);
+        }
         db.insert("LISTS", null, cv);
     }
 

@@ -32,9 +32,10 @@
             android:id="@+id/fav_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu_option_add"
+            android:background="@drawable/unselected_fav_icon"
             android:layout_marginRight="10dp"
             />
+
 
     </LinearLayout>
 

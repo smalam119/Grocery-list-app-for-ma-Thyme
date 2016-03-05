@@ -42,6 +42,7 @@ public class NotesViewerActivity extends AppCompatActivity
     Calendar dateAndTime=Calendar.getInstance();
     Calendar currentDateAndTime=Calendar.getInstance();
     long dif;
+    boolean isAlarmed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,6 +53,8 @@ public class NotesViewerActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         settings = new Settings();
+
+        isAlarmed = false;
 
         listId = String.valueOf(getIntent().getExtras().get(LIST_ID));
 
@@ -136,6 +139,10 @@ public class NotesViewerActivity extends AppCompatActivity
 
                 return true;
 
+            case R.id.action_favorite:
+                favUpdate(listId);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -179,12 +186,54 @@ public class NotesViewerActivity extends AppCompatActivity
 
     private void updateLabel()
     {
-        //Toast.makeText(this, "" + fmtDateAndTime.format(dateAndTime.getTime()), Toast.LENGTH_SHORT).show();
-        //Toast.makeText(this, "" + fmtDateAndTime.format(currentDateAndTime.getTime()), Toast.LENGTH_SHORT).show();
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(this);
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
 
         dif = dateAndTime.getTimeInMillis()-currentDateAndTime.getTimeInMillis();
         Toast.makeText(this, "" + dif, Toast.LENGTH_SHORT).show();
+        isAlarmed = true;
 
+        ContentValues cv = new ContentValues();
+        cv.put("IS_ALARMED", 1);
+        Toast.makeText(this,"Reminder Set",Toast.LENGTH_SHORT).show();
+        db.update("LISTS", cv, "_id=?", new String[]{listId});
         startNotificationService();
     }
+
+
+    public void favUpdate(String s)
+    {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(this);
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+
+        int fav = 0;
+
+        Cursor cursor = db.query("LISTS",
+                new String[]{"_id", "FAVORITE"},
+                "_id=?",
+                new String[]{listId},
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            fav = cursor.getInt(1);
+        }
+
+        ContentValues cv = new ContentValues();
+        if(fav == 0)
+        {
+            cv.put("FAVORITE", 1);
+
+            Toast.makeText(this,"Added as favorite",Toast.LENGTH_SHORT).show();
+        }
+        else if(fav == 1)
+        {
+            cv.put("FAVORITE", 0);
+
+            Toast.makeText(this,"Removed as favorite",Toast.LENGTH_SHORT).show();
+        }
+
+
+        db.update("LISTS", cv, "_id=?", new String[]{s});
+    }
+
     }

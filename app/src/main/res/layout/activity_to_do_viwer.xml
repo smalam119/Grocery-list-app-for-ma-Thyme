@@ -14,7 +14,7 @@
         android:background="?attr/colorPrimaryDark"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <include layout="@layout/content_item_selected_list" />
+    <include layout="@layout/content_to_do_viewer" />
 
 
 </android.support.design.widget.CoordinatorLayout>
