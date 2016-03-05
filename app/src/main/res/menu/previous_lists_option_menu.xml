@@ -9,7 +9,7 @@
 
         <item
             android:id="@+id/delete"
-            android:icon="@drawable/note_icon"
+            android:icon="@drawable/option_menu_edit_blue"
             android:title="Delete"/>
         <item
             android:id="@+id/Send"

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#01B9F1</color>
-    <color name="colorPrimaryDark">#0098F1</color>
+    <color name="colorPrimaryDark">#5e5f5f</color>
     <color name="colorAccent">#01B9F1</color>
+    <color name="test">#0098F1</color>
     <color name ="grey">#5e5f5f</color>
     <color name ="white">#ffffff</color>
+    <color name="footer_background">#f2efef</color>
+    <color name="black">#000000</color>
 </resources>

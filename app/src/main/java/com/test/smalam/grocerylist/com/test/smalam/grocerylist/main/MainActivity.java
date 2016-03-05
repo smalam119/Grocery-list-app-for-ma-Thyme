@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         drawerToggle = setupDrawerToggle();
+
+        //drawerToggle.setDrawerIndicatorEnabled(true);
+        //drawerToggle.setHomeAsUpIndicator(R.drawable.action_setting_icon);
 
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view

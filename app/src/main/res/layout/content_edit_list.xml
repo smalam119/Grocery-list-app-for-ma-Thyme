@@ -1,47 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center" >
+        android:gravity="center"
+        android:layout_marginTop="55dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#f2efef">
+            android:background="@color/footer_background">
 
             <EditText
-                android:id="@+id/title_e"
+                android:id="@+id/title_to_do_e"
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 android:hint="@string/title_hint"
-                android:layout_marginRight="150dp"
-                android:background="#f2efef"/>
+                android:layout_marginRight="100dp"
+                android:background="@color/footer_background"/>
 
             <ImageButton
                 android:id="@+id/add_row_e"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/add"
-                android:layout_marginRight="10dp"
+                android:background="@drawable/menu_option_add"
+                android:layout_marginLeft="60dp"
                 />
 
             <ImageButton
                 android:id="@+id/fav_button_e"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/add"
-                android:layout_marginRight="10dp"
+                android:background="@drawable/menu_option_add"
                 />
 
         </LinearLayout>
@@ -61,9 +62,18 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp">
 
+            <EditText
+                android:id="@+id/first_ed_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="3dp"
+                />
+
 
         </LinearLayout>
 
     </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>

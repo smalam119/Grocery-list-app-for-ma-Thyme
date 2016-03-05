@@ -89,12 +89,12 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             int isToDo = cursor.getInt(4);
 
             if (favorite == 1 && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon,cursor.getInt(4),R.drawable.fav_icon));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue));
             } else if (favorite == 0  && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4),R.color.colorAccent));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.colorAccent));
            }
             else if (isToDo == 0) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4),R.color.colorAccent));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.colorAccent));
             }
 
 
@@ -115,12 +115,12 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             int isToDo = cursor.getInt(4);
 
             if (favorite == 1 && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon,cursor.getInt(4),R.drawable.fav_icon));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue));
             } else if (favorite == 0  && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon,cursor.getInt(4),R.color.colorAccent));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.color.colorAccent));
             }
             else if (isToDo == 0) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_note_icon,cursor.getInt(4),R.color.colorAccent));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.color.colorAccent));
             }
 
 
@@ -139,12 +139,12 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             int isToDo = cursor.getInt(4);
 
             if (favorite == 1 && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4),R.drawable.fav_icon));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue));
             } else if (favorite == 0  && isToDo ==1) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_icon,cursor.getInt(4),R.color.colorAccent));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.colorAccent));
             }
             else if (isToDo ==0) {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_list_note_icon,cursor.getInt(4),R.color.colorAccent));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.colorAccent));
             }
 
 

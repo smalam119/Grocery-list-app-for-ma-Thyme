@@ -1,8 +1,6 @@
 package com.test.smalam.grocerylist.com.test.smalam.grocerylist.main;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -12,7 +10,6 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
@@ -79,7 +76,7 @@ public class NotesViewerActivity extends AppCompatActivity
                 getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
         note.setText(fetchedNoteText);
 
-        title = (TextView) findViewById(R.id.title_note);
+        title = (TextView) findViewById(R.id.title_to_do);
         title.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
         title.setText(fetchedTitle);
     }

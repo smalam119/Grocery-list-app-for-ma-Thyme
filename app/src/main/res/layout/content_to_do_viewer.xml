@@ -10,7 +10,7 @@
 
 
         <TextView
-            android:id="@+id/title_note"
+            android:id="@+id/title_to_do"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"

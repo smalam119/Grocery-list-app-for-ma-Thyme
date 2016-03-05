@@ -68,7 +68,7 @@ public class CreateTakeANoteFragment extends Fragment
         note.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
 
-        title = (EditText) v.findViewById(R.id.title);
+        title = (EditText) v.findViewById(R.id.title_to_do);
         title.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
         title.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));

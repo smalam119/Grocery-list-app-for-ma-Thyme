@@ -10,7 +10,7 @@
 
         <item
             android:id="@+id/take_a_note"
-            android:icon="@drawable/note_icon"
+            android:icon="@drawable/option_menu_edit_blue"
             android:title="Take A Note"/>
 
         <item
@@ -20,7 +20,7 @@
 
         <item
             android:id="@+id/trash"
-            android:icon="@drawable/trash_icon"
+            android:icon="@drawable/option_menu_trash_blue"
             android:title="Trash" />
 
     </group>

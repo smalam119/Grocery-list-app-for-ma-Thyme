@@ -1,40 +1,24 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <EditText
-        android:id="@+id/note_body"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
-        android:hint="@string/note_body_hint"
-        android:gravity="top|left"
-        android:background="#ffffff"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"/>
-
-    <RelativeLayout
-        android:id="@+id/footer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center" >
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#f2efef">
+        android:background="@color/footer_background">
 
         <EditText
-            android:id="@+id/title"
+            android:id="@+id/title_to_do"
             android:layout_width="130dp"
             android:layout_height="match_parent"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             android:hint="@string/title_hint"
             android:layout_marginRight="150dp"
-            android:background="#f2efef"/>
+            android:background="@color/footer_background"/>
 
         <ImageButton
             android:id="@+id/save_note"
@@ -48,12 +32,22 @@
             android:id="@+id/fav_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/add"
+            android:background="@drawable/menu_option_add"
             android:layout_marginRight="10dp"
             />
 
     </LinearLayout>
 
-    </RelativeLayout>
+    <EditText
+        android:id="@+id/note_body"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:hint="@string/note_body_hint"
+        android:gravity="top|left"
+        android:background="#ffffff"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        />
 
-</RelativeLayout>
+
+</LinearLayout>

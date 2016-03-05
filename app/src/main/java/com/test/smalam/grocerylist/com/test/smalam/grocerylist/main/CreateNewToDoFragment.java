@@ -85,7 +85,7 @@ public class CreateNewToDoFragment extends Fragment {
         fav = (ImageButton) rootView.findViewById(R.id.fav_button);
         fav.setBackgroundResource(R.drawable.unselected_fav_icon);
 
-        titleEd = (EditText) rootView.findViewById(R.id.title_note);
+        titleEd = (EditText) rootView.findViewById(R.id.title_to_do);
         titleEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),settings.getFont(settings.getFontNumber())));
         titleEd.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
@@ -97,7 +97,7 @@ public class CreateNewToDoFragment extends Fragment {
 
                 if (favButtonState == false) {
 
-                    fav.setBackgroundResource(R.drawable.fav_icon);
+                    fav.setBackgroundResource(R.drawable.option_menu_fav_blue);
                     favButtonState = true;
                 } else if (favButtonState == true) {
 

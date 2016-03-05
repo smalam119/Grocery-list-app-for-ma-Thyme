@@ -78,7 +78,7 @@ public class EditToDoActivity extends AppCompatActivity {
 
         if(favButtonState == true)
         {
-            iv.setBackgroundResource(R.drawable.fav_icon);
+            iv.setBackgroundResource(R.drawable.option_menu_fav_blue);
         }
 
         else if(favButtonState == false)
@@ -89,7 +89,7 @@ public class EditToDoActivity extends AppCompatActivity {
 
 
 
-        titleEd = (EditText) findViewById(R.id.title_e);
+        titleEd = (EditText) findViewById(R.id.title_to_do_e);
         titleEd.setText(title);
         titleEd.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
         titleEd.setTextSize(TypedValue.COMPLEX_UNIT_PX,
@@ -111,7 +111,7 @@ public class EditToDoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (favButtonState == false) {
 
-                    fav.setBackgroundResource(R.drawable.fav_icon);
+                    fav.setBackgroundResource(R.drawable.option_menu_fav_blue);
                     favButtonState = true;
                 } else if (favButtonState == true) {
 
