@@ -73,6 +73,8 @@ public class PreviousListsFragment extends Fragment implements SearchView.OnQuer
             notes.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
             toDo.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
 
+            all.setChecked(true);
+
 
             searchOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
@@ -92,6 +94,11 @@ public class PreviousListsFragment extends Fragment implements SearchView.OnQuer
                             break;
                         case R.id.to_do:
                             adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),"toDo");
+                            listView.setAdapter(adapterForPreviousList);
+                            break;
+
+                        default:
+                            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),"all");
                             listView.setAdapter(adapterForPreviousList);
                             break;
                     }

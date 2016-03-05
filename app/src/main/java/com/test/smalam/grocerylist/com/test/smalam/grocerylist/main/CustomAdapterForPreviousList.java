@@ -91,7 +91,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
 
             if (favorite == 1 && isToDo == 1 && isAlarmed == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (favorite == 0  && isToDo ==1 && isAlarmed == 0 )
             {
@@ -103,7 +103,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             }
             else if (favorite == 0  && isToDo ==1 && isAlarmed == 1 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
             }
             else if (isToDo ==1)
             {
@@ -150,46 +150,46 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             int isToDo = cursor.getInt(4);
             int isAlarmed = cursor.getInt(5);
 
-            if (favorite == 1 && isToDo == 1 && isAlarmed == 1)
+            if (isToDo == 1 && isAlarmed == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
-            else if (favorite == 0  && isToDo ==1 && isAlarmed == 0 )
-            {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
-            }
-            else if (favorite == 1  && isToDo ==1 && isAlarmed == 0 )
+            else if (isToDo ==1 && isAlarmed == 0 )
             {
                 a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
-            else if (favorite == 0  && isToDo ==1 && isAlarmed == 1 )
+            else if (isToDo ==1 && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+            }
+            else if ( isToDo ==1 && isAlarmed == 1 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (isToDo ==1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
 
-            if (favorite == 1 && isToDo == 0 && isAlarmed == 1)
+            if (isToDo == 0 && isAlarmed == 1)
             {
                 a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
             }
-            else if (favorite == 0  && isToDo == 0 && isAlarmed == 0 )
-            {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
-            }
-            else if (favorite == 1  && isToDo == 0 && isAlarmed == 0 )
+            else if (isToDo == 0 && isAlarmed == 0 )
             {
                 a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
-            else if (favorite == 0  && isToDo == 0 && isAlarmed == 1 )
+            else if (isToDo == 0 && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+            }
+            else if (isToDo == 0 && isAlarmed == 1 )
+            {
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
             }
             else if (isToDo == 0)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
 
 
@@ -243,23 +243,14 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             int isToDo = cursor.getInt(4);
             int isAlarmed = cursor.getInt(5);
 
-            if (favorite == 1 && isAlarmed == 1)
+            if (favorite == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
-            else if (favorite == 0  && isAlarmed == 0 )
+            else if (favorite == 0)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
             }
-            else if (favorite == 1  && isAlarmed == 0 )
-            {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
-            }
-            else if (favorite == 0  && isToDo == 0 && isAlarmed == 1 )
-            {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
-            }
-
 
         }
 
