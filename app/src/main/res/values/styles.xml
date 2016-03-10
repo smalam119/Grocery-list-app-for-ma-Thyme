@@ -10,7 +10,7 @@
 
 
     <style name="MyTheme.ActionBar.TitleTextStyle" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

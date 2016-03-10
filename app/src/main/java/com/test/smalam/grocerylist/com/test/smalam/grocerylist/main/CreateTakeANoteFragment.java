@@ -30,7 +30,7 @@ public class CreateTakeANoteFragment extends Fragment
     EditText note,title;
     ImageButton save,fav;
     String noteText,titleText;
-    String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+    String currentDateTimeString;
     Settings settings;
     public boolean isSaved = false;
     int latestId;
@@ -111,6 +111,7 @@ public class CreateTakeANoteFragment extends Fragment
                 {
                     if(!isSaved)
                     {
+                        currentDateTimeString=DateFormat.getDateTimeInstance().format(new Date());
                         insertList(db, currentDateTimeString,titleText,noteText);
                         isSaved = true;
                     }
@@ -133,6 +134,7 @@ public class CreateTakeANoteFragment extends Fragment
         cv.put("ARCHIVED",0);
         cv.put("CHECK_LIST_STATUS", "");
         cv.put("IS_TO_DO_LIST",0);
+        cv.put("DATE_ALARM","");
         if(favButtonState)
         {
             cv.put("FAVORITE", 1);

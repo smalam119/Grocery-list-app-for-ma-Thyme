@@ -41,7 +41,7 @@ public class CreateNewToDoFragment extends Fragment {
     private String title,firstEdValue;
     private boolean favButtonState;
     List<EditText> allEds = new ArrayList<EditText>();
-    String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+    String currentDateTimeString;
     ImageButton save,btn,fav;
     EditText ed,titleEd,firstEd;
     int fontNumber,fontColorNumber;
@@ -57,113 +57,8 @@ public class CreateNewToDoFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_create_new_list, container, false);
 
 
-        try
-        {
-            SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(getContext());
-            db = groceryListDatabaseHelper.getWritableDatabase();
-        }
-        catch(SQLiteException e)
-        {
-            Toast toast = Toast.makeText(getContext(), "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-
-        settings = new Settings();
-        settings.getSetting(CreateNewToDoFragment.this);
-
-        //View view = getView();
-
-        firstEd = (EditText) rootView.findViewById(R.id.first_ed);
-        firstEd.setHint("1.");
-        firstEd.requestFocus();
-        firstEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
-        firstEd.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
-        allEds.add(firstEd);
-
-        favButtonState = false;
-        fav = (ImageButton) rootView.findViewById(R.id.fav_button);
-        fav.setBackgroundResource(R.drawable.unselected_fav_icon);
-
-        titleEd = (EditText) rootView.findViewById(R.id.title_to_do);
-        titleEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),settings.getFont(settings.getFontNumber())));
-        titleEd.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
-        btn = (ImageButton) rootView.findViewById(R.id.add_row);
-
-        fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (favButtonState == false) {
-
-                    fav.setBackgroundResource(R.drawable.option_menu_fav_blue);
-                    favButtonState = true;
-                } else if (favButtonState == true) {
-
-                    fav.setBackgroundResource(R.drawable.unselected_fav_icon);
-                    favButtonState = false;
-                }
-            }
-        });
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                createEditText();
-                if(id == 6)
-                {
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-        });
-
-        save = (ImageButton) rootView.findViewById(R.id.save);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemData.clear();
-
-
-                for (int i = 0; i < allEds.size(); i++) {
-                    String s = allEds.get(i).getText().toString();
-                    if (!s.equals("")) {
-                        itemData.add(s);
-                        checks.add("false");
-                    }
-
-                    title = titleEd.getText().toString();
-                    firstEdValue = firstEd.getText().toString();
-                    Toast.makeText(getContext(),getLatestId()+"",Toast.LENGTH_SHORT).show();
-
-                }
-
-                if (title.isEmpty() || firstEdValue.isEmpty())
-                {
-                    Toast.makeText(getContext(), "Your list must have a title and at least an item", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    if(!isSaved)
-                    {
-                        insertList(db, currentDateTimeString, title, itemData.toString());
-                        Toast.makeText(getContext(), "List Saved", Toast.LENGTH_LONG).show();
-                        isSaved = true;
-                    }
-                    else
-                    {
-                        updateList(db, currentDateTimeString, title, itemData.toString());
-                    }
-                }
-
-            }
-        });
-
         return rootView;
     }
-
-
 
 
     public void createEditText()
@@ -178,7 +73,6 @@ public class CreateNewToDoFragment extends Fragment {
         allEds.add(ed);
         ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         ed.setHint("" + id + ".");
-        //ed.setBackgroundResource(R.drawable.apptheme_textfield_activated_holo_light);
         childLayout.addView(ed);
         ed.requestFocus();
         id++;
@@ -263,6 +157,112 @@ public class CreateNewToDoFragment extends Fragment {
     public void onStart()
     {
         super.onStart();
+
+
+
+        try
+        {
+            SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(getContext());
+            db = groceryListDatabaseHelper.getWritableDatabase();
+        }
+        catch(SQLiteException e)
+        {
+            Toast toast = Toast.makeText(getContext(), "Database unavailable", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+        settings = new Settings();
+        settings.getSetting(CreateNewToDoFragment.this);
+
+        View view = getView();
+
+        firstEd = (EditText) view.findViewById(R.id.first_ed);
+        firstEd.setHint("1.");
+        firstEd.requestFocus();
+        firstEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
+        firstEd.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
+        allEds.add(firstEd);
+
+        favButtonState = false;
+        fav = (ImageButton) view.findViewById(R.id.fav_button);
+        fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+
+        titleEd = (EditText) view.findViewById(R.id.title_to_do);
+        titleEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),settings.getFont(settings.getFontNumber())));
+        titleEd.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
+        btn = (ImageButton) view.findViewById(R.id.add_row);
+
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (favButtonState == false) {
+
+                    fav.setBackgroundResource(R.drawable.option_menu_fav_blue);
+                    favButtonState = true;
+                } else if (favButtonState == true) {
+
+                    fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+                    favButtonState = false;
+                }
+            }
+        });
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                createEditText();
+                if(id == 6)
+                {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+
+        save = (ImageButton) view.findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemData.clear();
+
+
+                for (int i = 0; i < allEds.size(); i++) {
+                    String s = allEds.get(i).getText().toString();
+                    if (!s.equals("")) {
+                        itemData.add(s);
+                        checks.add("false");
+                    }
+
+                    title = titleEd.getText().toString();
+                    firstEdValue = firstEd.getText().toString();
+                    Toast.makeText(getContext(),getLatestId()+"",Toast.LENGTH_SHORT).show();
+
+                }
+
+                if (title.isEmpty() || firstEdValue.isEmpty())
+                {
+                    Toast.makeText(getContext(), "Your list must have a title and at least an item", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    if(!isSaved)
+                    {
+                        currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+                        insertList(db, currentDateTimeString, title, itemData.toString());
+                        Toast.makeText(getContext(), "List Saved", Toast.LENGTH_LONG).show();
+                        isSaved = true;
+                    }
+                    else
+                    {
+                        updateList(db, currentDateTimeString, title, itemData.toString());
+                    }
+                }
+
+            }
+        });
 
     }
 

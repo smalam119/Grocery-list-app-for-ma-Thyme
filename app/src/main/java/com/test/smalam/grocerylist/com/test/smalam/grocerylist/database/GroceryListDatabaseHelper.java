@@ -33,13 +33,18 @@ public class GroceryListDatabaseHelper extends SQLiteOpenHelper {
     {
         if(oldVersion<1)
         {
-            db.execSQL("CREATE TABLE LISTS(_id INTEGER PRIMARY KEY AUTOINCREMENT, "+"DATE TEXT,"+"NAME TEXT,"+"ITEMS TEXT,"+"ARCHIVED INTEGER,"+"FAVORITE INTEGER,"+"CHECK_LIST_STATUS TEXT,"+"IS_TO_DO_LIST INTEGER,"+"IS_ALARMED INTEGER);");
+            db.execSQL("CREATE TABLE LISTS(_id INTEGER PRIMARY KEY AUTOINCREMENT, "+"DATE TEXT,"+"NAME TEXT,"+"ITEMS TEXT,"+"ARCHIVED INTEGER,"+"FAVORITE INTEGER,"+"CHECK_LIST_STATUS TEXT,"+"IS_TO_DO_LIST INTEGER,"+"IS_ALARMED INTEGER,"+"DATE_ALARM TEXT);");
             db.execSQL("CREATE TABLE SETTINGS(_id INTEGER PRIMARY KEY AUTOINCREMENT, " + "FONT_FAMILY INTEGER," + "FONT_COLOR INTEGER,"+"FONT_SIZE INTEGER);");
             ContentValues cv = new ContentValues();
             cv.put("FONT_FAMILY", 0);
             cv.put("FONT_COLOR", 0);
             cv.put("FONT_SIZE",1);
             db.insert("SETTINGS", null, cv);
+        }
+
+        if(oldVersion<2)
+        {
+            //
         }
     }
 }

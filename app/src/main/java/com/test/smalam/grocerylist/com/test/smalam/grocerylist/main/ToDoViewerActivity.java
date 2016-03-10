@@ -10,7 +10,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,15 +30,14 @@ public class ToDoViewerActivity extends AppCompatActivity  {
 
     private ArrayList<String> items = new ArrayList<String>();
     public static final String LIST_ID = "drinkNo";
-    private String listId, itemsConcatenated, checkStatusConcatenated, title,fetchedNoteText,fetchedTitle;
+    private String listId, itemsConcatenated, checkStatusConcatenated, title;
     private List<String> listOfItems;
     private List<String> listOfChecks;
     private SQLiteDatabase db;
     ArrayList<Boolean> isSelectedList = new ArrayList<>();
     ListView listView;
     ArrayAdapter<String> adapter;
-    TextView titleTv;
-    private ActionMode mActionMode;
+    TextView titleTv;;
     Settings settings;
 
     @Override
@@ -94,49 +92,8 @@ public class ToDoViewerActivity extends AppCompatActivity  {
             }
         }
 
-        Toast.makeText(this,listOfChecks.toString(),Toast.LENGTH_LONG).show();
-
-
     }
 
-
-    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
-
-        // Called when the action mode is created; startActionMode() was called
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            // Inflate a menu resource providing context menu items
-            MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.archived_list_option_menu, menu);
-            return true;
-        }
-
-        // Called each time the action mode is shown. Always called after onCreateActionMode, but
-        // may be called multiple times if the mode is invalidated.
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false; // Return false if nothing is done
-        }
-
-        // Called when the user selects a contextual menu item
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.delete_a:
-                    Toast.makeText(getBaseContext(),"Alhamdulillah",Toast.LENGTH_SHORT).show();
-                    mode.finish(); // Action picked, so close the CAB
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        // Called when the user exits the action mode
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            mActionMode = null;
-        }
-    };
 
     public void fetchItemsOfAList()
     {

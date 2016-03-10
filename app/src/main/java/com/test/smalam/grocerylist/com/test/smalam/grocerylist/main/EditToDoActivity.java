@@ -14,6 +14,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -47,7 +50,6 @@ public class EditToDoActivity extends AppCompatActivity {
     EditText ed,titleEd;
     private int id = 1;
     Settings settings;
-    private int fontNumber,fontColorNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -123,6 +125,7 @@ public class EditToDoActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -137,9 +140,12 @@ public class EditToDoActivity extends AppCompatActivity {
             title = titleEd.getText().toString();
         }
 
-        if (title.isEmpty()) {
+        if (title.isEmpty())
+        {
             Toast.makeText(getBaseContext(), "Your list must have a title", Toast.LENGTH_LONG).show();
-        } else {
+        } else
+        {
+            currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
             updateList(db, currentDateTimeString, title, itemData.toString());
             Toast.makeText(getBaseContext(), "List Saved", Toast.LENGTH_LONG).show();
         }
@@ -195,11 +201,9 @@ public class EditToDoActivity extends AppCompatActivity {
                 getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
         ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         allEds.add(ed);
-        //ed.setId(id);
         ed.setText(content);
         childLayout.addView(ed);
         ed.requestFocus();
-        //id++;
     }
 
     public void createEditText()
@@ -231,7 +235,7 @@ public class EditToDoActivity extends AppCompatActivity {
         {
             cv.put("FAVORITE", 0);
         }
-        db.update("LISTS",cv, "_id=?", new String[] {listId});
+        db.update("LISTS", cv, "_id=?", new String[]{listId});
     }
 
 

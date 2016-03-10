@@ -11,31 +11,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:layout_marginTop="55dp">
+        android:gravity="center">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@color/footer_background">
 
             <EditText
                 android:id="@+id/title_to_do_e"
-                android:layout_width="130dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
                 android:hint="@string/title_hint"
-                android:layout_marginRight="100dp"
-                android:background="@color/footer_background"/>
+                android:background="@color/footer_background"
+                android:layout_centerVertical="true"/>
 
             <ImageButton
                 android:id="@+id/add_row_e"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/menu_option_add"
-                android:layout_marginLeft="60dp"
+                android:layout_toLeftOf="@+id/fav_button_e"
                 />
 
             <ImageButton
@@ -43,9 +40,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/menu_option_add"
+                android:layout_alignParentRight="true"
                 />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </RelativeLayout>
 
@@ -59,7 +57,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp">
 
             <EditText

@@ -43,6 +43,7 @@ public class NotesViewerActivity extends AppCompatActivity
     Calendar currentDateAndTime=Calendar.getInstance();
     long dif;
     boolean isAlarmed;
+    String alarmDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -88,7 +89,7 @@ public class NotesViewerActivity extends AppCompatActivity
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(this);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         Cursor cursor = db.query("LISTS",
-                new String[]{"NAME", "ITEMS"},
+                new String[]{"NAME", "ITEMS","IS_ALARMED","DATE_ALARM"},
                 "_id=?",
                 new String[]{listId},
                 null, null, null);
@@ -96,6 +97,16 @@ public class NotesViewerActivity extends AppCompatActivity
         if (cursor.moveToFirst()) {
             fetchedNoteText = cursor.getString(1).replaceAll("\\[", "").replaceAll("\\]", "").trim();
             fetchedTitle = cursor.getString(0);
+            if(cursor.getInt(2) == 1)
+            {
+                isAlarmed = true;
+            }
+            else
+            {
+                isAlarmed = false;
+            }
+
+            alarmDate = cursor.getString(3);
 
         }
 
@@ -125,17 +136,24 @@ public class NotesViewerActivity extends AppCompatActivity
                 return true;
 
             case R.id.action_reminder:
-                //startNotificationService();
-                new TimePickerDialog(NotesViewerActivity.this,
-                        t,
-                        dateAndTime.get(Calendar.HOUR_OF_DAY),
-                        dateAndTime.get(Calendar.MINUTE),
-                        true).show();
+                if(!isAlarmed)
+                {
+                    new TimePickerDialog(NotesViewerActivity.this,
+                            t,
+                            dateAndTime.get(Calendar.HOUR_OF_DAY),
+                            dateAndTime.get(Calendar.MINUTE),
+                            true).show();
 
-                new DatePickerDialog(NotesViewerActivity.this,d,
-                        dateAndTime.get(Calendar.YEAR),
-                        dateAndTime.get(Calendar.MONTH),
-                        dateAndTime.get(Calendar.DAY_OF_MONTH)).show();
+                    new DatePickerDialog(NotesViewerActivity.this,d,
+                            dateAndTime.get(Calendar.YEAR),
+                            dateAndTime.get(Calendar.MONTH),
+                            dateAndTime.get(Calendar.DAY_OF_MONTH)).show();
+                }
+                else
+                {
+                    Toast.makeText(getBaseContext(),"Alarm is set to. "+alarmDate+" Do you want to cancel the reminder?",Toast.LENGTH_SHORT).show();
+                }
+
 
                 return true;
 
@@ -191,11 +209,10 @@ public class NotesViewerActivity extends AppCompatActivity
 
         dif = dateAndTime.getTimeInMillis()-currentDateAndTime.getTimeInMillis();
         Toast.makeText(this, "" + dif, Toast.LENGTH_SHORT).show();
-        isAlarmed = true;
-
         ContentValues cv = new ContentValues();
         cv.put("IS_ALARMED", 1);
-        Toast.makeText(this,"Reminder Set",Toast.LENGTH_SHORT).show();
+        cv.put("DATE_ALARM",dateAndTime.getTime()+"");
+        Toast.makeText(this,"Reminder Set to" +dateAndTime.getTime(),Toast.LENGTH_LONG).show();
         db.update("LISTS", cv, "_id=?", new String[]{listId});
         startNotificationService();
     }

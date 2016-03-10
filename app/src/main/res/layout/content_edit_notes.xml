@@ -4,34 +4,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/footer_background"
-        android:layout_marginTop="55dp">
+        android:background="@color/footer_background">
 
         <EditText
             android:id="@+id/title_note_e"
-            android:layout_width="130dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
             android:hint="@string/title_hint"
-            android:layout_marginRight="150dp"
-            android:background="@color/footer_background"/>
+            android:background="@color/footer_background"
+            android:layout_centerVertical="true"/>
 
-    </LinearLayout>
+        <ImageButton
+            android:id="@+id/fav_button_e"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/unselected_fav_icon"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            />
+
+
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/note_body_e"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:hint="@string/note_body_hint"
         android:gravity="top|left"
-        android:background="#ffffff"
-        android:layout_gravity="center"
+        android:background="@color/white"
         android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         />
 
 

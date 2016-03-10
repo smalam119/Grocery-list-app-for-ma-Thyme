@@ -28,12 +28,6 @@ import java.util.ArrayList;
 public class CustomAdapterForArchivedList extends BaseAdapter {
     Context context;
     ArrayList<SingleRow> a;
-    final String[] spinnerOptions = {
-            "",
-            "Delete",
-            "Restore",
-    };
-
     Settings settings;
 
 
@@ -43,7 +37,6 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         a = new ArrayList<SingleRow>();
         settings = new Settings();
         settings.getSetting(context);
-        final SingleRow temp;
 
         readAllArchivedLists();
     }
@@ -163,21 +156,21 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
                         a.remove(t);
                         CustomAdapterForArchivedList.this.notifyDataSetChanged();
                         deleteList(t);
-                        Toast.makeText(context, "List Deleted", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Item Deleted", Toast.LENGTH_LONG).show();
                         return true;
 
                     case R.id.delete_all:
                         a.clear();
                         CustomAdapterForArchivedList.this.notifyDataSetChanged();
                         deleteAll();
-                        Toast.makeText(context, "List Deleted", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "All Items Are Deleted", Toast.LENGTH_LONG).show();
                         return true;
 
                     case R.id.restore_a:
                         a.remove(t);
                         CustomAdapterForArchivedList.this.notifyDataSetChanged();
                         sendToPreviousList(t);
-                        Toast.makeText(context, "Restored", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Item Restored", Toast.LENGTH_LONG).show();
                         return true;
 
                     default:
