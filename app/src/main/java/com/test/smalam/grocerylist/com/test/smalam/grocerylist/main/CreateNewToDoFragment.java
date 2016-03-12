@@ -240,7 +240,6 @@ public class CreateNewToDoFragment extends Fragment {
 
                     title = titleEd.getText().toString();
                     firstEdValue = firstEd.getText().toString();
-                    Toast.makeText(getContext(),getLatestId()+"",Toast.LENGTH_SHORT).show();
 
                 }
 

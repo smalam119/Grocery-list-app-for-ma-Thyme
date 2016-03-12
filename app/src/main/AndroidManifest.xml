@@ -60,6 +60,14 @@
         <activity
             android:name=".com.test.smalam.grocerylist.about.AboutActivity"
             android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".com.test.smalam.grocerylist.main.CreateNewToDoFragment"
+            android:label="@string/title_activity_create_new_to_do_fragment"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".com.test.smalam.grocerylist.about.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme"></activity>
     </application>
 

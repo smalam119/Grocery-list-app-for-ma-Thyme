@@ -187,7 +187,7 @@ public class EditNotesActivity extends AppCompatActivity
         {
             currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
             updateList(db, currentDateTimeString, titleText, noteText);
-            Toast.makeText(getBaseContext(),"Note added",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(),"Note Saved",Toast.LENGTH_SHORT).show();
         }
 
         Intent i = new Intent(this,NotesViewerActivity.class);

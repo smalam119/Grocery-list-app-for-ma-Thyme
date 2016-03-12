@@ -143,10 +143,14 @@ public class ToDoViewerActivity extends AppCompatActivity  {
         if(fav == 0)
         {
             cv.put("FAVORITE", 1);
+
+            Toast.makeText(this,"Added as favorite",Toast.LENGTH_SHORT).show();
         }
         else if(fav == 1)
         {
             cv.put("FAVORITE", 0);
+
+            Toast.makeText(this,"Removed as favorite",Toast.LENGTH_SHORT).show();
         }
         db.update("LISTS",cv, "_id=?", new String[] {s});
     }

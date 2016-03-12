@@ -151,7 +151,7 @@ public class NotesViewerActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(),"Alarm is set to. "+alarmDate,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(),"Alarm is set to "+alarmDate,Toast.LENGTH_SHORT).show();
                 }
 
 

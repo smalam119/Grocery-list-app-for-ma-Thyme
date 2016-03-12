@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdView;
 import com.test.smalam.grocerylist.R;
-import com.test.smalam.grocerylist.com.test.smalam.grocerylist.about.AboutActivity;
+import com.test.smalam.grocerylist.com.test.smalam.grocerylist.about.ScrollingActivity;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.settings.Settings;
 
@@ -65,7 +65,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(getApplicationContext(), AboutActivity.class);
+                Intent i = new Intent(getApplicationContext(), ScrollingActivity.class);
                 startActivity(i);
             }
         });
