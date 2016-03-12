@@ -151,7 +151,7 @@ public class NotesViewerActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(),"Alarm is set to. "+alarmDate+" Do you want to cancel the reminder?",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(),"Alarm is set to. "+alarmDate,Toast.LENGTH_SHORT).show();
                 }
 
 

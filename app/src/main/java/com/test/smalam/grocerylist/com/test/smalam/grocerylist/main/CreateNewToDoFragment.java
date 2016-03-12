@@ -189,6 +189,7 @@ public class CreateNewToDoFragment extends Fragment {
         fav.setBackgroundResource(R.drawable.unselected_fav_icon);
 
         titleEd = (EditText) view.findViewById(R.id.title_to_do);
+        titleEd.requestFocus();
         titleEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),settings.getFont(settings.getFontNumber())));
         titleEd.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));

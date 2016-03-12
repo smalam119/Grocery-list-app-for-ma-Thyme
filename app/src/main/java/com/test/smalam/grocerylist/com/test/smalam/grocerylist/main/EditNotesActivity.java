@@ -16,7 +16,9 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import com.test.smalam.grocerylist.R;
 import com.test.smalam.grocerylist.com.test.smalam.grocerylist.database.GroceryListDatabaseHelper;
@@ -33,6 +35,8 @@ public class EditNotesActivity extends AppCompatActivity
     String currentDateTimeString;
     public String listId,fetchedNoteText,fetchedTitle;
     Settings settings;
+    private boolean favButtonState;
+    ImageButton fav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,35 @@ public class EditNotesActivity extends AppCompatActivity
         settings.getSetting(this);
 
         fetchItemsOfAList();
+
+        fav = (ImageButton) findViewById(R.id.fav_button_e);
+        fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+
+        if(favButtonState == true)
+        {
+            fav.setBackgroundResource(R.drawable.option_menu_fav_blue);
+        }
+
+        else if(favButtonState == false)
+        {
+            fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+        }
+
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (favButtonState == false) {
+
+                    fav.setBackgroundResource(R.drawable.option_menu_fav_blue);
+                    favButtonState = true;
+                } else if (favButtonState == true) {
+
+                    fav.setBackgroundResource(R.drawable.unselected_fav_icon);
+                    favButtonState = false;
+                }
+            }
+        });
 
         note = (EditText) findViewById(R.id.note_body_e);
         note.setTypeface(Typeface.createFromAsset(getAssets(), settings.getFont(settings.getFontNumber())));
@@ -97,7 +130,7 @@ public class EditNotesActivity extends AppCompatActivity
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(this);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
         Cursor cursor = db.query("LISTS",
-                new String[]{"NAME", "ITEMS"},
+                new String[]{"NAME", "ITEMS","FAVORITE"},
                 "_id=?",
                 new String[]{listId},
                 null, null, null);
@@ -105,8 +138,19 @@ public class EditNotesActivity extends AppCompatActivity
         if (cursor.moveToFirst()) {
             fetchedNoteText = cursor.getString(1).replaceAll("\\[", "").replaceAll("\\]", "").trim();
             fetchedTitle = cursor.getString(0);
+            int fav = cursor.getInt(2);
+
+            if (fav == 0)
+            {
+                favButtonState = false;
+            }
+            else if (fav == 1)
+            {
+                favButtonState = true;
+            }
 
         }
+
 
     }
 
@@ -116,7 +160,14 @@ public class EditNotesActivity extends AppCompatActivity
         cv.put("DATE", date);
         cv.put("NAME", name);
         cv.put("ITEMS",noteText);
-        cv.put("FAVORITE", 0);
+        if(favButtonState)
+        {
+            cv.put("FAVORITE", 1);
+        }
+        else if(!favButtonState)
+        {
+            cv.put("FAVORITE", 0);
+        }
         db.update("LISTS",cv, "_id=?", new String[] {listId});
     }
 

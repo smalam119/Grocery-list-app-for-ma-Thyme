@@ -152,6 +152,14 @@ public class CreateTakeANoteFragment extends Fragment
         cv.put("DATE", date);
         cv.put("NAME", name);
         cv.put("ITEMS", noteText);
+        if(favButtonState)
+        {
+            cv.put("FAVORITE", 1);
+        }
+        else if(!favButtonState)
+        {
+            cv.put("FAVORITE", 0);
+        }
         db.update("LISTS", cv, "_id=?", new String[]{getLatestId() + ""});
     }
 

@@ -6,12 +6,6 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/footer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -52,8 +46,6 @@
                 />
 
         </RelativeLayout>
-
-    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
