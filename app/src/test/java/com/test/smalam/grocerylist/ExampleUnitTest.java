@@ -1,4 +1,4 @@
-package com.test.smalam.grocerylist;
+package com.pseudozero.thyme.thyme;
 
 import org.junit.Test;
 

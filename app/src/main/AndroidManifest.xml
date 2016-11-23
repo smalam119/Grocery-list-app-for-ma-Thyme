@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.test.smalam.grocerylist">
+    package="com.pseudozero.thyme.thyme"
+    android:versionCode="1"
+    android:versionName="1.1">
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_thyme"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".com.test.smalam.grocerylist.main.MainActivity"
+            android:name="com.pseudozero.thyme.thyme.main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -21,33 +23,34 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".com.test.smalam.grocerylist.main.ToDoViewerActivity"
+            android:name="com.pseudozero.thyme.thyme.main.ToDoViewerActivity"
             android:label="@string/title_activity_item_selected_list"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".com.test.smalam.grocerylist.main.EditToDoActivity"
+            android:name="com.pseudozero.thyme.thyme.main.EditToDoActivity"
             android:label="@string/title_activity_edit_list"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".com.test.smalam.grocerylist.main.EditNotesActivity"
+            android:name="com.pseudozero.thyme.thyme.main.EditNotesActivity"
             android:label="@string/title_activity_edit_notes"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".com.test.smalam.grocerylist.main.NotesViewerActivity"
+            android:name="com.pseudozero.thyme.thyme.main.NotesViewerActivity"
             android:label="@string/title_activity_notes_viewer"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".com.test.smalam.grocerylist.main.SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:screenOrientation="portrait"/>
 
         <service
-            android:name=".com.test.smalam.grocerylist.service.ReminderService"
+            android:name="com.pseudozero.thyme.thyme.service.ReminderService"
             android:exported="false" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -58,17 +61,19 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".com.test.smalam.grocerylist.about.AboutActivity"
+            android:name="com.pseudozero.thyme.thyme.about.IconCreditActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".com.test.smalam.grocerylist.main.CreateNewToDoFragment"
+            android:name="com.pseudozero.thyme.thyme.main.CreateNewToDoFragment"
             android:label="@string/title_activity_create_new_to_do_fragment"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity
-            android:name=".com.test.smalam.grocerylist.about.ScrollingActivity"
+            android:name="com.pseudozero.thyme.thyme.about.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

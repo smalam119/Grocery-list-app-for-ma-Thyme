@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.test.smalam.grocerylist.com.test.smalam.grocerylist.service.TimePickerFragment">
+    tools:context="com.pseudozero.thyme.thyme.service.TimePickerFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
