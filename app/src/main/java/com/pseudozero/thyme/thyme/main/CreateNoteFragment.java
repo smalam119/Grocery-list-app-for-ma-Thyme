@@ -17,19 +17,19 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
-import com.pseudozero.thyme.thyme.settings.Settings;
+import com.pseudozero.thyme.thyme.settings.SettingsData;
 import java.text.DateFormat;
 import java.util.Date;
 
 
-public class CreateTakeANoteFragment extends Fragment
+public class CreateNoteFragment extends Fragment
 {
     private SQLiteDatabase db;
     EditText note,title;
     ImageButton save,fav;
     String noteText,titleText;
     String currentDateTimeString;
-    Settings settings;
+    SettingsData settings;
     public boolean isSaved = false;
     int latestId;
     private boolean favButtonState;
@@ -79,8 +79,8 @@ public class CreateTakeANoteFragment extends Fragment
             }
         });
 
-        settings = new Settings();
-        settings.getSetting(CreateTakeANoteFragment.this);
+        settings = new SettingsData();
+        settings.getSetting(CreateNoteFragment.this);
 
         note = (EditText) v.findViewById(R.id.note_body);
         note.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));

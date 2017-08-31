@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
-import com.pseudozero.thyme.thyme.settings.Settings;
+import com.pseudozero.thyme.thyme.settings.SettingsData;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class EditToDoActivity extends AppCompatActivity {
     ImageButton btn,fav,iv;
     EditText ed,titleEd;
     private int id = 1;
-    Settings settings;
+    SettingsData settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,7 +56,7 @@ public class EditToDoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        settings = new Settings();
+        settings = new SettingsData();
         settings.getSetting(this);
 
         try
@@ -147,8 +147,8 @@ public class EditToDoActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "List Saved", Toast.LENGTH_LONG).show();
         }
 
-        Intent i = new Intent(this,ToDoViewerActivity.class);
-        i.putExtra(ToDoViewerActivity.LIST_ID,listId);
+        Intent i = new Intent(this,ToDoListActivity.class);
+        i.putExtra(ToDoListActivity.LIST_ID,listId);
         startActivity(i);
 
     }

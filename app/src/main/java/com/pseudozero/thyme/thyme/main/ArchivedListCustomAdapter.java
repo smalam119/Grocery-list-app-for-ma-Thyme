@@ -17,24 +17,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
-import com.pseudozero.thyme.thyme.settings.Settings;
+import com.pseudozero.thyme.thyme.settings.SettingsData;
 
 import java.util.ArrayList;
 
 /**
  * Created by SAYED on 1/13/2016.
  */
-public class CustomAdapterForArchivedList extends BaseAdapter {
+public class ArchivedListCustomAdapter extends BaseAdapter {
     Context context;
-    ArrayList<SingleRow> a;
-    Settings settings;
+    ArrayList<SingleRowToDoList> a;
+    SettingsData settings;
 
 
 
-    CustomAdapterForArchivedList(Context c) {
+    ArchivedListCustomAdapter(Context c) {
         context = c;
-        a = new ArrayList<SingleRow>();
-        settings = new Settings();
+        a = new ArrayList<SingleRowToDoList>();
+        settings = new SettingsData();
         settings.getSetting(context);
 
         readAllArchivedLists();
@@ -51,19 +51,19 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         {
             if(cursor.getInt(3) == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon_black, 0,R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_list_icon_black, 0,R.drawable.option_menu_fav_blue,R.color.white));
             }
 
             else if(cursor.getInt(3) == 0)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_black, 0,R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_black, 0,R.drawable.option_menu_fav_blue,R.color.white));
             }
 
         }
 
     }
 
-    public void deleteList(SingleRow s)
+    public void deleteList(SingleRowToDoList s)
     {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
@@ -81,7 +81,7 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
                 new String[]{"1"});
     }
 
-    public void sendToPreviousList(SingleRow s)
+    public void sendToPreviousList(SingleRowToDoList s)
     {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
@@ -118,7 +118,7 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         TextView  tvDate = (TextView) rowView.findViewById(R.id.textView_date);
         ImageView iv = (ImageView) rowView.findViewById(R.id.imageView1);
         ImageView isFav = (ImageView) rowView.findViewById(R.id.is_fav);
-        final SingleRow temp = a.get(position);
+        final SingleRowToDoList temp = a.get(position);
         isFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +143,7 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
         return rowView;
     }
 
-    public void showMenu(View v, final SingleRow t) {
+    public void showMenu(View v, final SingleRowToDoList t) {
         PopupMenu popup = new PopupMenu(context, v);
 
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -153,21 +153,21 @@ public class CustomAdapterForArchivedList extends BaseAdapter {
                 {
                     case R.id.delete_a:
                         a.remove(t);
-                        CustomAdapterForArchivedList.this.notifyDataSetChanged();
+                        ArchivedListCustomAdapter.this.notifyDataSetChanged();
                         deleteList(t);
                         Toast.makeText(context, "Item Deleted", Toast.LENGTH_LONG).show();
                         return true;
 
                     case R.id.delete_all:
                         a.clear();
-                        CustomAdapterForArchivedList.this.notifyDataSetChanged();
+                        ArchivedListCustomAdapter.this.notifyDataSetChanged();
                         deleteAll();
                         Toast.makeText(context, "All Items Are Deleted", Toast.LENGTH_LONG).show();
                         return true;
 
                     case R.id.restore_a:
                         a.remove(t);
-                        CustomAdapterForArchivedList.this.notifyDataSetChanged();
+                        ArchivedListCustomAdapter.this.notifyDataSetChanged();
                         sendToPreviousList(t);
                         Toast.makeText(context, "Item Restored", Toast.LENGTH_LONG).show();
                         return true;

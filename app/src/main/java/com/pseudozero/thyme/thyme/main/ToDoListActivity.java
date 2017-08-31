@@ -20,13 +20,13 @@ import android.widget.Toast;
 
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
-import com.pseudozero.thyme.thyme.settings.Settings;
+import com.pseudozero.thyme.thyme.settings.SettingsData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ToDoViewerActivity extends AppCompatActivity  {
+public class ToDoListActivity extends AppCompatActivity  {
 
     private ArrayList<String> items = new ArrayList<String>();
     public static final String LIST_ID = "drinkNo";
@@ -38,14 +38,14 @@ public class ToDoViewerActivity extends AppCompatActivity  {
     ListView listView;
     ArrayAdapter<String> adapter;
     TextView titleTv;;
-    Settings settings;
+    SettingsData settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do_viwer);
 
-        settings = new Settings();
+        settings = new SettingsData();
         settings.getSetting(this);
 
         try

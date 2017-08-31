@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.pseudozero.thyme.thyme.main.ToDoViewerActivity"
+            android:name="com.pseudozero.thyme.thyme.main.ToDoListActivity"
             android:label="@string/title_activity_item_selected_list"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />

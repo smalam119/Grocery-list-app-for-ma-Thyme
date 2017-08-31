@@ -19,18 +19,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
-import com.pseudozero.thyme.thyme.settings.Settings;
+import com.pseudozero.thyme.thyme.settings.SettingsData;
 import java.util.ArrayList;
 
 
 /**
  * Created by SAYED on 1/13/2016.
  */
-public class CustomAdapterForPreviousList extends BaseAdapter
+public class PreviousListCustomAdapter extends BaseAdapter
 {
     Context context;
-    ArrayList<SingleRow> a;
-    ArrayList<SingleRow> a1;
+    ArrayList<SingleRowToDoList> a;
+    ArrayList<SingleRowToDoList> a1;
     ValueFilter valueFilter;
     final String[] spinnerOptions = {
             "",
@@ -39,18 +39,18 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             "Send"
     };
 
-    Settings settings;
+    SettingsData settings;
 
 
     public  static String queryType;
 
-    CustomAdapterForPreviousList(Context c,String typeOfSearch) {
+    PreviousListCustomAdapter(Context c, String typeOfSearch) {
         context = c;
-        a = new ArrayList<SingleRow>();
-        a1 = new ArrayList<SingleRow>();
-        settings = new Settings();
+        a = new ArrayList<SingleRowToDoList>();
+        a1 = new ArrayList<SingleRowToDoList>();
+        settings = new SettingsData();
         settings.getSetting(context);
-        final SingleRow temp;
+        final SingleRowToDoList temp;
 
         if(typeOfSearch.equals("all"))
         {
@@ -89,44 +89,44 @@ public class CustomAdapterForPreviousList extends BaseAdapter
 
             if (favorite == 1 && isToDo == 1 && isAlarmed == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (favorite == 0  && isToDo ==1 && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
             }
             else if (favorite == 1  && isToDo ==1 && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (favorite == 0  && isToDo ==1 && isAlarmed == 1 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
             }
             else if (isToDo ==1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
             }
 
             if (favorite == 1 && isToDo == 0 && isAlarmed == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
             }
             else if (favorite == 0  && isToDo == 0 && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
             }
             else if (favorite == 1  && isToDo == 0 && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (favorite == 0  && isToDo == 0 && isAlarmed == 1 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
             }
             else if (isToDo == 0)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
             }
 
 
@@ -150,44 +150,44 @@ public class CustomAdapterForPreviousList extends BaseAdapter
 
             if (isToDo == 1 && isAlarmed == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (isToDo ==1 && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (isToDo ==1 && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if ( isToDo ==1 && isAlarmed == 1 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (isToDo ==1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
 
             if (isToDo == 0 && isAlarmed == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
             }
             else if (isToDo == 0 && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (isToDo == 0 && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (isToDo == 0 && isAlarmed == 1 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
             }
             else if (isToDo == 0)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
 
 
@@ -209,19 +209,19 @@ public class CustomAdapterForPreviousList extends BaseAdapter
 
             if (favorite == 1 && isAlarmed == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.drawable.option_menu_reminder_blue));
             }
             else if (favorite == 0  && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
             }
             else if (favorite == 1  && isAlarmed == 0 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (favorite == 0  && isToDo == 0 && isAlarmed == 1 )
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_note_icon_grey,cursor.getInt(4),R.color.white,R.drawable.option_menu_reminder_blue));
             }
 
 
@@ -243,11 +243,11 @@ public class CustomAdapterForPreviousList extends BaseAdapter
 
             if (favorite == 1)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2), R.drawable.previous_to_do_icon_blue,cursor.getInt(4),R.drawable.option_menu_fav_blue,R.color.white));
             }
             else if (favorite == 0)
             {
-                a.add(new SingleRow(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
+                a.add(new SingleRowToDoList(cursor.getInt(0), cursor.getString(1), cursor.getString(2),R.drawable.previous_to_do_icon_grey,cursor.getInt(4),R.color.white,R.color.white));
             }
 
         }
@@ -255,7 +255,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
 
     }
 
-    public void sendToTrash(SingleRow s)
+    public void sendToTrash(SingleRowToDoList s)
     {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
@@ -265,7 +265,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
     }
 
 
-    public void deleteList(SingleRow s)
+    public void deleteList(SingleRowToDoList s)
     {
         SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(context);
         SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
@@ -300,7 +300,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         TextView tvTitle = (TextView) rowView.findViewById(R.id.textView_title_single_row);
         TextView tvDate = (TextView) rowView.findViewById(R.id.textView_date);
         ImageView icon = (ImageView) rowView.findViewById(R.id.imageView1);
-        final SingleRow temp = a.get(position);
+        final SingleRowToDoList temp = a.get(position);
 
         ImageView isFav = (ImageView) rowView.findViewById(R.id.is_fav);
 
@@ -326,8 +326,8 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 if (temp.getIsToDoList() == 1) {
-                    Intent intent = new Intent(context, ToDoViewerActivity.class);
-                    intent.putExtra(ToDoViewerActivity.LIST_ID, temp.id);
+                    Intent intent = new Intent(context, ToDoListActivity.class);
+                    intent.putExtra(ToDoListActivity.LIST_ID, temp.id);
                     context.startActivity(intent);
                 } else if (temp.getIsToDoList() == 0) {
                     Intent intent = new Intent(context, NotesViewerActivity.class);
@@ -340,7 +340,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         return rowView;
     }
 
-    public void showMenu(View v, final SingleRow t) {
+    public void showMenu(View v, final SingleRowToDoList t) {
         PopupMenu popup = new PopupMenu(context, v);
 
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -364,7 +364,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
 
                     case R.id.delete:
                         a.remove(t);
-                        CustomAdapterForPreviousList.this.notifyDataSetChanged();
+                        PreviousListCustomAdapter.this.notifyDataSetChanged();
                         sendToTrash(t);
                         Toast.makeText(context, "List Deleted", Toast.LENGTH_LONG).show();
                         return true;
@@ -392,12 +392,12 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             FilterResults results = new FilterResults();
 
             if (constraint != null && constraint.length() > 0) {
-                ArrayList<SingleRow> filterList = new ArrayList<SingleRow>();
+                ArrayList<SingleRowToDoList> filterList = new ArrayList<SingleRowToDoList>();
                 for (int i = 0; i < a.size(); i++) {
                     if ((a.get(i).getTitle().toUpperCase())
                             .contains(constraint.toString().toUpperCase())) {
 
-                        SingleRow sr = new SingleRow(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getImageResource(),a.get(i).getId(),a.get(i).getIsFavImage(),a.get(i).getIsAlarmed());
+                        SingleRowToDoList sr = new SingleRowToDoList(a.get(i).getId(), a.get(i).getTitle(), a.get(i).getDate(), a.get(i).getImageResource(),a.get(i).getId(),a.get(i).getIsFavImage(),a.get(i).getIsAlarmed());
 
                         filterList.add(sr);
                     }
@@ -407,28 +407,28 @@ public class CustomAdapterForPreviousList extends BaseAdapter
             }
             else {
 
-                if(CustomAdapterForPreviousList.queryType.equals("all"))
+                if(PreviousListCustomAdapter.queryType.equals("all"))
                 {
                     a.clear();
                     readAllLists();
                     results.count = a.size();
                     results.values = a;
                 }
-                else if(CustomAdapterForPreviousList.queryType.equals("favorite"))
+                else if(PreviousListCustomAdapter.queryType.equals("favorite"))
                 {
                     a.clear();
                     readOnlyFavorites();
                     results.count = a.size();
                     results.values = a;
                 }
-                else if(CustomAdapterForPreviousList.queryType.equals("notes"))
+                else if(PreviousListCustomAdapter.queryType.equals("notes"))
                 {
                     a.clear();
                     readOnlyNotes();
                     results.count = a.size();
                     results.values = a;
                 }
-                else if(CustomAdapterForPreviousList.queryType.equals("toDo"))
+                else if(PreviousListCustomAdapter.queryType.equals("toDo"))
                 {
                     a.clear();
                     readOnlyToDo();
@@ -445,7 +445,7 @@ public class CustomAdapterForPreviousList extends BaseAdapter
         protected void publishResults(CharSequence constraint,
                                       FilterResults results)
         {
-            a = (ArrayList<SingleRow>) results.values;
+            a = (ArrayList<SingleRowToDoList>) results.values;
             notifyDataSetChanged();
         }
 

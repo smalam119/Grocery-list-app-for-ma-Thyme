@@ -16,11 +16,9 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdView;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.about.ScrollingActivity;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
-import com.pseudozero.thyme.thyme.settings.Settings;
 
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -38,7 +36,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Settings settings = new Settings();
+        SettingsData settings = new SettingsData();
 
 
         try

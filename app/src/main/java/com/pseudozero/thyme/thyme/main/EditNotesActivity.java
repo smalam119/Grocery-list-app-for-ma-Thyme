@@ -20,7 +20,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
-import com.pseudozero.thyme.thyme.settings.Settings;
+import com.pseudozero.thyme.thyme.settings.SettingsData;
 import com.pseudozero.thyme.thyme.settings.SettingsActivity;
 
 import java.text.DateFormat;
@@ -34,7 +34,7 @@ public class EditNotesActivity extends AppCompatActivity
     String noteText,titleText;
     String currentDateTimeString;
     public String listId,fetchedNoteText,fetchedTitle;
-    Settings settings;
+    SettingsData settings;
     private boolean favButtonState;
     ImageButton fav;
 
@@ -47,7 +47,7 @@ public class EditNotesActivity extends AppCompatActivity
 
         listId = String.valueOf(getIntent().getExtras().get(LIST_ID));
 
-        settings = new Settings();
+        settings = new SettingsData();
 
         try
         {

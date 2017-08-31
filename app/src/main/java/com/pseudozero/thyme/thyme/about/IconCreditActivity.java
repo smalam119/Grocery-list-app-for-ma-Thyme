@@ -14,7 +14,7 @@ public class IconCreditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_icon_credit);
 
         ListView lv = (ListView) findViewById(R.id.listView_icon_credit);
-        CustomAdapterForAbout customAdapterForAbout = new CustomAdapterForAbout(getBaseContext());
+        AboutCustomAdapter customAdapterForAbout = new AboutCustomAdapter(getBaseContext());
         lv.setAdapter(customAdapterForAbout);
 
     }

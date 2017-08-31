@@ -3,7 +3,7 @@ package com.pseudozero.thyme.thyme.about;
 /**
  * Created by SAYED on 3/12/2016.
  */
-public class SingleRowForIconCredit
+public class IconCreditSingleRow
 {
     private String name;
     private String url;
@@ -34,7 +34,7 @@ public class SingleRowForIconCredit
         this.name = name;
     }
 
-    public SingleRowForIconCredit(String name, int image, String url)
+    public IconCreditSingleRow(String name, int image, String url)
     {
         this.name = name;
         this.image = image;

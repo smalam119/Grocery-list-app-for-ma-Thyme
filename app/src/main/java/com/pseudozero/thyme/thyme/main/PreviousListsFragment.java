@@ -13,17 +13,17 @@ import android.widget.RadioGroup;
 import android.widget.SearchView;
 
 import com.pseudozero.thyme.thyme.R;
-import com.pseudozero.thyme.thyme.settings.Settings;
+import com.pseudozero.thyme.thyme.settings.SettingsData;
 
 
 public class PreviousListsFragment extends Fragment implements SearchView.OnQueryTextListener{
 
     ListView listView;
     SearchView searchBar;
-    CustomAdapterForPreviousList adapterForPreviousList;
+    PreviousListCustomAdapter adapterForPreviousList;
     RadioGroup searchOptions;
     String typeOfSearch = "all";
-    Settings settings;
+    SettingsData settings;
 
 
     public PreviousListsFragment(){}
@@ -47,14 +47,14 @@ public class PreviousListsFragment extends Fragment implements SearchView.OnQuer
         super.onStart();
         View view = getView();
 
-        settings = new Settings();
+        settings = new SettingsData();
 
         settings.getSetting(PreviousListsFragment.this);
 
         if (view != null) {
 
             listView = (ListView) view.findViewById(R.id.listView);
-            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),typeOfSearch);
+            adapterForPreviousList = new PreviousListCustomAdapter(getContext(),typeOfSearch);
             listView.setAdapter(adapterForPreviousList);
 
 
@@ -80,24 +80,24 @@ public class PreviousListsFragment extends Fragment implements SearchView.OnQuer
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     switch (checkedId) {
                         case R.id.all:
-                            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),"all");
+                            adapterForPreviousList = new PreviousListCustomAdapter(getContext(),"all");
                             listView.setAdapter(adapterForPreviousList);
                             break;
                         case R.id.fav:
-                            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),"favorites");
+                            adapterForPreviousList = new PreviousListCustomAdapter(getContext(),"favorites");
                             listView.setAdapter(adapterForPreviousList);
                             break;
                         case R.id.note:
-                            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),"notes");
+                            adapterForPreviousList = new PreviousListCustomAdapter(getContext(),"notes");
                             listView.setAdapter(adapterForPreviousList);
                             break;
                         case R.id.to_do:
-                            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),"toDo");
+                            adapterForPreviousList = new PreviousListCustomAdapter(getContext(),"toDo");
                             listView.setAdapter(adapterForPreviousList);
                             break;
 
                         default:
-                            adapterForPreviousList = new CustomAdapterForPreviousList(getContext(),"all");
+                            adapterForPreviousList = new PreviousListCustomAdapter(getContext(),"all");
                             listView.setAdapter(adapterForPreviousList);
                             break;
                     }

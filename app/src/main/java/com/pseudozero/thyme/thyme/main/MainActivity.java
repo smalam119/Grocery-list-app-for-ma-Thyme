@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = CreateNewToDoFragment.class;
                 break;
             case R.id.take_a_note:
-                fragmentClass =  CreateTakeANoteFragment.class;
+                fragmentClass =  CreateNoteFragment.class;
                 break;
             case R.id.previous_list:
                 fragmentClass =  PreviousListsFragment.class;

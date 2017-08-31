@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 import com.pseudozero.thyme.thyme.service.ReminderService;
-import com.pseudozero.thyme.thyme.settings.Settings;
+import com.pseudozero.thyme.thyme.settings.SettingsData;
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -34,7 +34,7 @@ public class NotesViewerActivity extends AppCompatActivity
     public static final String LIST_ID = "listID";
     public String listId,fetchedNoteText,fetchedTitle;
     private SQLiteDatabase db;
-    Settings settings;
+    SettingsData settings;
     DateFormat fmtDateAndTime= DateFormat.getDateTimeInstance();
     TextView dateAndTimeLabel;
     Calendar dateAndTime=Calendar.getInstance();
@@ -51,7 +51,7 @@ public class NotesViewerActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        settings = new Settings();
+        settings = new SettingsData();
 
         isAlarmed = false;
 

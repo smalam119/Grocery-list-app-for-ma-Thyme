@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
-import com.pseudozero.thyme.thyme.settings.Settings;
+import com.pseudozero.thyme.thyme.settings.SettingsData;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,7 +44,7 @@ public class CreateNewToDoFragment extends Fragment {
     EditText ed,titleEd,firstEd;
     int fontNumber,fontColorNumber;
     int latestId;
-    public Settings settings;
+    public SettingsData settings;
     public boolean isSaved = false;
 
 
@@ -169,20 +169,12 @@ public class CreateNewToDoFragment extends Fragment {
             toast.show();
         }
 
-        settings = new Settings();
+        settings = new SettingsData();
         settings.getSetting(CreateNewToDoFragment.this);
 
         View view = getView();
 
         createEditText();
-
-        //firstEd = (EditText) view.findViewById(R.id.first_ed);
-        //firstEd.setHint("1.");
-        //firstEd.requestFocus();
-        //firstEd.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
-        //firstEd.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                //getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
-        //allEds.add(firstEd);
 
         favButtonState = false;
         fav = (ImageButton) view.findViewById(R.id.fav_button);
@@ -239,7 +231,6 @@ public class CreateNewToDoFragment extends Fragment {
                     }
 
                     title = titleEd.getText().toString();
-                    //firstEdValue = firstEd.getText().toString();
 
                 }
 

@@ -32,7 +32,7 @@ public class ArchivedListFragment extends Fragment {
         View view = getView();
         if (view != null) {
             listView = (ListView) view.findViewById(R.id.listView);
-            listView.setAdapter(new CustomAdapterForArchivedList(getContext()));
+            listView.setAdapter(new ArchivedListCustomAdapter(getContext()));
         }
     }
 

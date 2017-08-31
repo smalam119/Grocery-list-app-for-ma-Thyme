@@ -12,7 +12,7 @@ import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 /**
  * Created by SAYED on 2/26/2016.
  */
-public class Settings
+public class SettingsData
 {
 
     private int fontColorNumber;

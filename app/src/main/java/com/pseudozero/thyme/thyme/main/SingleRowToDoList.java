@@ -3,7 +3,7 @@ package com.pseudozero.thyme.thyme.main;
 /**
  * Created by SAYED on 1/14/2016.
  */
-public class SingleRow
+public class SingleRowToDoList
 {
     String title;
     String date;
@@ -74,7 +74,7 @@ public class SingleRow
         this.isAlarmed = isAlarmed;
     }
 
-    public SingleRow(int id,String title, String date,int imageResource,int isToDoList,int isFavImage,int isAlarmed)
+    public SingleRowToDoList(int id, String title, String date, int imageResource, int isToDoList, int isFavImage, int isAlarmed)
     {
         this.id = id;
         this.title = title;
