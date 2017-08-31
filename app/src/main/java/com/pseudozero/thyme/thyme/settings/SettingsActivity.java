@@ -13,12 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.about.ScrollingActivity;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
+import com.pseudozero.thyme.thyme.utils.NotyAlert;
 
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -27,6 +29,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     ContentValues cv;
     RadioButton f1,f2,f3,f4;
     RadioButton s1,s2,s3;
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,6 +38,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        linearLayout = (LinearLayout) findViewById(R.id.setting_activity_linear_layout);
+        //NotyAlert.showWarning(SettingsActivity.this,linearLayout,"Age starts showing");
 
         SettingsData settings = new SettingsData();
 

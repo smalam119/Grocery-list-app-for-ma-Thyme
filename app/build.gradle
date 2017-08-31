@@ -27,4 +27,5 @@ dependencies {
     compile 'com.android.support:support-v4:23.2.0'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    compile 'com.emredavarci:noty:1.0.3'
 }

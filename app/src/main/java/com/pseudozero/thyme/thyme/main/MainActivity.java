@@ -17,9 +17,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.settings.SettingsActivity;
+import com.pseudozero.thyme.thyme.utils.NotyAlert;
 
 public class MainActivity extends AppCompatActivity {
 
