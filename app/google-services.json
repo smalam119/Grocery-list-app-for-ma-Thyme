@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "559851340502",
+    "firebase_url": "https://thyme-c1dc5.firebaseio.com",
+    "project_id": "thyme-c1dc5",
+    "storage_bucket": "thyme-c1dc5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559851340502:android:35b5cc3106c5b3b8",
+        "android_client_info": {
+          "package_name": "com.pseudozero.thyme.thyme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559851340502-8j9iik7n1bl9qrrmak2regh1v2uak067.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pseudozero.thyme.thyme",
+            "certificate_hash": "ea9517a7c8b08c83ec57e9b2a4b8f25886c8cedc"
+          }
+        },
+        {
+          "client_id": "559851340502-kiqlaindomhri7dvcl4btp9222pkkelf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_Cp09ztceTg1UGHRcWmwargDeOOnJC5M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559851340502-kiqlaindomhri7dvcl4btp9222pkkelf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
