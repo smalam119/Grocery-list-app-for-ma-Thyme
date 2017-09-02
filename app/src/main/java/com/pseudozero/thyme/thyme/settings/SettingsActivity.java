@@ -28,12 +28,13 @@ import com.facebook.login.widget.LoginButton;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.google.firebase.auth.FirebaseUser;
+
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.about.ScrollingActivity;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
@@ -41,14 +42,14 @@ import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private SQLiteDatabase db;
+    private SQLiteDatabase mSqliteDB;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseAuth mAuth;
     ContentValues cv;
     RadioButton f1,f2,f3,f4;
     RadioButton s1,s2,s3;
     LinearLayout linearLayout;
 
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseAuth mAuth;
     LoginButton loginButton;
     CallbackManager mCallbackManager;
     String TAG ="Hey";
@@ -60,24 +61,27 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        SettingsData settings = new SettingsData();
         linearLayout = (LinearLayout) findViewById(R.id.setting_activity_linear_layout);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        setSupportActionBar(toolbar);
+
+        SettingsData settings = new SettingsData();
+
         //NotyAlert.showWarning(SettingsActivity.this,linearLayout,"Age starts showing");
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
+        FirebaseApp.initializeApp(this);
 
         mAuth = FirebaseAuth.getInstance();
 
         mCallbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions("email");
+
+        //registering fb callback
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
                 Log.i(TAG,"Hello"+loginResult.getAccessToken().getToken());
-                //  Toast.makeText(MainActivity.this, "Token:"+loginResult.getAccessToken(), Toast.LENGTH_SHORT).show();
-
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
@@ -93,8 +97,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         });
 
+        //firebase auth state listener
         mAuthListener = new FirebaseAuth.AuthStateListener(){
-
 
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -116,7 +120,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         try
         {
             SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(this);
-            db = groceryListDatabaseHelper.getWritableDatabase();
+            mSqliteDB = groceryListDatabaseHelper.getWritableDatabase();
         }
         catch(SQLiteException e)
         {
@@ -139,9 +143,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(i);
             }
         });
-
-
-
 
         Button c1,c2,c3,c4;
 
@@ -206,6 +207,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    //handling facebook access token
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
@@ -224,7 +226,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                                     Toast.LENGTH_SHORT).show();
 
                         }
-
 
                     }
                 });
@@ -289,14 +290,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     {
         cv = new ContentValues();
         cv.put("FONT_FAMILY",fontNumber);
-        db.update("SETTINGS", cv, "_id=?", new String[]{"1"});
+        mSqliteDB.update("SETTINGS", cv, "_id=?", new String[]{"1"});
     }
 
     public void fontColorChange(int fontColorNumber)
     {
         //cv = new ContentValues();
         //cv.put("FONT_COLOR",fontColorNumber);
-        //db.update("SETTINGS", cv, "_id=?", new String[]{"1"});
+        //mSqliteDB.update("SETTINGS", cv, "_id=?", new String[]{"1"});
         Toast.makeText(getBaseContext(),"Not available right now",Toast.LENGTH_SHORT).show();
     }
 
@@ -304,7 +305,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     {
         cv = new ContentValues();
         cv.put("FONT_SIZE",fontSizeNumber);
-        db.update("SETTINGS", cv, "_id=?", new String[]{"1"});
+        mSqliteDB.update("SETTINGS", cv, "_id=?", new String[]{"1"});
     }
 
     public void currentFont(int info)
