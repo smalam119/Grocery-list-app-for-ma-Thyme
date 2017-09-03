@@ -1,5 +1,6 @@
 package com.pseudozero.thyme.thyme.main;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,11 +11,14 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,6 +27,7 @@ import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 import com.pseudozero.thyme.thyme.settings.SettingsData;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,26 +58,32 @@ public class CreateNewToDoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_create_new_list, container, false);
-
-
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        hideKeyboard(getActivity(), getView());
+    }
 
     public void createEditText()
     {
         View view = getView();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         childLayout = (LinearLayout)view.findViewById(R.id.child_lay);
         ed = new EditText(getContext());
         ed.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), settings.getFont(settings.getFontNumber())));
         ed.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimension(settings.getFontSize(settings.getFontSizeNumber())));
         ed.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        ed.setInputType(InputType.TYPE_CLASS_TEXT);
         allEds.add(ed);
         ed.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         ed.setHint("" + id + ".");
         childLayout.addView(ed);
         ed.requestFocus();
+        imm.showSoftInput(ed, InputMethodManager.SHOW_IMPLICIT);
         id++;
     }
 
@@ -156,8 +167,6 @@ public class CreateNewToDoFragment extends Fragment {
     {
         super.onStart();
 
-
-
         try
         {
             SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(getContext());
@@ -234,13 +243,16 @@ public class CreateNewToDoFragment extends Fragment {
 
                 }
 
-                if (title.isEmpty() || s.isEmpty())
+                if (title.isEmpty() && s.isEmpty())
                 {
-                    Toast.makeText(getContext(), "Your list must have a title and at least an item", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Your list is empty" + s, Toast.LENGTH_LONG).show();
                 }
                 else {
                     if(!isSaved)
                     {
+                        if(title.isEmpty()) {
+                            title = "Untitled";
+                        }
                         currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
                         insertList(db, currentDateTimeString, title, itemData.toString());
                         Toast.makeText(getContext(), "List Saved", Toast.LENGTH_LONG).show();
@@ -248,6 +260,9 @@ public class CreateNewToDoFragment extends Fragment {
                     }
                     else
                     {
+                        if(title.isEmpty()) {
+                            title = "Untitled";
+                        }
                         updateList(db, currentDateTimeString, title, itemData.toString());
                         Toast.makeText(getContext(), "List Saved", Toast.LENGTH_LONG).show();
                     }
@@ -256,6 +271,12 @@ public class CreateNewToDoFragment extends Fragment {
             }
         });
 
+    }
+
+    public static void hideKeyboard(Activity activity, View viewToHide) {
+        InputMethodManager imm = (InputMethodManager) activity
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(viewToHide.getWindowToken(), 0);
     }
 
 

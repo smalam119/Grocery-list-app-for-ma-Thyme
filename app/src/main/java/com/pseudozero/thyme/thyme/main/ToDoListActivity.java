@@ -37,7 +37,7 @@ public class ToDoListActivity extends AppCompatActivity  {
     ArrayList<Boolean> isSelectedList = new ArrayList<>();
     ListView listView;
     ArrayAdapter<String> adapter;
-    TextView titleTv;;
+    TextView titleTv;
     SettingsData settings;
 
     @Override
