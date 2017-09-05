@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 import com.pseudozero.thyme.thyme.settings.SettingsData;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,8 +56,7 @@ public class ToDoListActivity extends AppCompatActivity  {
         }
         catch(SQLiteException e)
         {
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
+            TastyToast.makeText(this, "Database unavailable", TastyToast.LENGTH_LONG, TastyToast.ERROR);
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -144,13 +144,13 @@ public class ToDoListActivity extends AppCompatActivity  {
         {
             cv.put("FAVORITE", 1);
 
-            Toast.makeText(this,"Added as favorite",Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(this, "Added as favorite", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
         }
         else if(fav == 1)
         {
             cv.put("FAVORITE", 0);
 
-            Toast.makeText(this,"Removed as favorite",Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(this, "Removed from favorite", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
         }
         db.update("LISTS",cv, "_id=?", new String[] {s});
     }
@@ -170,6 +170,7 @@ public class ToDoListActivity extends AppCompatActivity  {
         ContentValues cv = new ContentValues();
         cv.put("CHECK_LIST_STATUS", isSelectedList.toString());
         db.update("LISTS", cv, "_id=?", new String[]{listId});
+        TastyToast.makeText(this, "Saved", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
     }
 
     @Override

@@ -19,11 +19,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 import com.pseudozero.thyme.thyme.settings.SettingsData;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -66,8 +66,7 @@ public class EditToDoActivity extends AppCompatActivity {
         }
         catch(SQLiteException e)
         {
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
+            TastyToast.makeText(getBaseContext(), "Database unavailable", TastyToast.LENGTH_LONG, TastyToast.ERROR);
         }
 
         listId = String.valueOf(getIntent().getExtras().get(LIST_ID));
@@ -112,10 +111,12 @@ public class EditToDoActivity extends AppCompatActivity {
 
                     fav.setBackgroundResource(R.drawable.option_menu_fav_blue);
                     favButtonState = true;
+                    TastyToast.makeText(getBaseContext(), "Added as favorite", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 } else if (favButtonState == true) {
 
                     fav.setBackgroundResource(R.drawable.unselected_fav_icon);
                     favButtonState = false;
+                    TastyToast.makeText(getBaseContext(), "Removed from favorites", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 }
             }
         });
@@ -139,12 +140,12 @@ public class EditToDoActivity extends AppCompatActivity {
 
         if (title.isEmpty())
         {
-            Toast.makeText(getBaseContext(), "Your list must have a title", Toast.LENGTH_LONG).show();
+            TastyToast.makeText(getBaseContext(), "Your list must have a title", TastyToast.LENGTH_LONG, TastyToast.WARNING);
         } else
         {
             currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
             updateList(db, currentDateTimeString, title, itemData.toString());
-            Toast.makeText(getBaseContext(), "List Saved", Toast.LENGTH_LONG).show();
+            TastyToast.makeText(getBaseContext(), "List Saved", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
         }
 
         Intent i = new Intent(this,ToDoListActivity.class);

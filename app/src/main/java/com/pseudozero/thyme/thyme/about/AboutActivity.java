@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 
-public class ScrollingActivity extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity {
 
     int i = 0;
 

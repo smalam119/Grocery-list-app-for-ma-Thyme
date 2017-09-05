@@ -14,10 +14,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 import com.pseudozero.thyme.thyme.settings.SettingsData;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
 
@@ -155,21 +155,21 @@ public class ArchivedListCustomAdapter extends BaseAdapter {
                         a.remove(t);
                         ArchivedListCustomAdapter.this.notifyDataSetChanged();
                         deleteList(t);
-                        Toast.makeText(context, "Item Deleted", Toast.LENGTH_LONG).show();
+                        TastyToast.makeText(context, "Item Deleted", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                         return true;
 
                     case R.id.delete_all:
                         a.clear();
                         ArchivedListCustomAdapter.this.notifyDataSetChanged();
                         deleteAll();
-                        Toast.makeText(context, "All Items Are Deleted", Toast.LENGTH_LONG).show();
+                        TastyToast.makeText(context, "All Items Are Deleted", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                         return true;
 
                     case R.id.restore_a:
                         a.remove(t);
                         ArchivedListCustomAdapter.this.notifyDataSetChanged();
                         sendToPreviousList(t);
-                        Toast.makeText(context, "Item Restored", Toast.LENGTH_LONG).show();
+                        TastyToast.makeText(context, "Item Restored", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                         return true;
 
                     default:

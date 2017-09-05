@@ -14,25 +14,24 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 import com.pseudozero.thyme.thyme.settings.SettingsData;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 
 public class CreateNewToDoFragment extends Fragment {
 
@@ -52,11 +51,9 @@ public class CreateNewToDoFragment extends Fragment {
     public SettingsData settings;
     public boolean isSaved = false;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_create_new_list, container, false);
         return rootView;
     }
@@ -174,8 +171,7 @@ public class CreateNewToDoFragment extends Fragment {
         }
         catch(SQLiteException e)
         {
-            Toast toast = Toast.makeText(getContext(), "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
+            TastyToast.makeText(getContext(), "Database unavailable", TastyToast.LENGTH_LONG, TastyToast.ERROR);
         }
 
         settings = new SettingsData();
@@ -204,10 +200,12 @@ public class CreateNewToDoFragment extends Fragment {
 
                     fav.setBackgroundResource(R.drawable.option_menu_fav_blue);
                     favButtonState = true;
+                    TastyToast.makeText(getContext(), "Added as favorite", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 } else if (favButtonState == true) {
 
                     fav.setBackgroundResource(R.drawable.unselected_fav_icon);
                     favButtonState = false;
+                    TastyToast.makeText(getContext(), "Removed from favorite", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 }
             }
         });
@@ -245,7 +243,7 @@ public class CreateNewToDoFragment extends Fragment {
 
                 if (title.isEmpty() && s.isEmpty())
                 {
-                    Toast.makeText(getContext(), "Your list is empty" + s, Toast.LENGTH_LONG).show();
+                    TastyToast.makeText(getContext(), "Your list is empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 }
                 else {
                     if(!isSaved)
@@ -255,7 +253,8 @@ public class CreateNewToDoFragment extends Fragment {
                         }
                         currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
                         insertList(db, currentDateTimeString, title, itemData.toString());
-                        Toast.makeText(getContext(), "List Saved", Toast.LENGTH_LONG).show();
+                        updateList(db, currentDateTimeString, title, itemData.toString());
+                        TastyToast.makeText(getContext(), "List Created", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                         isSaved = true;
                     }
                     else
@@ -264,7 +263,7 @@ public class CreateNewToDoFragment extends Fragment {
                             title = "Untitled";
                         }
                         updateList(db, currentDateTimeString, title, itemData.toString());
-                        Toast.makeText(getContext(), "List Saved", Toast.LENGTH_LONG).show();
+                        TastyToast.makeText(getContext(), "List Updated", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                     }
                 }
 
@@ -273,11 +272,23 @@ public class CreateNewToDoFragment extends Fragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        hideKeyboard(getActivity(),titleEd);
+        Log.d("State","onPause");
+    }
+
     public static void hideKeyboard(Activity activity, View viewToHide) {
         InputMethodManager imm = (InputMethodManager) activity
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(viewToHide.getWindowToken(), 0);
     }
 
-
+    private int getPreviousListCount() {
+        SQLiteOpenHelper groceryListDatabaseHelper = new GroceryListDatabaseHelper(getContext());
+        SQLiteDatabase db = groceryListDatabaseHelper.getReadableDatabase();
+        Cursor cursor = db.query("LISTS", new String[]{"_id", "NAME", "DATE", "FAVORITE","IS_TO_DO_LIST","IS_ALARMED"}, "ARCHIVED = ?", new String[]{"0"}, null, null, null);
+        return cursor.getCount();
+    }
 }

@@ -17,11 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 import com.pseudozero.thyme.thyme.settings.SettingsData;
 import com.pseudozero.thyme.thyme.settings.SettingsActivity;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -56,8 +56,7 @@ public class EditNotesActivity extends AppCompatActivity
         }
         catch(SQLiteException e)
         {
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
+            TastyToast.makeText(getApplicationContext(), "Database unavailable", TastyToast.LENGTH_LONG, TastyToast.ERROR);
         }
 
         settings.getSetting(this);
@@ -85,10 +84,12 @@ public class EditNotesActivity extends AppCompatActivity
 
                     fav.setBackgroundResource(R.drawable.option_menu_fav_blue);
                     favButtonState = true;
+                    TastyToast.makeText(getBaseContext(), "Added as favorite", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 } else if (favButtonState == true) {
 
                     fav.setBackgroundResource(R.drawable.unselected_fav_icon);
                     favButtonState = false;
+                    TastyToast.makeText(getBaseContext(), "Removed from favorites", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 }
             }
         });
@@ -181,13 +182,13 @@ public class EditNotesActivity extends AppCompatActivity
 
         if(titleText.isEmpty())
         {
-            Toast.makeText(getBaseContext(),"You must give a title",Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(getApplicationContext(), "You must give a title", TastyToast.LENGTH_LONG, TastyToast.WARNING);
         }
         else
         {
             currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
             updateList(db, currentDateTimeString, titleText, noteText);
-            Toast.makeText(getBaseContext(),"Note Saved",Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(getBaseContext(), "Note Updated", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
         }
 
         Intent i = new Intent(this,NotesViewerActivity.class);

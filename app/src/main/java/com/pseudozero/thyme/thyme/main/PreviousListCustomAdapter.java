@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 import com.pseudozero.thyme.thyme.settings.SettingsData;
+import com.sdsmdg.tastytoast.TastyToast;
+
 import java.util.ArrayList;
 
 
@@ -366,7 +368,7 @@ public class PreviousListCustomAdapter extends BaseAdapter
                         a.remove(t);
                         PreviousListCustomAdapter.this.notifyDataSetChanged();
                         sendToTrash(t);
-                        Toast.makeText(context, "List Deleted", Toast.LENGTH_LONG).show();
+                        TastyToast.makeText(context, "List Deleted", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                         return true;
 
                     default:

@@ -36,7 +36,4 @@ public class ArchivedListFragment extends Fragment {
         }
     }
 
-
-
-
 }

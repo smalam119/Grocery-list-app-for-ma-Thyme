@@ -19,11 +19,12 @@ import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 import com.pseudozero.thyme.thyme.service.ReminderService;
 import com.pseudozero.thyme.thyme.settings.SettingsData;
+import com.sdsmdg.tastytoast.TastyToast;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -64,8 +65,7 @@ public class NotesViewerActivity extends AppCompatActivity
         }
         catch(SQLiteException e)
         {
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
+            TastyToast.makeText(this, "Database unavailable", TastyToast.LENGTH_LONG, TastyToast.ERROR);
         }
 
         fetchItemsOfAList();
@@ -149,7 +149,7 @@ public class NotesViewerActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(),"Alarm is set to "+alarmDate,Toast.LENGTH_SHORT).show();
+                    TastyToast.makeText(this, "Alarm is set to "+alarmDate, TastyToast.LENGTH_LONG, TastyToast.ERROR);
                 }
 
 
@@ -210,7 +210,7 @@ public class NotesViewerActivity extends AppCompatActivity
         ContentValues cv = new ContentValues();
         cv.put("IS_ALARMED", 1);
         cv.put("DATE_ALARM",dateAndTime.getTime()+"");
-        Toast.makeText(this,"Reminder Set to " +dateAndTime.getTime(),Toast.LENGTH_LONG).show();
+        TastyToast.makeText(this,"Reminder Set to " +dateAndTime.getTime(),TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
         db.update("LISTS", cv, "_id=?", new String[]{listId});
         startNotificationService();
     }
@@ -238,13 +238,13 @@ public class NotesViewerActivity extends AppCompatActivity
         {
             cv.put("FAVORITE", 1);
 
-            Toast.makeText(this,"Added as favorite",Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(this, "Added as favorite", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
         }
         else if(fav == 1)
         {
             cv.put("FAVORITE", 0);
 
-            Toast.makeText(this,"Removed as favorite",Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(this, "Removed from favorites", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
         }
 
 

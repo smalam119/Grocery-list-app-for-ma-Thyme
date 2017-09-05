@@ -14,10 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 import com.pseudozero.thyme.thyme.R;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 import com.pseudozero.thyme.thyme.settings.SettingsData;
+import com.sdsmdg.tastytoast.TastyToast;
+
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -53,8 +54,7 @@ public class CreateNoteFragment extends Fragment
         }
         catch(SQLiteException e)
         {
-            Toast toast = Toast.makeText(getContext(), "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
+            TastyToast.makeText(getContext(), "Database unavailable", TastyToast.LENGTH_LONG, TastyToast.ERROR);
         }
 
         View v = getView();
@@ -71,10 +71,12 @@ public class CreateNoteFragment extends Fragment
 
                     fav.setBackgroundResource(R.drawable.option_menu_fav_blue);
                     favButtonState = true;
+                    TastyToast.makeText(getContext(), "Added as favorite", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 } else if (favButtonState == true) {
 
                     fav.setBackgroundResource(R.drawable.unselected_fav_icon);
                     favButtonState = false;
+                    TastyToast.makeText(getContext(), "Removed from favorite", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 }
             }
         });
@@ -103,7 +105,7 @@ public class CreateNoteFragment extends Fragment
 
                 if(titleText.isEmpty())
                 {
-                    Toast.makeText(getContext(),"You must give a title",Toast.LENGTH_SHORT).show();
+                    TastyToast.makeText(getContext(), "You must have a title", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 }
                 else
                 {
@@ -117,7 +119,7 @@ public class CreateNoteFragment extends Fragment
                     {
                         updateList(db, currentDateTimeString, titleText, noteText);
                     }
-                    Toast.makeText(getContext(),"Note added",Toast.LENGTH_SHORT).show();
+                    TastyToast.makeText(getContext(), "Note added", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 }
             }
         });

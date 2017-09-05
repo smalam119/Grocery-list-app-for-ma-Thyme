@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,7 +35,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import com.pseudozero.thyme.thyme.R;
-import com.pseudozero.thyme.thyme.about.ScrollingActivity;
 import com.pseudozero.thyme.thyme.database.GroceryListDatabaseHelper;
 
 
@@ -66,8 +64,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setSupportActionBar(toolbar);
 
         SettingsData settings = new SettingsData();
-
-        //NotyAlert.showWarning(SettingsActivity.this,linearLayout,"Age starts showing");
 
         FirebaseApp.initializeApp(this);
 
@@ -132,17 +128,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         Typeface archRival = Typeface.createFromAsset(getAssets(),"fonts/SF_Arch_Rival.ttf");
         Typeface raleway = Typeface.createFromAsset(getAssets(),"fonts/Raleway-Regular.ttf");
         Typeface walkway = Typeface.createFromAsset(getAssets(),"fonts/Walkway_Black.ttf");
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setImageResource(R.mipmap.what_icon);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent i = new Intent(getApplicationContext(), ScrollingActivity.class);
-                startActivity(i);
-            }
-        });
 
         Button c1,c2,c3,c4;
 
@@ -295,9 +280,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     public void fontColorChange(int fontColorNumber)
     {
-        //cv = new ContentValues();
-        //cv.put("FONT_COLOR",fontColorNumber);
-        //mSqliteDB.update("SETTINGS", cv, "_id=?", new String[]{"1"});
         Toast.makeText(getBaseContext(),"Not available right now",Toast.LENGTH_SHORT).show();
     }
 
